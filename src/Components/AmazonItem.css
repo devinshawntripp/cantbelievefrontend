@@ -1,0 +1,29 @@
+img {
+  width: 300px;
+  height: 300px;
+}
+
+.AmazonItemBox {
+  width: 350px;
+  margin-top: 5%;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 3%;
+}
+
+.ItemDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  text-align: left;
+  padding: 5%;
+  color: white;
+  margin: 3% 5% 3% 5%;
+  border-collapse: collapse;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.text {
+  margin-top: 3%;
+}
