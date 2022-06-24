@@ -15,6 +15,12 @@
   align-items: center;
 }
 
+.Login {
+  display: flex;
+  margin-left: auto;
+  margin-right: 5%;
+}
+
 a {
   color: rgba(97, 97, 214, 0.856);
   text-decoration: none;

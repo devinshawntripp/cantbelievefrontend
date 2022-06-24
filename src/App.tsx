@@ -3,8 +3,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AboutPage from "./Pages/About";
 import Home from "./Pages/Home";
 import ContactPage from "./Pages/Contact";
+import Login from "./Pages/Login";
 import "reset-css";
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.css";
 
 import Menu from "./Components/Menu";
 
@@ -31,6 +33,7 @@ export default class App extends Component {
             <Route path="/" element={<Home />} />
             <Route path="/About" element={<AboutPage />} />
             <Route path="/Contact" element={<ContactPage />} />
+            <Route path="/Login" element={<Login />} />
           </Routes>
         </BrowserRouter>
       </div>

@@ -1,0 +1,43 @@
+:root {
+  --veryLightGreen: #d9ed92;
+  --lessLightGreen: #b5e48c;
+  --green: #99d98c;
+  --teal: #76c893;
+  --darkTeal: #52b69a;
+  --lightestBlue: #34a0a4;
+  --blue: #168aad;
+  --middleBlue: #1a759f;
+  --lessDarkBlue: #1e6091;
+  --darkBlue: #184e77;
+}
+
+.card {
+  width: 400px;
+  height: 450px;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  margin-top: 5%;
+  border-radius: 20px !important;
+}
+
+.inputG {
+  width: 80%;
+  margin-top: 6%;
+}
+
+.LoginButton {
+  width: 80% !important;
+}
+.altSignins {
+  width: 80% !important;
+  margin-left: 5%;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

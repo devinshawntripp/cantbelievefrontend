@@ -16,12 +16,17 @@ const Menu = (props: {
     ));
 
   return (
-    <div className="Navbar">
-      <a className="Brand" href={brand.to}>
-        {brand.name}
-      </a>
-      <NavLinks />
-    </div>
+    <>
+      <div className="Navbar">
+        <a className="Brand" href={brand.to}>
+          {brand.name}
+        </a>
+        <NavLinks />
+        <a className="Login" href="/Login">
+          Login/Register
+        </a>
+      </div>
+    </>
   );
 };
 

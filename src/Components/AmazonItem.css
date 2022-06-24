@@ -1,3 +1,16 @@
+:root {
+  --veryLightGreen: #d9ed92;
+  --lessLightGreen: #b5e48c;
+  --green: #99d98c;
+  --teal: #76c893;
+  --darkTeal: #52b69a;
+  --lightestBlue: #34a0a4;
+  --blue: #168aad;
+  --middleBlue: #1a759f;
+  --lessDarkBlue: #1e6091;
+  --darkBlue: #184e77;
+}
+
 img {
   width: 300px;
   height: 300px;
@@ -6,8 +19,21 @@ img {
 .AmazonItemBox {
   width: 350px;
   margin-top: 5%;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 3%;
+  /* background-color: var(--lightestBlue); */
+  /* border-radius: 25px; */
+  padding-bottom: 5%;
+}
+
+a {
+  color: var(--green) !important;
+  opacity: 0.7 !important;
+  transition: opacity 1s;
+}
+
+a:hover {
+  /* color: rgba(97, 97, 214, 1); */
+  opacity: 1 !important;
+  transition-delay: 100ms !important;
 }
 
 .ItemDetails {
@@ -18,12 +44,68 @@ img {
   text-align: left;
   padding: 5%;
   color: white;
+  font-weight: 600;
   margin: 3% 5% 3% 5%;
   border-collapse: collapse;
   border-radius: 20px;
-  background-color: rgba(0, 0, 0, 0.7);
+  /* background-color: rgba(0, 0, 0, 0.7); */
+  background-color: var(--darkBlue);
+}
+
+.title {
+  color: white;
+  font-weight: bold;
+  margin-bottom: -10px;
+}
+
+.desc {
+  text-indent: 10%;
 }
 
 .text {
   margin-top: 3%;
+}
+
+.priceAndLink {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: white;
+  font-weight: 700;
+  padding: 3% 5% 3% 5%;
+}
+
+.button {
+  /* color: var(--darkBlue); */
+  background-color: var(--teal) !important;
+  color: black !important;
+  border-color: var(--teal) !important;
+}
+
+.heartIcon {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.test {
+  object-fit: cover !important;
+}
+
+.iconSaves {
+  width: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-right: 10px;
+  font-weight: 100;
+  font-size: 10px;
+}
+
+.priceSaves {
+  display: flex;
+  flex-direction: row;
+}
+
+.saves {
+  margin-right: 10px;
 }
