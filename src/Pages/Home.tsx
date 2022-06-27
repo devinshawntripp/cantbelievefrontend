@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Button, Row, Col } from "react-bootstrap";
 import AmazonItem from "../Components/AmazonItem";
 import "./css/Home.css";
 
@@ -33,21 +34,33 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
 
   return (
     <div className="Home">
-      {/* <AmazonItem name={} /> */
-
-      items &&
-        items.map((item) => {
-          return (
-            <div className="Item">
-              <AmazonItem
-                name={item.name}
-                url={item.url}
-                imgUrl={item.imgUrl}
-                desc={item.desc}
-              />
-            </div>
-          );
-        })}
+        <Row style={{width: "100%"}}>
+          {
+            items &&
+              items.map((item) => {
+                return (
+                  <Col>
+                    <div>
+                      <AmazonItem
+                        name={item.name}
+                        url={item.url}
+                        imgUrl={item.imgUrl}
+                        desc={item.desc}
+                      />
+                 
+                    </div>
+                  </Col>
+                );
+              })}
+        </Row>
+      
+      <Row>
+        <div style={{marginTop: "10%"}}>
+          {/* <Button>Add Product</Button> */}
+          <Button>Add Product</Button>
+        </div>
+      </Row>
+        
     </div>
   );
 };

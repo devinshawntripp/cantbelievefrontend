@@ -21,6 +21,16 @@
   margin-right: 5%;
 }
 
+.Username {
+  display: flex;
+  margin-left: auto;
+  margin-right: 1%;
+}
+
+.Logout {
+  margin-right: 3%;
+}
+
 a {
   color: rgba(97, 97, 214, 0.856);
   text-decoration: none;

@@ -12,12 +12,12 @@
 }
 
 img {
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
 }
 
 .AmazonItemBox {
-  width: 350px;
+  width: 200px;
   margin-top: 5%;
   /* background-color: var(--lightestBlue); */
   /* border-radius: 25px; */
