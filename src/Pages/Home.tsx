@@ -14,7 +14,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
   const getAllItems = async () => {
     console.log("HI THERE");
     await axios
-      .get("//localhost:8174/api/items")
+      .get(`${process.env.REACT_APP_URL}/api/items`)
       .then((res) => {
         if (res.status === 200) {
           setItems(res.data.items);
