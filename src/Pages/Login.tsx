@@ -1,34 +1,32 @@
 import React, { useState, useEffect, MouseEvent, ChangeEvent } from "react";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
-import axios from 'axios'
+import axios from "axios";
 import "./css/Login.css";
 import { applyMiddleware } from "redux";
-import { useDispatch } from 'react-redux'
-import { loadAppData } from '../store/slices/app-slice'
-import { ToastContainer, toast } from 'react-toastify'
+import { useDispatch } from "react-redux";
+import { loadAppData } from "../store/slices/app-slice";
+import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 // import { useLocation } from 'react-router'
 
-
 interface ILoginProps {}
-
-
 
 const Login: React.FC<ILoginProps> = ({}) => {
   const [email, setEmail] = useState<string>();
   const [pwd, setPwd] = useState<string>();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const notify = (msg: string) => toast(msg, {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  })
+  const notify = (msg: string) =>
+    toast(msg, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
 
   //   const handleChange = (e: ChangeEvent) => {
   //     console.log(e.target.);
@@ -53,37 +51,36 @@ const Login: React.FC<ILoginProps> = ({}) => {
 
     const payload = { email: email, password: pwd };
     //request for
-    console.log("HIIHIHSDKF DSKFL")
-    await axios.post("//localhost:8174/api/login", payload).then((res) => {
-      console.log(res)
-      const user = res.data.user;
-      dispatch(loadAppData({
-        id: user.id,
-        email: user.email,
-        admin: user.admin,
-        vouchers: user.vouchers,
-        idsSaved: user.idsSaved
-      }))
-      console.log(res.data.token)
-      localStorage.setItem("auth-token", res.data.token)
-      notify("You have logged in successfully!")
-      navigate('/')
-      
-    }).catch((err) => {
-      console.log(err)
-      notify(err.response.data.msg)
-    })
-
-    
+    // console.log("HIIHIHSDKF DSKFL")
+    await axios
+      .post("//localhost:8174/api/login", payload)
+      .then((res) => {
+        console.log(res);
+        const user = res.data.user;
+        dispatch(
+          loadAppData({
+            id: user.id,
+            email: user.email,
+            admin: user.admin,
+            vouchers: user.vouchers,
+            idsSaved: user.idsSaved,
+          })
+        );
+        console.log(res.data.token);
+        localStorage.setItem("auth-token", res.data.token);
+        notify("You have logged in successfully!");
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        notify(err.response.data.msg);
+      });
   };
-
-
-  
 
   return (
     <div className="container">
-      <ToastContainer 
-        toastStyle={{backgroundColor: "black"}}
+      <ToastContainer
+        toastStyle={{ backgroundColor: "black" }}
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}

@@ -10,6 +10,7 @@ interface IAmazonItemProps {
   url: String;
   desc: String;
   imgUrl: String;
+  price: Number;
 }
 
 const AmazonItem: React.FC<IAmazonItemProps> = (props: {
@@ -17,11 +18,12 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
   url: String;
   desc: String;
   imgUrl: String;
+  price: Number;
 }) => {
   var something: String =
     "https://amazon.com/itemnumblahalkjsdlfkajdklfajdfalkjjdfjkl3859283?=12454";
 
-  var { name, url, desc, imgUrl } = props;
+  var { name, url, desc, imgUrl, price } = props;
   var showUrl = url;
 
   if (showUrl.length > 30) {
@@ -78,7 +80,7 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
             />
             <p className="saves">200 Saves</p>
           </div>
-          <p>$37.00</p>
+          <p>{String(props.price)}</p>
         </div>
       </div>
     </div>
