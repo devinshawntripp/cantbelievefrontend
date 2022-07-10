@@ -2,7 +2,6 @@ import React, { useState, useEffect, MouseEvent, ChangeEvent } from "react";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
 import axios from "axios";
 import "./css/Login.css";
-import { applyMiddleware } from "redux";
 import { useDispatch } from "react-redux";
 import { loadAppData } from "../store/slices/app-slice";
 import { ToastContainer, toast } from "react-toastify";
@@ -53,7 +52,7 @@ const Login: React.FC<ILoginProps> = ({}) => {
     //request for
     // console.log("HIIHIHSDKF DSKFL")
     await axios
-      .post("//localhost:8174/api/login", payload)
+      .post(`${process.env.REACT_APP_URL}/api/login`, payload)
       .then((res) => {
         console.log(res);
         const user = res.data.user;
