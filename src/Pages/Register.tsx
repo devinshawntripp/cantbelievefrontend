@@ -3,7 +3,7 @@ import { InputGroup, FormControl, Button } from "react-bootstrap";
 import axios from "axios";
 import "./css/Register.css";
 import { useDispatch } from "react-redux";
-import { loadAppData } from "../store/slices/app-slice";
+// import { loadAppData } from "../store/slices/app-slice";
 
 interface IRegisterProps {}
 
@@ -36,7 +36,7 @@ const Register: React.FC<IRegisterProps> = ({}) => {
     const payload = { email: email, password: pwd };
 
     //request for
-    console.log("SDJFLKSDFLKJ FLKJ");
+    // console.log("SDJFLKSDFLKJ FLKJ");
 
     await axios
       .post(`${process.env.REACT_APP_URL}/api/registerUser`, payload)

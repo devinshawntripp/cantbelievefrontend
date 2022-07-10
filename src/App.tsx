@@ -46,17 +46,20 @@ const App: React.FC<IAppProps> = ({}) => {
       }
 
       const tokenResponse = await Axios.post(
-        "//localhost:8174/api/checkToken",
+        `${process.env.REACT_APP_URL}/api/checkToken`,
         null,
         { headers: { "x-auth-token": token } }
       );
 
       if (tokenResponse.data) {
-        const userRes = await Axios.get("//localhost:8174/api/loginwithjwt", {
-          headers: { "x-auth-token": token },
-        });
-        console.log(userRes.data.user);
-        console.log("HI THERE");
+        const userRes = await Axios.get(
+          `${process.env.REACT_APP_URL}/api/loginwithjwt`,
+          {
+            headers: { "x-auth-token": token },
+          }
+        );
+        // console.log(userRes.data.user);
+        // console.log("HI THERE");
 
         dispatch(
           loadAppData({
