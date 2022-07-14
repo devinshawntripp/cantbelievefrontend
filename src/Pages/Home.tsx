@@ -19,6 +19,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
       imgUrl: string;
       desc: string;
       price: number;
+      saves: number;
     }>
   >();
 
@@ -75,7 +76,11 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
   };
 
   const productItem: CSS.Properties = {
-    width: "20%",
+    display: "flex",
+    flexDirection: "column",
+    width: "24%",
+    justifyContent: "center",
+    alignItems: "center",
   };
 
   return (
@@ -83,15 +88,17 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
       <div style={productsStyle}>
         {items &&
           items.map((item) => {
-            console.log(item);
+            // console.log(item);
             return (
               <div style={productItem}>
                 <AmazonItem
+                  id={item._id}
                   name={item.name}
                   url={item.url}
                   imgUrl={item.imgUrl}
                   desc={item.desc}
                   price={item.price ?? 0}
+                  saves={item.saves ?? 0}
                 />
                 {app.admin && (
                   <Button

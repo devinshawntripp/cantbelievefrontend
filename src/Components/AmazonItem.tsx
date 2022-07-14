@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import picture from "../images/nail_stamper.jpg";
 import { Button } from "react-bootstrap";
 import saveIcon from "../images/heartIcon.png";
 import saveIconFilled from "../images/heartIconFilled.png";
+import saveIconWhite from "../images/heartIconWhite.png";
+import CSS from "csstype";
 import "./AmazonItem.css";
 
 interface IAmazonItemProps {
@@ -11,6 +13,8 @@ interface IAmazonItemProps {
   desc: String;
   imgUrl: String;
   price: Number;
+  saves: Number;
+  id: Number;
 }
 
 const AmazonItem: React.FC<IAmazonItemProps> = (props: {
@@ -19,11 +23,13 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
   desc: String;
   imgUrl: String;
   price: Number;
+  saves: Number;
+  id: Number;
 }) => {
   var something: String =
     "https://amazon.com/itemnumblahalkjsdlfkajdklfajdfalkjjdfjkl3859283?=12454";
 
-  var { name, url, desc, imgUrl, price } = props;
+  var { name, url, desc, imgUrl, price, saves, id } = props;
   var showUrl = url;
 
   if (showUrl.length > 30) {
@@ -34,18 +40,26 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
     name = name.slice(0, 68) + "...";
   }
 
-  if (desc.length > 65) {
-    desc = desc.slice(0, 65) + "...";
-  }
+  // if (desc.length > 65) {
+  //   desc = desc.slice(0, 400) + "...";
+  // }
 
-  const [pic, setPic] = useState(saveIcon);
+  useEffect(() => {
+    const getIdsOfUserSaved = async () => {};
+  }, []);
+
+  const [pic, setPic] = useState(saveIconWhite);
 
   const handleMouseOver = () => {
     setPic(saveIconFilled);
   };
 
   const handleMouseLeave = () => {
-    setPic(saveIcon);
+    setPic(saveIconWhite);
+  };
+
+  const handleClickSave = (idPassed: Number) => {
+    //get the id of the item
   };
 
   return (
@@ -57,8 +71,9 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
         <p>Not avail</p>
       )}
       <div className="ItemDetails">
-        <p className="text desc">{String(desc)}</p>
+        <p className="text desc">{String(desc).trim()}</p>
       </div>
+      {/* <div style={PriceAndLink}> */}
       <div className="priceAndLink">
         {/* <a href={String(url)} target="_blank" rel="noopener noreferrer"> */}
         <Button
@@ -70,18 +85,23 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
           Click Me
         </Button>
         {/* </a> */}
-        <div className="priceSaves">
-          <div className="iconSaves">
-            <img
-              onMouseOver={handleMouseOver}
-              onMouseLeave={handleMouseLeave}
-              style={{ width: "20px", height: "20px", objectFit: "fill" }}
-              src={pic}
-            />
-            <p className="saves">200 Saves</p>
-          </div>
-          <p>{String(props.price)}</p>
+        {/* <div className="priceSaves" style={SavesUrIPrice}>
+         */}
+        {/* <div style={SavesUrIPrice}> */}
+        {/* <div className="iconSaves"> */}
+        <div className="saves">
+          <img
+            onMouseOver={handleMouseOver}
+            onMouseLeave={handleMouseLeave}
+            onClick={() => handleClickSave(id)}
+            style={{ width: "20px", height: "20px", objectFit: "fill" }}
+            src={pic}
+          />
+          {/* <p className="saves">{String(saves)} Saves</p> */}
+          <p>{String(saves)} Saves</p>
         </div>
+        <p className="price">${String(price)}</p>
+        {/* </div> */}
       </div>
     </div>
   );
