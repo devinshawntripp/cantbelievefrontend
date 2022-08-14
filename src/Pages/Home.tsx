@@ -13,7 +13,7 @@ export interface IHomeProps {}
 const Home: React.FunctionComponent<IHomeProps> = (props) => {
   const [items, setItems] = useState<
     Array<{
-      _id: number;
+      _id: string;
       name: string;
       url: string;
       imgUrl: string;
@@ -29,7 +29,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
     navigate(path);
   };
 
-  const deleteItem = async (id: number) => {
+  const deleteItem = async (id: string) => {
     // console.log(id);
     const payload = { itemId: id };
     await axios

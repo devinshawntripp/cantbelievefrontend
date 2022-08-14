@@ -6,15 +6,18 @@ import saveIconFilled from "../images/heartIconFilled.png";
 import saveIconWhite from "../images/heartIconWhite.png";
 import CSS from "csstype";
 import "./AmazonItem.css";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { appSelector } from "../store/slices/app-slice";
 
 interface IAmazonItemProps {
   name: String;
   url: String;
   desc: String;
   imgUrl: String;
-  price: Number;
-  saves: Number;
-  id: Number;
+  price: number;
+  saves: number;
+  id: String;
 }
 
 const AmazonItem: React.FC<IAmazonItemProps> = (props: {
@@ -22,9 +25,9 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
   url: String;
   desc: String;
   imgUrl: String;
-  price: Number;
-  saves: Number;
-  id: Number;
+  price: number;
+  saves: number;
+  id: String;
 }) => {
   var something: String =
     "https://amazon.com/itemnumblahalkjsdlfkajdklfajdfalkjjdfjkl3859283?=12454";
@@ -40,15 +43,23 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
     name = name.slice(0, 68) + "...";
   }
 
-  // if (desc.length > 65) {
-  //   desc = desc.slice(0, 400) + "...";
-  // }
+  const [actSaves, setSaves] = useState(saves);
 
-  useEffect(() => {
-    const getIdsOfUserSaved = async () => {};
-  }, []);
+  const user = useSelector(appSelector);
 
   const [pic, setPic] = useState(saveIconWhite);
+
+  useEffect(() => {
+    console.log(id);
+    user.idsSaved.map((userIdsSaved) => {
+      console.log(userIdsSaved);
+      console.log(id);
+      if (userIdsSaved == id) {
+        setPic(saveIconFilled);
+      }
+    });
+    // user.idsSaved;
+  }, [user]);
 
   const handleMouseOver = () => {
     setPic(saveIconFilled);
@@ -58,8 +69,28 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
     setPic(saveIconWhite);
   };
 
-  const handleClickSave = (idPassed: Number) => {
+  const handleClickSave = async (idPassed: String) => {
     //get the id of the item
+    console.log(user);
+
+    const payload = {
+      itemId: idPassed,
+      userId: user.id,
+    };
+    await axios
+      .post(`${process.env.REACT_APP_URL}/items/saveProduct`, payload)
+      .then((res) => {
+        console.log(res.data);
+        if (res.status == 200) {
+          if (res.data.found) {
+            setPic(saveIconWhite);
+            setSaves(actSaves - 1);
+          } else {
+            setPic(saveIconFilled);
+            setSaves(actSaves + 1);
+          }
+        }
+      });
   };
 
   return (
@@ -75,7 +106,6 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
       </div>
       {/* <div style={PriceAndLink}> */}
       <div className="priceAndLink">
-        {/* <a href={String(url)} target="_blank" rel="noopener noreferrer"> */}
         <Button
           href={String(url)}
           target="_blank"
@@ -84,21 +114,16 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
         >
           Click Me
         </Button>
-        {/* </a> */}
-        {/* <div className="priceSaves" style={SavesUrIPrice}>
-         */}
-        {/* <div style={SavesUrIPrice}> */}
-        {/* <div className="iconSaves"> */}
+
         <div className="saves">
           <img
             onMouseOver={handleMouseOver}
             onMouseLeave={handleMouseLeave}
-            onClick={() => handleClickSave(id)}
+            onClick={() => handleClickSave(String(id))}
             style={{ width: "20px", height: "20px", objectFit: "fill" }}
             src={pic}
           />
-          {/* <p className="saves">{String(saves)} Saves</p> */}
-          <p>{String(saves)} Saves</p>
+          <p>{String(actSaves)} Saves</p>
         </div>
         <p className="price">${String(price)}</p>
         {/* </div> */}

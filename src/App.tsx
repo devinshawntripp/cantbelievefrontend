@@ -63,7 +63,7 @@ const App: React.FC<IAppProps> = ({}) => {
 
         dispatch(
           loadAppData({
-            id: userRes.data.user.id,
+            id: userRes.data.user._id,
             email: userRes.data.user.email,
             admin: userRes.data.user.admin,
             vouchers: userRes.data.user.vouchers,

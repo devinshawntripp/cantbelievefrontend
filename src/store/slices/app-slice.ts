@@ -1,28 +1,23 @@
-import { createAsyncThunk } from "@reduxjs/toolkit"
-import { createSlice } from "@reduxjs/toolkit"
-import { store } from '../store'
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { store } from "../store";
 
 import { setAll } from "../../helpers/set-all";
 
-
-
-
-
 interface UserType {
-    id: string;
-    email: string;
-    admin: boolean;
-    vouchers: number;
-    idsSaved: [number]; 
+  id: string;
+  email: string;
+  admin: boolean;
+  vouchers: number;
+  idsSaved: [string];
 }
 
-
 interface UserState {
-    id: "";
-    email: "";
-    admin: false;
-    voucher: 0;
-    idsSaved: [0];
+  id: "";
+  email: "";
+  admin: false;
+  voucher: 0;
+  idsSaved: [0];
 }
 
 // const blankUser: UserType = {
@@ -34,25 +29,22 @@ interface UserState {
 // }
 
 const initialState: UserType = {
-    id: "",
-    email: "",
-    admin: false,
-    vouchers: 0,
-    idsSaved: [0]
-
-}
-
+  id: "",
+  email: "",
+  admin: false,
+  vouchers: 0,
+  idsSaved: [""],
+};
 
 export const appSlice = createSlice({
-    name: "appData",
-    initialState,
-    reducers: {
-        loadAppData(state, action){
-            setAll(state, action.payload);
-        }
-    }
-})
-
+  name: "appData",
+  initialState,
+  reducers: {
+    loadAppData(state, action) {
+      setAll(state, action.payload);
+    },
+  },
+});
 
 export const { loadAppData } = appSlice.actions;
 type RootState = ReturnType<typeof store.getState>;
