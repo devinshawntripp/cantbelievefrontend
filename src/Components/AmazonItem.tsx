@@ -125,7 +125,7 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
           />
           <p>{String(actSaves)} Saves</p>
         </div>
-        <p className="price">${String(price)}</p>
+        <p className="price">${String(Number(price).toLocaleString("en"))}</p>
         {/* </div> */}
       </div>
     </div>

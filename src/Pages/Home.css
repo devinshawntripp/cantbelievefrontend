@@ -8,7 +8,6 @@
 }
 
 .Home {
-
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -25,12 +24,12 @@
 } */
 
 .Products {
-  display: flex !important;
+  /* display: flex !important;
   flex-direction: row !important;
   width: 100% !important;
   height: 100px;
   color: white;
-  flex-flow: row wrap;
+  flex-flow: row wrap; */
 }
 
 .Item {
@@ -39,12 +38,12 @@
   /* width: 50px !important; */
   margin-right: 3%;
   /* start: added by editor for visualization purpose */
-  min-height: 75px;
+  /* min-height: 75px;
   border: 2px dashed red;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: gray;
+  background-color: gray; */
 }
 
 .line-break {

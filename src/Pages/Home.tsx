@@ -68,9 +68,13 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
   }, []);
 
   const productsStyle: CSS.Properties = {
+    display: "flex",
     width: "100%",
     marginTop: "5%",
-    display: "flex",
+    // marginLeft: "10%",
+    // marginRight: "10%",
+
+    flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
   };
@@ -78,9 +82,10 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
   const productItem: CSS.Properties = {
     display: "flex",
     flexDirection: "column",
-    width: "24%",
-    justifyContent: "center",
-    alignItems: "center",
+    width: "20%",
+    // justifyContent: "center",
+    // alignItems: "center",
+    marginRight: "2%",
   };
 
   return (
