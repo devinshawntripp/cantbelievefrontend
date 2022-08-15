@@ -96,11 +96,13 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
   return (
     <div className="AmazonItemBox">
       <p className="title">{String(name)}</p>
+      {/* <div className="imgContainer"> */}
       {imgUrl ? (
         <img style={{ marginTop: "4%" }} src={String(imgUrl)} />
       ) : (
         <p>Not avail</p>
       )}
+      {/* </div> */}
       <div className="ItemDetails">
         <p className="text desc">{String(desc).trim()}</p>
       </div>
