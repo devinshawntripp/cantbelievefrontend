@@ -83,8 +83,8 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
     display: "flex",
     flexDirection: "column",
     width: "20%",
-    // justifyContent: "center",
-    // alignItems: "center",
+    justifyContent: "center",
+    alignItems: "center",
     marginRight: "2%",
   };
 
