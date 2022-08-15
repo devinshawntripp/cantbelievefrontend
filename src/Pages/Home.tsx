@@ -7,6 +7,7 @@ import CSS from "csstype";
 import { appSelector, loadAppData } from "../store/slices/app-slice";
 import "./css/Home.css";
 import { useSelector } from "react-redux";
+import useMediaQuery from "../hooks/useMediaQuery";
 
 export interface IHomeProps {}
 
@@ -28,6 +29,8 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
     let path = `AddProduct`;
     navigate(path);
   };
+
+  let getStuff: boolean = useMediaQuery("(max-width: 600px)");
 
   const deleteItem = async (id: string) => {
     // console.log(id);
@@ -82,7 +85,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
   const productItem: CSS.Properties = {
     display: "flex",
     flexDirection: "column",
-    width: "20%",
+    width: getStuff ? "100% " : "20%",
     justifyContent: "center",
     alignItems: "center",
     marginRight: "2%",
