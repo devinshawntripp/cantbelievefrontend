@@ -17,15 +17,19 @@
   height: 200px; */
     width: 300px;
     height: 300px;
-    object-fit: cover;
+    object-fit: fill;
   }
 
   .AmazonItemBox {
     /* width: 200px; */
-    margin-top: 5%;
+    margin-top: 10%;
     /* background-color: var(--lightestBlue); */
     /* border-radius: 25px; */
     padding-bottom: 5%;
+
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
   }
 
   a {
@@ -50,7 +54,6 @@
     text-align: left;
     padding: 2%;
     color: white;
-    font-size: large;
     text-align: top;
     vertical-align: top;
 
@@ -70,13 +73,15 @@
     color: white;
     font-weight: bold;
     width: 300px;
-    height: 30px;
-    /* margin-bottom: 5%; */
+    height: 100px;
+    font-size: 16pt;
   }
 
   .desc {
     text-indent: 10%;
-    font-size: 11px;
+    /* font-size: 11px;
+     */
+    font-size: 11pt;
   }
 
   .text {
@@ -216,7 +221,7 @@
 
   .desc {
     text-indent: 10%;
-    font-size: 11px;
+    font-size: 11pt;
   }
 
   .text {
@@ -350,7 +355,7 @@
 
   .desc {
     text-indent: 10%;
-    font-size: 11px;
+    font-size: 11pt;
   }
 
   .text {
@@ -425,7 +430,7 @@
   height: 200px; */
     width: 80%;
     height: 150px;
-    /* object-fit: contain; */
+    object-fit: fill;
   }
 
   .AmazonItemBox {
@@ -484,7 +489,7 @@
 
   .desc {
     text-indent: 10%;
-    font-size: 11px;
+    font-size: 11pt;
   }
 
   .text {

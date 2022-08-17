@@ -93,6 +93,14 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
 
   return (
     <div className="Home">
+      {app.admin && (
+        <Row>
+          <div style={{ marginTop: "10%" }}>
+            {/* <Button>Add Product</Button> */}
+            <Button onClick={routeChange}>Add Product</Button>
+          </div>
+        </Row>
+      )}
       <div style={productsStyle}>
         {items &&
           items.map((item) => {
@@ -120,15 +128,6 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
             );
           })}
       </div>
-
-      {app.admin && (
-        <Row>
-          <div style={{ marginTop: "10%" }}>
-            {/* <Button>Add Product</Button> */}
-            <Button onClick={routeChange}>Add Product</Button>
-          </div>
-        </Row>
-      )}
     </div>
   );
 };
