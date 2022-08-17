@@ -8,6 +8,7 @@ import { appSelector, loadAppData } from "../store/slices/app-slice";
 import "./css/Home.css";
 import { useSelector } from "react-redux";
 import useMediaQuery from "../hooks/useMediaQuery";
+import Popup from "../Components/Popup";
 
 export interface IHomeProps {}
 
@@ -30,10 +31,18 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
     navigate(path);
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const togglePopup = () => {
+    setIsOpen(!isOpen);
+  };
+
   let getStuff: boolean = useMediaQuery("(max-width: 600px)");
 
   const deleteItem = async (id: string) => {
     // console.log(id);
+    //are you sure you want to delete
+
     const payload = { itemId: id };
     await axios
       .post(`${process.env.REACT_APP_URL}/items/deleteItem`, payload)
@@ -116,14 +125,51 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
                   price={item.price ?? 0}
                   saves={item.saves ?? 0}
                 />
-                {app.admin && (
+
+                <Button style={{ width: "90%" }} onClick={togglePopup}>
+                  Delete
+                </Button>
+
+                {isOpen && app.admin && (
+                  <Popup
+                    content={
+                      <>
+                        <h1>Are you sure you want to delete?</h1>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-around",
+                          }}
+                        >
+                          <Button
+                            onClick={() => deleteItem(item._id)}
+                            style={{ width: "20%" }}
+                            variant="danger"
+                          >
+                            Yes
+                          </Button>
+
+                          <Button
+                            onClick={togglePopup}
+                            style={{ width: "20%" }}
+                            variant="success"
+                          >
+                            No
+                          </Button>
+                        </div>
+                      </>
+                    }
+                    handleClose={togglePopup}
+                  />
+                )}
+                {/* {app.admin && (
                   <Button
                     onClick={() => deleteItem(item._id)}
                     style={{ width: "90%" }}
                   >
                     Delete
                   </Button>
-                )}
+                )} */}
               </div>
             );
           })}
