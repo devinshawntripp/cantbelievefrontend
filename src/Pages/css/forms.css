@@ -9,16 +9,9 @@
   --middleBlue: #1a759f;
   --lessDarkBlue: #1e6091;
   --darkBlue: #184e77;
-}
-
-.card {
-  width: 400px;
-  height: 450px;
-  display: flex;
-  /* justify-content: center; */
-  align-items: center;
-  margin-top: 5%;
-  border-radius: 20px !important;
+  --toastify-toast-width: 320px !important;
+  --toastify-toast-min-height: 100px !important;
+  /* --toastify-toast-height: 600px !important; */
 }
 
 .formInputs {
@@ -28,11 +21,12 @@
   flex-direction: column;
   align-items: center;
   margin-top: 5%;
+  color: white;
 }
 
 .inputG {
   width: 80%;
-  margin-top: 6%;
+  margin-top: 3%;
 }
 
 .LoginButton {

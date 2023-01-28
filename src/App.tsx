@@ -2,6 +2,7 @@ import React, { Component, useEffect } from "react";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import Axios from "axios";
 import AboutPage from "./Pages/About";
+import Footer from "./Components/Footer";
 import Home from "./Pages/Home";
 import ContactPage from "./Pages/Contact";
 import Login from "./Pages/Login";
@@ -93,6 +94,7 @@ const App: React.FC<IAppProps> = ({}) => {
           <Route path="/AddProduct" element={<AddProduct />} />
         </Routes>
       </Router>
+      <Footer />
     </div>
   );
 };

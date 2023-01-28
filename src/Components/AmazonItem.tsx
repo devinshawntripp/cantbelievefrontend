@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import picture from "../images/nail_stamper.jpg";
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import saveIcon from "../images/heartIcon.png";
 import saveIconFilled from "../images/heartIconFilled.png";
 import saveIconWhite from "../images/heartIconWhite.png";
@@ -9,11 +9,12 @@ import "./AmazonItem.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { appSelector } from "../store/slices/app-slice";
+import { ToastContainer, toast } from "react-toastify";
 
 interface IAmazonItemProps {
   name: String;
   url: String;
-  desc: String;
+  desc: string;
   imgUrl: String;
   price: number;
   saves: number;
@@ -23,7 +24,7 @@ interface IAmazonItemProps {
 const AmazonItem: React.FC<IAmazonItemProps> = (props: {
   name: String;
   url: String;
-  desc: String;
+  desc: string;
   imgUrl: String;
   price: number;
   saves: number;
@@ -42,6 +43,17 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
   if (name.length > 68) {
     name = name.slice(0, 68) + "...";
   }
+
+  const notify = (msg: string) =>
+    toast(msg, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
 
   const [actSaves, setSaves] = useState(saves);
 
@@ -69,6 +81,68 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
     setPic(saveIconWhite);
   };
 
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const toggleEdit = async () => {
+    submitForm();
+    setIsEdit(!isEdit);
+  };
+
+  const [editDesc, setEditDesc] = useState<string>(desc);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.ariaLabel === "Desc") {
+      setEditDesc(e.target.value);
+    }
+
+    // if (e.target.ariaLabel === "Desc") {
+    //   setDesc(e.target.value);
+    // }
+
+    // if (e.target.ariaLabel === "AmzUrl") {
+    //   setAmzUrl(e.target.value);
+    // }
+
+    // if (e.target.ariaLabel === "Price" && !isNaN(e.target.valueAsNumber)) {
+    //   setPrice(e.target.valueAsNumber);
+    // }
+  };
+
+  const submitForm = async () => {
+    //validate
+
+    if (
+      // fileRef.current?.files &&
+      // file &&
+      // fileName != "" &&
+      // title != "" &&
+      editDesc != ""
+      // amzUrl != "" &&
+      // desc != undefined &&
+      // amzUrl != undefined &&
+      // title != undefined &&
+      // price != 0
+    ) {
+      const formData = new FormData();
+      // formData.append("file", file);
+      // formData.append("fileName", String(fileName));
+      // formData.append("title", String(title));
+      formData.append("desc", String(editDesc));
+      formData.append("id", String(id));
+      // formData.append("amzURL", String(amzUrl));
+      // formData.append("price", String(price));
+
+      // console.log(formData);
+
+      await axios
+        .post(`${process.env.REACT_APP_URL}/items/UpdateItem`, formData)
+        .then(() => {
+          notify("Successfully updated a product");
+        });
+    } else {
+      notify("All values were not entered correctly");
+    }
+  };
+
   const handleClickSave = async (idPassed: String) => {
     //get the id of the item
     console.log(user);
@@ -94,43 +168,131 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
   };
 
   return (
-    <div className="AmazonItemBox">
-      <p className="title">{String(name)}</p>
-      {/* <div className="imgContainer"> */}
-      {imgUrl ? (
-        <img style={{ marginTop: "4%" }} src={String(imgUrl)} />
-      ) : (
-        <p>Not avail</p>
-      )}
-      {/* </div> */}
-      <div className="ItemDetails">
-        <p className="text desc">{String(desc).trim()}</p>
-      </div>
-      {/* <div style={PriceAndLink}> */}
-      <div className="priceAndLink">
-        <Button
-          href={String(url)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="button"
-        >
-          Click Me
-        </Button>
+    <>
+      <ToastContainer
+        toastStyle={{ backgroundColor: "black" }}
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      {isEdit ? (
+        <div className="AmazonItemBox">
+          <div className="titleContainer">
+            <p className="title">{String(name)}</p>
+          </div>
 
-        <div className="saves">
-          <img
-            onMouseOver={handleMouseOver}
-            onMouseLeave={handleMouseLeave}
-            onClick={() => handleClickSave(String(id))}
-            style={{ width: "20px", height: "20px", objectFit: "fill" }}
-            src={pic}
-          />
-          <p>{String(actSaves)} Saves</p>
+          {/* <div className="imgContainer"> */}
+          {imgUrl ? (
+            <img style={{ marginTop: "0%" }} src={String(imgUrl)} />
+          ) : (
+            <p>Not avail</p>
+          )}
+          {/* </div> */}
+          <div className="ItemDetails">
+            {/* <p className="text desc">{String(desc).trim()}</p> */}
+            <Form.Control
+              as="textarea"
+              rows={5}
+              value={editDesc}
+              aria-label="Desc"
+              onChange={handleChange}
+            />
+          </div>
+          {/* <div style={PriceAndLink}> */}
+          <div className="priceAndLink">
+            <Button
+              href={String(url)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="button"
+            >
+              Click Me
+            </Button>
+
+            <div className="saves">
+              <img
+                onMouseOver={handleMouseOver}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => handleClickSave(String(id))}
+                style={{ width: "20px", height: "20px", objectFit: "fill" }}
+                src={pic}
+              />
+              <p>{String(actSaves)} Saves</p>
+            </div>
+            <p className="price">
+              ${String(Number(price).toLocaleString("en"))}
+            </p>
+            {/* </div> */}
+          </div>
+          {user.admin && (
+            <Button
+              variant="success"
+              style={{ width: "90%" }}
+              onClick={toggleEdit}
+            >
+              Submit
+            </Button>
+          )}
         </div>
-        <p className="price">${String(Number(price).toLocaleString("en"))}</p>
-        {/* </div> */}
-      </div>
-    </div>
+      ) : (
+        <div className="AmazonItemBox">
+          <div className="titleContainer">
+            <p className="title">{String(name)}</p>
+          </div>
+          {/* <div className="imgContainer"> */}
+          {imgUrl ? (
+            <img style={{ marginTop: "4%" }} src={String(imgUrl)} />
+          ) : (
+            <p>Not avail</p>
+          )}
+          {/* </div> */}
+          <div className="ItemDetails">
+            <p className="text desc">{String(desc).trim()}</p>
+          </div>
+          {/* <div style={PriceAndLink}> */}
+          <div className="priceAndLink">
+            <Button
+              href={String(url)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="button"
+            >
+              Click Me
+            </Button>
+
+            <div className="saves">
+              <img
+                onMouseOver={handleMouseOver}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => handleClickSave(String(id))}
+                style={{ width: "20px", height: "20px", objectFit: "fill" }}
+                src={pic}
+              />
+              <p>{String(actSaves)} Saves</p>
+            </div>
+            <p className="price">
+              ${String(Number(price).toLocaleString("en"))}
+            </p>
+            {/* </div> */}
+          </div>
+          {user.admin && (
+            <Button
+              variant="success"
+              style={{ width: "90%" }}
+              onClick={toggleEdit}
+            >
+              Edit
+            </Button>
+          )}
+        </div>
+      )}
+    </>
   );
 };
 

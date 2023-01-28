@@ -98,6 +98,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
     justifyContent: "center",
     alignItems: "center",
     marginRight: "2%",
+    marginTop: "2%",
   };
 
   return (
@@ -126,9 +127,11 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
                   saves={item.saves ?? 0}
                 />
 
-                <Button style={{ width: "90%" }} onClick={togglePopup}>
-                  Delete
-                </Button>
+                {app.admin && (
+                  <Button style={{ width: "90%" }} onClick={togglePopup}>
+                    Delete
+                  </Button>
+                )}
 
                 {isOpen && app.admin && (
                   <Popup
@@ -162,14 +165,6 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
                     handleClose={togglePopup}
                   />
                 )}
-                {/* {app.admin && (
-                  <Button
-                    onClick={() => deleteItem(item._id)}
-                    style={{ width: "90%" }}
-                  >
-                    Delete
-                  </Button>
-                )} */}
               </div>
             );
           })}
