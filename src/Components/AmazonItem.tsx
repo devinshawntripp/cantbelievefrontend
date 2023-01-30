@@ -5,11 +5,11 @@ import { Button, Form } from "react-bootstrap";
 import saveIconFilled from "../images/heartIconFilled.png";
 import saveIconWhite from "../images/heartIconWhite.png";
 // import CSS from "csstype";
-import "./AmazonItem.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { appSelector } from "../store/slices/app-slice";
 import { ToastContainer, toast } from "react-toastify";
+import Image from "next/image";
 
 /**
  * TODO:
@@ -48,8 +48,7 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
   if (name.length > 68) {
     name = name.slice(0, 68) + "...";
   }
-
-  const notify = (msg: string) =>
+  const notify = (msg: any) =>
     toast(msg, {
       position: "top-right",
       autoClose: 5000,
@@ -67,7 +66,7 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
   const [pic, setPic] = useState(saveIconWhite);
 
   useEffect(() => {
-    user.idsSaved.map((userIdsSaved) => {
+    user.idsSaved.map((userIdsSaved: String) => {
       if (userIdsSaved === id) {
         setPic(saveIconFilled);
       }
@@ -87,7 +86,9 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
 
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const toggleEdit = async () => {
-    submitForm();
+    if (isEdit) {
+      submitForm();
+    }
     setIsEdit(!isEdit);
   };
 
@@ -138,9 +139,12 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
       // console.log(formData);
 
       await axios
-        .post(`${process.env.REACT_APP_URL}/items/UpdateItem`, formData)
-        .then(() => {
-          notify("Successfully updated a product");
+        .post(`${process.env.NEXT_PUBLIC_APP_URL}/items/UpdateItem`, formData)
+        .then((res) => {
+          notify("Successfully updated a product: " + res.data.msg);
+        })
+        .catch((err) => {
+          notify("Something went wrong: " + err);
         });
     } else {
       notify("All values were not entered correctly");
@@ -156,7 +160,7 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
       userId: user.id,
     };
     await axios
-      .post(`${process.env.REACT_APP_URL}/items/saveProduct`, payload)
+      .post(`${process.env.NEXT_PUBLIC_APP_URL}/items/saveProduct`, payload)
       .then((res) => {
         console.log(res.data);
         if (res.status === 200) {
@@ -210,14 +214,14 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
           </div>
           {/* <div style={PriceAndLink}> */}
           <div className="priceAndLink">
-            <Button
+            {/* <Button
               href={String(url)}
               target="_blank"
               rel="noopener noreferrer"
-              className="button"
+              className="clickme-button"
             >
               Click Me
-            </Button>
+            </Button> */}
 
             <div className="saves">
               <img
@@ -225,7 +229,7 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
                 onMouseLeave={handleMouseLeave}
                 onClick={() => handleClickSave(String(id))}
                 style={{ width: "20px", height: "20px", objectFit: "fill" }}
-                src={pic}
+                src={pic.src}
               />
               <p>{String(actSaves)} Saves</p>
             </div>
@@ -261,14 +265,17 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
           </div>
           {/* <div style={PriceAndLink}> */}
           <div className="priceAndLink">
-            <Button
-              href={String(url)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="button"
-            >
-              Click Me
-            </Button>
+            <a target="_blank" rel="noopener noreferrer" href={String(url)}>
+              <Button
+                variant="success"
+                // style={{ backgroundColor: "green" }}
+                // target="_blank"
+                // rel="noopener noreferrer"
+                // className="btn btn-primary"
+              >
+                Click Me
+              </Button>
+            </a>
 
             <div className="saves">
               <img
@@ -276,7 +283,7 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
                 onMouseLeave={handleMouseLeave}
                 onClick={() => handleClickSave(String(id))}
                 style={{ width: "20px", height: "20px", objectFit: "fill" }}
-                src={pic}
+                src={pic.src}
               />
               <p>{String(actSaves)} Saves</p>
             </div>

@@ -13,7 +13,6 @@ import { Html } from "@react-email/html";
 // import { Button } from "@react-email/button";
 
 import axios from "axios";
-import "./css/forms.css";
 
 interface IContactPageProps {}
 
@@ -83,7 +82,7 @@ const ContactPage: React.FC<IContactPageProps> = (props: {}) => {
     const payload = { options: options };
 
     axios
-      .post(`${process.env.REACT_APP_URL}/api/sendMail`, payload)
+      .post(`${process.env.NEXT_PUBLIC_APP_URL}/api/sendMail`, payload)
       .then((res) => {
         notify(res.data);
       })

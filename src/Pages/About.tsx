@@ -5,7 +5,7 @@ import myimage from "../images/product_research.png";
 
 interface IAboutPageProps {}
 
-const AboutPage: React.FC<IAboutPageProps> = (props: {}) => {
+const About: React.FC<IAboutPageProps> = (props: {}) => {
   const content: CSS.Properties = {
     color: "white",
     marginTop: "3%",
@@ -49,7 +49,7 @@ const AboutPage: React.FC<IAboutPageProps> = (props: {}) => {
       <section style={sectionOne}>
         <img
           style={imgStyle}
-          src={String(myimage)}
+          src={String(myimage.src)}
           alt="A person researching and curating the best products for online shoppers"
         ></img>
       </section>
@@ -68,7 +68,7 @@ const AboutPage: React.FC<IAboutPageProps> = (props: {}) => {
         </p>
         <h2 style={titles}>
           Save Time and Effort with Our Curated Product Selection with a touch
-          of comedy :)
+          of comedy &#128512;
         </h2>
         <p style={paragraphStyle}>
           On this website, you'll find a curated selection of links that lead to
@@ -137,4 +137,4 @@ const AboutPage: React.FC<IAboutPageProps> = (props: {}) => {
   );
 };
 
-export default AboutPage;
+export default About;

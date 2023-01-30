@@ -76,7 +76,7 @@ const AddProduct: React.FC<IAddProductProps> = (props: {}) => {
       // console.log(formData);
 
       await Axios.post(
-        `${process.env.REACT_APP_URL}/items/AddProduct`,
+        `${process.env.NEXT_PUBLIC_APP_URL}/items/AddProduct`,
         formData
       ).then(() => {
         notify("Successfully added a product");

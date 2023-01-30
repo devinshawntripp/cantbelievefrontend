@@ -2,11 +2,10 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 
 import CSS from "csstype";
-import "./css/Blog.css";
 
 interface IBlogPageProps {}
 
-export const Blog: React.FC<IBlogPageProps> = (props: {}) => {
+const Blog: React.FC<IBlogPageProps> = (props: {}) => {
   const rowStyle: CSS.Properties = {
     // marginTop: "5%",
   };
@@ -48,3 +47,5 @@ export const Blog: React.FC<IBlogPageProps> = (props: {}) => {
     </div>
   );
 };
+
+export default Blog;

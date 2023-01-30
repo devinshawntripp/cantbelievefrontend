@@ -1,7 +1,5 @@
 import React from "react";
 
-import "./popup.css";
-
 interface PopupProps {
   handleClose: (params: any) => any;
   content: React.ReactNode;

@@ -2,17 +2,16 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Row } from "react-bootstrap";
 import AmazonItem from "../Components/AmazonItem";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 import CSS from "csstype";
 import { appSelector } from "../store/slices/app-slice";
-import "./css/Home.css";
 import { useSelector } from "react-redux";
 import useMediaQuery from "../hooks/useMediaQuery";
 import Popup from "../Components/Popup";
 
 export interface IHomeProps {}
 
-export const Home: React.FunctionComponent<IHomeProps> = (props) => {
+export default function Home() {
   const [items, setItems] = useState<
     Array<{
       _id: string;
@@ -25,10 +24,10 @@ export const Home: React.FunctionComponent<IHomeProps> = (props) => {
     }>
   >();
 
-  let navigate = useNavigate();
+  let navigate = useRouter();
   const routeChange = () => {
     let path = `AddProduct`;
-    navigate(path);
+    navigate.push(path);
   };
 
   const [isOpen, setIsOpen] = useState(false);
@@ -45,7 +44,7 @@ export const Home: React.FunctionComponent<IHomeProps> = (props) => {
 
     const payload = { itemId: id };
     await axios
-      .post(`${process.env.REACT_APP_URL}/items/deleteItem`, payload)
+      .post(`${process.env.NEXT_PUBLIC_APP_URL}/items/deleteItem`, payload)
       .then((res) => {
         console.log(res.status);
         if (res.status === 200) {
@@ -61,7 +60,7 @@ export const Home: React.FunctionComponent<IHomeProps> = (props) => {
 
   const getAllItems = async () => {
     await axios
-      .get(`${process.env.REACT_APP_URL}/api/items`)
+      .get(`${process.env.NEXT_PUBLIC_APP_URL}/api/items`)
       .then((res) => {
         if (res.status === 200) {
           setItems(res.data.items);
@@ -113,7 +112,7 @@ export const Home: React.FunctionComponent<IHomeProps> = (props) => {
       )}
       <div style={productsStyle}>
         {items &&
-          items.map((item) => {
+          items.map((item, key) => {
             // console.log(item);
             return (
               <div style={productItem}>
@@ -171,4 +170,4 @@ export const Home: React.FunctionComponent<IHomeProps> = (props) => {
       </div>
     </div>
   );
-};
+}

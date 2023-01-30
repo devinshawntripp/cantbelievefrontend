@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import { appSelector, loadAppData } from "../store/slices/app-slice";
 import { store } from "../store/store";
 import { useDispatch } from "react-redux";
+import Link from "next/link";
 import logo from "../images/whyareyoubuyingthislogo.png";
-import "./Menu.css";
 
 const Menu = (props: {
   brand: { name: string; to: string };
@@ -33,16 +33,16 @@ const Menu = (props: {
   const NavLinks: any = () =>
     links.map((link: { name: string; to: string }) => (
       <li key={link.name}>
-        <a className="gradient-text" href={link.to}>
+        <Link className="gradient-text" href={link.to}>
           {link.name}
-        </a>
+        </Link>
       </li>
     ));
 
   return (
     <>
       <div className="Navbar">
-        <a className="Brand" href={brand.to}>
+        <a className="gradient-text Brand" href={brand.to}>
           <img
             style={{
               maxHeight: "90px",
@@ -52,7 +52,7 @@ const Menu = (props: {
               marginTop: "-25px",
               marginLeft: "-15px",
             }}
-            src={logo}
+            src={logo.src}
           />
           {/* {brand.name} */}
         </a>

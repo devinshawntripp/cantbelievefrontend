@@ -1,11 +1,10 @@
 import React, { useState, useEffect, MouseEvent, ChangeEvent } from "react";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
 import axios from "axios";
-import "./css/Login.css";
 import { useDispatch } from "react-redux";
 import { loadAppData } from "../store/slices/app-slice";
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 import "react-toastify/dist/ReactToastify.css";
 // import { useLocation } from 'react-router'
 
@@ -14,7 +13,7 @@ interface ILoginProps {}
 const Login: React.FC<ILoginProps> = ({}) => {
   const [email, setEmail] = useState<string>();
   const [pwd, setPwd] = useState<string>();
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const dispatch = useDispatch();
   const notify = (msg: string) =>
     toast(msg, {
@@ -52,7 +51,7 @@ const Login: React.FC<ILoginProps> = ({}) => {
     //request for
     // console.log("HIIHIHSDKF DSKFL")
     await axios
-      .post(`${process.env.REACT_APP_URL}/api/login`, payload)
+      .post(`${process.env.NEXT_PUBLIC_APP_URL}/api/login`, payload)
       .then((res) => {
         console.log(res);
         const user = res.data.user;
@@ -68,7 +67,7 @@ const Login: React.FC<ILoginProps> = ({}) => {
         console.log(res.data.token);
         localStorage.setItem("auth-token", res.data.token);
         notify("You have logged in successfully!");
-        navigate("/");
+        navigate.replace("/");
       })
       .catch((err) => {
         console.log(err);

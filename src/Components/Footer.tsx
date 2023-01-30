@@ -1,9 +1,8 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
+import Link from "next/link";
 
 import CSS from "csstype";
-
-import "./Footer.css";
 
 interface FooterProps {}
 
@@ -61,6 +60,7 @@ const Footer: React.FC<FooterProps> = (props: {}) => {
           <a href="/About">About us</a>
           <a href="#">Contact us</a>
           <a href="#">Add a product</a>
+          <Link href="/AffiliateLink">Make an aff link</Link>
         </Col>
         <Col style={colStyle}>
           <h1>Social</h1>

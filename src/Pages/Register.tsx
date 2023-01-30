@@ -1,7 +1,6 @@
 import React, { useState, useEffect, MouseEvent, ChangeEvent } from "react";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
 import axios from "axios";
-import "./css/Register.css";
 import { useDispatch } from "react-redux";
 // import { loadAppData } from "../store/slices/app-slice";
 
@@ -39,7 +38,7 @@ const Register: React.FC<IRegisterProps> = ({}) => {
     // console.log("SDJFLKSDFLKJ FLKJ");
 
     await axios
-      .post(`${process.env.REACT_APP_URL}/api/registerUser`, payload)
+      .post(`${process.env.NEXT_PUBLIC_APP_URL}/api/registerUser`, payload)
       .then((res) => {
         console.log(res.data.user);
       })
