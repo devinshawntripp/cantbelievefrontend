@@ -1,15 +1,15 @@
-import React, { useState, useEffect, MouseEvent, ChangeEvent } from "react";
-import { InputGroup, FormControl, Button, Form } from "react-bootstrap";
+import React, { useState, MouseEvent } from "react";
+import { Button, Form } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { loadAppData } from "../store/slices/app-slice";
+// import { useNavigate } from "react-router-dom";
+// import { useDispatch } from "react-redux";
+// import { loadAppData } from "../store/slices/app-slice";
 
 import { render } from "@react-email/render";
 // import { Email } from './email';
 
 import { Html } from "@react-email/html";
-import { Button as ButtonHtml } from "@react-email/button";
+// import { Button as ButtonHtml } from "@react-email/button";
 // import { Button } from "@react-email/button";
 
 import axios from "axios";
@@ -17,12 +17,12 @@ import "./css/forms.css";
 
 interface IContactPageProps {}
 
-const ContactPage: React.FC<IContactPageProps> = ({}) => {
+const ContactPage: React.FC<IContactPageProps> = (props: {}) => {
   const [email, setEmail] = useState<string>("");
   const [subject, setSubject] = useState<string>("");
   const [message, setMessage] = useState<string>("");
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const navigate = useNavigate();
+  // const dispatch = useDispatch();
   const notify = (msg: string) =>
     toast(msg, {
       position: "top-center",

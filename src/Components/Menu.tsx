@@ -1,4 +1,4 @@
-import { linkSync } from "fs";
+// import { linkSync } from "fs";
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { appSelector, loadAppData } from "../store/slices/app-slice";
@@ -33,7 +33,9 @@ const Menu = (props: {
   const NavLinks: any = () =>
     links.map((link: { name: string; to: string }) => (
       <li key={link.name}>
-        <a href={link.to}>{link.name}</a>
+        <a className="gradient-text" href={link.to}>
+          {link.name}
+        </a>
       </li>
     ));
 
@@ -45,9 +47,10 @@ const Menu = (props: {
             style={{
               maxHeight: "90px",
               maxWidth: "120px",
-              marginRight: "-50px",
-              marginBottom: "-15px",
+              marginRight: "-30px",
+              marginBottom: "-20px",
               marginTop: "-25px",
+              marginLeft: "-15px",
             }}
             src={logo}
           />

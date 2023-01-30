@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
-import picture from "../images/nail_stamper.jpg";
+// import picture from "../images/nail_stamper.jpg";
 import { Button, Form } from "react-bootstrap";
-import saveIcon from "../images/heartIcon.png";
+// import saveIcon from "../images/heartIcon.png";
 import saveIconFilled from "../images/heartIconFilled.png";
 import saveIconWhite from "../images/heartIconWhite.png";
-import CSS from "csstype";
+// import CSS from "csstype";
 import "./AmazonItem.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { appSelector } from "../store/slices/app-slice";
 import { ToastContainer, toast } from "react-toastify";
+
+/**
+ * TODO:
+ *  - add alt text prop and change this in the database
+ */
 
 interface IAmazonItemProps {
   name: String;
@@ -30,8 +35,8 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
   saves: number;
   id: String;
 }) => {
-  var something: String =
-    "https://amazon.com/itemnumblahalkjsdlfkajdklfajdfalkjjdfjkl3859283?=12454";
+  // var something: String =
+  //   "https://amazon.com/itemnumblahalkjsdlfkajdklfajdfalkjjdfjkl3859283?=12454";
 
   var { name, url, desc, imgUrl, price, saves, id } = props;
   var showUrl = url;
@@ -62,13 +67,12 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
   const [pic, setPic] = useState(saveIconWhite);
 
   useEffect(() => {
-    console.log(id);
     user.idsSaved.map((userIdsSaved) => {
-      console.log(userIdsSaved);
-      console.log(id);
-      if (userIdsSaved == id) {
+      if (userIdsSaved === id) {
         setPic(saveIconFilled);
       }
+
+      return true;
     });
     // user.idsSaved;
   }, [user]);
@@ -115,7 +119,7 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
       // file &&
       // fileName != "" &&
       // title != "" &&
-      editDesc != ""
+      editDesc !== ""
       // amzUrl != "" &&
       // desc != undefined &&
       // amzUrl != undefined &&
@@ -155,7 +159,7 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
       .post(`${process.env.REACT_APP_URL}/items/saveProduct`, payload)
       .then((res) => {
         console.log(res.data);
-        if (res.status == 200) {
+        if (res.status === 200) {
           if (res.data.found) {
             setPic(saveIconWhite);
             setSaves(actSaves - 1);

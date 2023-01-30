@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Button, Row, Col } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
 import AmazonItem from "../Components/AmazonItem";
 import { useNavigate } from "react-router-dom";
 import CSS from "csstype";
-import { appSelector, loadAppData } from "../store/slices/app-slice";
+import { appSelector } from "../store/slices/app-slice";
 import "./css/Home.css";
 import { useSelector } from "react-redux";
 import useMediaQuery from "../hooks/useMediaQuery";
@@ -12,7 +12,7 @@ import Popup from "../Components/Popup";
 
 export interface IHomeProps {}
 
-const Home: React.FunctionComponent<IHomeProps> = (props) => {
+export const Home: React.FunctionComponent<IHomeProps> = (props) => {
   const [items, setItems] = useState<
     Array<{
       _id: string;
@@ -48,7 +48,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
       .post(`${process.env.REACT_APP_URL}/items/deleteItem`, payload)
       .then((res) => {
         console.log(res.status);
-        if (res.status == 200) {
+        if (res.status === 200) {
         }
         // const item = items?.find((i) => i._id == id);
         // items?.findIndex(obj =>{return obj._id == id})
@@ -172,5 +172,3 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
     </div>
   );
 };
-
-export default Home;

@@ -1,11 +1,11 @@
 import React from "react";
-import { Container } from "react-bootstrap";
+// import { Container } from "react-bootstrap";
 import CSS from "csstype";
 import myimage from "../images/product_research.png";
 
 interface IAboutPageProps {}
 
-const AboutPage: React.FC<IAboutPageProps> = ({}) => {
+const AboutPage: React.FC<IAboutPageProps> = (props: {}) => {
   const content: CSS.Properties = {
     color: "white",
     marginTop: "3%",
@@ -47,7 +47,11 @@ const AboutPage: React.FC<IAboutPageProps> = ({}) => {
   return (
     <div style={containerStyle}>
       <section style={sectionOne}>
-        <img style={imgStyle} src={String(myimage)}></img>
+        <img
+          style={imgStyle}
+          src={String(myimage)}
+          alt="A person researching and curating the best products for online shoppers"
+        ></img>
       </section>
 
       <section style={content}>

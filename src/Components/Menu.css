@@ -31,16 +31,16 @@
   margin-right: 3%;
 }
 
-a {
-  color: rgba(97, 97, 214, 0.856);
+/* a {
+  color: white !important;
   text-decoration: none;
   transition: 0s color;
 }
 
 a:hover {
-  color: rgba(97, 97, 214, 1);
+  color: linear-gradient(rgb(25, 25, 202), rgb(181, 42, 42)) !important;
   transition-delay: 200ms;
-}
+} */
 
 .Brand {
   font-weight: bold;

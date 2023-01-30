@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import Axios from "axios";
 import AboutPage from "./Pages/About";
 import Footer from "./Components/Footer";
-import Home from "./Pages/Home";
 import ContactPage from "./Pages/Contact";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
+import { Blog, Home } from "./Pages";
 import { loadAppData } from "./store/slices/app-slice";
 import "reset-css";
 import "./App.css";
@@ -20,7 +20,7 @@ const navigation = {
   brand: { name: "Why Are You Buying This?!", to: "/" },
   links: [
     { name: "About Me", to: "/About" },
-    // { name: "Blog", to: "/blog" },
+    { name: "Blog", to: "/blog" },
     // { name: "Developement", to: "/dev" },
     // { name: "Graphic Design", to: "/design" },
     { name: "Contact", to: "/Contact" },
@@ -92,6 +92,7 @@ const App: React.FC<IAppProps> = ({}) => {
           <Route path="/Login" element={<Login />} />
           <Route path="/Register" element={<Register />} />
           <Route path="/AddProduct" element={<AddProduct />} />
+          <Route path="/Blog" element={<Blog />} />
         </Routes>
       </Router>
       <Footer />
