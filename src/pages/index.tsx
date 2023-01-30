@@ -115,7 +115,7 @@ export default function Home() {
           items.map((item) => {
             // console.log(item);
             return (
-              <div style={productItem}>
+              <div key={item._id} style={productItem}>
                 <AmazonItem
                   id={item._id}
                   name={item.name}
