@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { loadAppData } from "../store/slices/app-slice";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import "react-toastify/dist/ReactToastify.css";
 // import { useLocation } from 'react-router'
 
@@ -123,9 +124,9 @@ const Login: React.FC<ILoginProps> = ({}) => {
           </Button>
         </div>
         <div>
-          <a href="/Register">
-            <p>Don't have an account? click here to register</p>
-          </a>
+          <Link href="/Register">
+            Don&apos;t have an account? click here to register
+          </Link>
         </div>
         <div
           className="blackLine"

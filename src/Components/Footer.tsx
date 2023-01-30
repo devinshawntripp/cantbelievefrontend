@@ -57,7 +57,7 @@ const Footer: React.FC<FooterProps> = (props: {}) => {
       <Row style={rowStyle}>
         <Col style={colStyle}>
           <h1>Information</h1>
-          <a href="/About">About us</a>
+          <Link href="/About">About us</Link>
           <a href="#">Contact us</a>
           <a href="#">Add a product</a>
           <Link href="/AffiliateLink">Make an aff link</Link>

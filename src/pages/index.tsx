@@ -112,7 +112,7 @@ export default function Home() {
       )}
       <div style={productsStyle}>
         {items &&
-          items.map((item, key) => {
+          items.map((item) => {
             // console.log(item);
             return (
               <div style={productItem}>

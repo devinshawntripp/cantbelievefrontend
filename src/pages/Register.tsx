@@ -2,6 +2,7 @@ import React, { useState, useEffect, MouseEvent, ChangeEvent } from "react";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import Link from "next/link";
 // import { loadAppData } from "../store/slices/app-slice";
 
 interface IRegisterProps {}
@@ -83,9 +84,9 @@ const Register: React.FC<IRegisterProps> = ({}) => {
           </Button>
         </div>
         <div>
-          <a href="/Login">
-            <p>Already have an account? click here to Login</p>
-          </a>
+          <Link href="/Login">
+            Already have an account? click here to Login
+          </Link>
         </div>
       </div>
     </div>

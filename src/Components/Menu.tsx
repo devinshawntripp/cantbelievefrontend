@@ -66,9 +66,9 @@ const Menu = (props: {
             </a>
           </>
         ) : (
-          <a className="Login" href="/Login">
+          <Link className="Login" href="/Login">
             Login/Register
-          </a>
+          </Link>
         )}
       </div>
     </>
