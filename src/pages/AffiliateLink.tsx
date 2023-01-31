@@ -19,12 +19,14 @@ export default function AffiliateLink(props: {}) {
     var linkSplit: any = "";
     if (!link.startsWith("http")) {
       const firstSplit = link.split("http");
-      linkSplit = "http" + firstSplit.at(firstSplit.length - 1);
+      console.log(firstSplit[firstSplit.length - 1]);
+
+      linkSplit = "http" + firstSplit[firstSplit.length - 1];
     }
 
     linkSplit = linkSplit.split("?").at(0);
 
-    setAffLink(linkSplit.at(0) + tag);
+    setAffLink(linkSplit + tag);
 
     // const payload = { options: options };
 
