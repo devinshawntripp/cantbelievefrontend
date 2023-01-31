@@ -69,6 +69,9 @@ const Footer: React.FC<FooterProps> = (props: {}) => {
           <Link className="footer-link-style" href="/AffiliateLink">
             Make an aff link
           </Link>
+          <Link className="footer-link-style" href="/PrivacyPolicy">
+            Privacy Policy
+          </Link>
         </Col>
         <Col className="colStyle">
           <h1 className="footer-header-style">Social</h1>
@@ -78,7 +81,10 @@ const Footer: React.FC<FooterProps> = (props: {}) => {
           <a className="footer-link-style" href="#">
             Youtube
           </a>
-          <a className="footer-link-style" href="#">
+          <a
+            className="footer-link-style"
+            href="https://twitter.com/WhyAreYouBuying"
+          >
             Twitter
           </a>
           <a className="footer-link-style" href="#">

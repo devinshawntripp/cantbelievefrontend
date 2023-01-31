@@ -16,12 +16,13 @@
 
 .formInputs {
   width: 100%;
-  height: 50%;
+  /* height: 50%; */
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 5%;
   color: white;
+  min-height: 100vh;
 }
 
 .inputG {

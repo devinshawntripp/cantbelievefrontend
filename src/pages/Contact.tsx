@@ -58,12 +58,16 @@ const ContactPage: React.FC<IContactPageProps> = (props: {}) => {
       return;
     }
 
-    const emailHtml = render(<Html>{message}</Html>);
+    const emailHtml = render(
+      <Html>
+        {message} From: {email}
+      </Html>
+    );
 
     const options = {
       Source: "devin@onetripp.com",
       Destination: {
-        ToAddresses: [email],
+        ToAddresses: ["devin@onetripp.com"],
       },
       Message: {
         Body: {
@@ -74,7 +78,7 @@ const ContactPage: React.FC<IContactPageProps> = (props: {}) => {
         },
         Subject: {
           Charset: "UTF-8",
-          Data: subject,
+          Data: subject + " From: " + email,
         },
       },
     };

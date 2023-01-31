@@ -13,10 +13,11 @@
     /* height: 50rem; */
     margin-left: auto;
     background-color: var(--dark);
-    position: relative;
+    /* position: absolute; */
     align-items: center;
     justify-content: center;
     color: white;
+    margin-top: auto;
     bottom: 0;
   }
 
