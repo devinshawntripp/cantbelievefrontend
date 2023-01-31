@@ -164,7 +164,7 @@
   } */
 
   .nav-menu.active {
-    margin-top: 60%;
+    margin-top: 300px;
     left: 0;
     z-index: 1 !important;
   }
