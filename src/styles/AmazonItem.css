@@ -69,12 +69,12 @@
     overflow: hidden;
   }
 
-  .title {
+  .amz-item-title {
     font-weight: bold;
     /* width: 300px;
     height: 100px; */
     font-size: 16pt;
-    padding-top: 10%;
+    /* padding-top: 10%; */
   }
 
   .titleContainer {
@@ -224,9 +224,9 @@
     overflow: hidden;
   }
 
-  .title {
+  .amz-item-title {
     font-weight: bold;
-    padding-top: 10%;
+    /* padding-top: 10%; */
   }
 
   .titleContainer {
@@ -362,9 +362,9 @@
     overflow: hidden;
   }
 
-  .title {
+  .amz-item-title {
     font-weight: bold;
-    padding-top: 10%;
+    /* padding-top: 10%; */
   }
 
   .titleContainer {
@@ -500,9 +500,9 @@
     overflow: hidden;
   }
 
-  .title {
+  .amz-item-title {
     font-weight: bold;
-    padding-top: 10%;
+    /* padding-top: 10%; */
   }
 
   .titleContainer {

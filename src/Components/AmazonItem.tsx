@@ -192,7 +192,7 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
       {isEdit ? (
         <div className="AmazonItemBox">
           <div className="titleContainer">
-            <p className="title">{String(name)}</p>
+            <p className="amz-item-title">{String(name)}</p>
           </div>
 
           {/* <div className="imgContainer"> */}
@@ -251,7 +251,7 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
       ) : (
         <div className="AmazonItemBox">
           <div className="titleContainer">
-            <p className="title">{String(name)}</p>
+            <p className="amz-item-title">{String(name)}</p>
           </div>
           {/* <div className="imgContainer"> */}
           {imgUrl ? (

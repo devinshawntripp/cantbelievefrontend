@@ -8,6 +8,7 @@ import "@/styles/Home.css";
 import "@/styles/Login.css";
 import "@/styles/Register.css";
 import "@/styles/Footer.css";
+import "@/styles/About.css";
 import "react-toastify/scss/main.scss";
 // import "bootstrap/dist/css/bootstrap.css";
 // import "bootstrap/dist/css/bootstrap.min.css";

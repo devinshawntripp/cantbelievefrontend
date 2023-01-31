@@ -39,7 +39,7 @@ const Footer: React.FC<FooterProps> = (props: {}) => {
 
   return (
     <div className="containerFooter">
-      <Row style={rowStyle}>
+      <Row className="rowStyle">
         <div
           className="blackLine"
           style={{
@@ -54,33 +54,59 @@ const Footer: React.FC<FooterProps> = (props: {}) => {
         ></div>
       </Row>
 
-      <Row style={rowStyle}>
-        <Col style={colStyle}>
-          <h1>Information</h1>
-          <Link href="/About">About us</Link>
-          <a href="#">Contact us</a>
-          <a href="#">Add a product</a>
-          <Link href="/AffiliateLink">Make an aff link</Link>
+      <Row className="rowStyle">
+        <Col className="colStyle">
+          <h1 className="footer-header-style">Information</h1>
+          <Link className="footer-link-style" href="/About">
+            About us
+          </Link>
+          <a className="footer-link-style" href="#">
+            Contact us
+          </a>
+          <a className="footer-link-style" href="#">
+            Add a product
+          </a>
+          <Link className="footer-link-style" href="/AffiliateLink">
+            Make an aff link
+          </Link>
         </Col>
-        <Col style={colStyle}>
-          <h1>Social</h1>
-          <a href="#">Faceboook</a>
-          <a href="#">Youtube</a>
-          <a href="#">Twitter</a>
-          <a href="#">Instagram</a>
-          <a href="#">TikTok</a>
+        <Col className="colStyle">
+          <h1 className="footer-header-style">Social</h1>
+          <a className="footer-link-style" href="#">
+            Faceboook
+          </a>
+          <a className="footer-link-style" href="#">
+            Youtube
+          </a>
+          <a className="footer-link-style" href="#">
+            Twitter
+          </a>
+          <a className="footer-link-style" href="#">
+            Instagram
+          </a>
+          <a className="footer-link-style" href="#">
+            TikTok
+          </a>
         </Col>
 
-        <Col style={colStyle}>
-          <h1>Services</h1>
-          <a href="#">Affiliate Marketing</a>
-          <a href="#">Development</a>
-          <a href="#">SEO Audit</a>
-          <a href="#">Architech Consulting</a>
+        <Col className="colStyle">
+          <h1 className="footer-header-style">Services</h1>
+          <a className="footer-link-style" href="#">
+            Affiliate Marketing
+          </a>
+          <a className="footer-link-style" href="#">
+            Development
+          </a>
+          <a className="footer-link-style" href="#">
+            SEO Audit
+          </a>
+          <a className="footer-link-style" href="#">
+            Architech Consulting
+          </a>
         </Col>
       </Row>
 
-      <Col style={colStyleCopy}>
+      <Col className="colStyleCopy">
         <p>
           &copy; {String(new Date().getFullYear() + "")} all rights reserved
         </p>
