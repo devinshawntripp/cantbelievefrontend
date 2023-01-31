@@ -62,7 +62,11 @@ const Menu = (props: {
         <ul className={`${isMenu ? "nav-menu active" : "nav-menu"}`}>
           {links.map((link: { name: string; to: string }) => (
             <li className="nav-item" key={link.name}>
-              <Link className="gradient-text" href={link.to}>
+              <Link
+                className="gradient-text"
+                href={link.to}
+                onClick={isMenu && toggleMenu}
+              >
                 {link.name}
               </Link>
             </li>
