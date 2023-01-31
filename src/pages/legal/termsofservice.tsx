@@ -31,10 +31,10 @@ export default function TermsOfService() {
           </li>
           <li>
             Disclaimer of Warranties: whyareyoubuyingthis.com provides our
-            services on an "as is" and "as available" basis. We make no
-            representations or warranties of any kind, express or implied, as to
-            the operation of our website or the information, content, materials,
-            or products included on our website.
+            services on an &quot;as is&quot; and &quot;as available&quot; basis.
+            We make no representations or warranties of any kind, express or
+            implied, as to the operation of our website or the information,
+            content, materials, or products included on our website.
           </li>
           <li>
             Limitation of Liability: In no event shall whyareyoubuyingthis.com
@@ -46,9 +46,9 @@ export default function TermsOfService() {
             Indemnification: You agree to indemnify and hold
             whyareyoubuyingthis.com and its affiliates, officers, agents, and
             employees harmless from any claim or demand, including reasonable
-            attorneys' fees, made by any third party due to or arising out of
-            your use of our website, your violation of these Terms of Service,
-            or your violation of any rights of another.
+            attorneys&apos; fees, made by any third party due to or arising out
+            of your use of our website, your violation of these Terms of
+            Service, or your violation of any rights of another.
           </li>
           <li>
             Governing Law: These Terms of Service shall be governed by and

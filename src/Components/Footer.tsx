@@ -69,7 +69,10 @@ const Footer: React.FC<FooterProps> = (props: {}) => {
           <Link className="footer-link-style" href="/AffiliateLink">
             Make an aff link
           </Link>
-          <Link className="footer-link-style" href="/PrivacyPolicy">
+          <Link className="footer-link-style" href="/privacypolicy">
+            Privacy Policy
+          </Link>
+          <Link className="footer-link-style" href="/termsofservice">
             Privacy Policy
           </Link>
         </Col>
