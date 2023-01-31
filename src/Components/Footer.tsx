@@ -73,7 +73,7 @@ const Footer: React.FC<FooterProps> = (props: {}) => {
             Privacy Policy
           </Link>
           <Link className="footer-link-style" href="/termsofservice">
-            Privacy Policy
+            Terms of Service
           </Link>
         </Col>
         <Col className="colStyle">
