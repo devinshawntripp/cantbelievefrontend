@@ -16,12 +16,12 @@ export default function AffiliateLink(props: {}) {
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    var linkSplit = "";
+    var linkSplit: any = "";
     if (!link.startsWith("http")) {
-      linkSplit = link.split("http")[0] + "http";
+      linkSplit = link.split("http").at(0) + "http";
     }
 
-    linkSplit = linkSplit.split("?");
+    linkSplit = linkSplit.split("?").at(0);
 
     setAffLink(linkSplit.at(0) + tag);
 
