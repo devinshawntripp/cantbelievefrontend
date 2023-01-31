@@ -18,7 +18,8 @@ export default function AffiliateLink(props: {}) {
     e.preventDefault();
     var linkSplit: any = "";
     if (!link.startsWith("http")) {
-      linkSplit = link.split("http").at(0) + "http";
+      const firstSplit = link.split("http");
+      linkSplit = "http" + firstSplit.at(firstSplit.length - 1);
     }
 
     linkSplit = linkSplit.split("?").at(0);
