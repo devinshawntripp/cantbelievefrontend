@@ -84,23 +84,7 @@ const About: React.FC<IAboutPageProps> = (props: {}) => {
           We&apos;re constantly updating the website with new products and
           reviews, so make sure to check back often. And don&apos;t hesitate to
           reach out if you have any questions or suggestions - we&apos;d love to
-          hear from you. Thanks for visiting! In this expanded version,
-          I&apos;ve added more detailed information about the website&apos;s
-          purpose, the selection process of the products, the unique reviews,
-          the additional services and projects that Devin is working on, the
-          affiliate marketing tips, and the invitation to the readers to reach
-          out and to check back the website often for new products and reviews.
-          The headings provide a clear structure for the content and make it
-          easy for readers to find the information they&apos;re looking for. The
-          content is interesting and leaves the readers wanting to learn more
-          about the products, the affiliate marketing strategies and
-          Devin&apos;s experiences in e-commerce and digital marketing.
-          Additionally, I&apos;ve made sure to use keywords related to product
-          research, affiliate marketing, e-commerce, and Amazon throughout the
-          text to help improve SEO. With this expanded and optimized version,
-          readers will be more likely to stay on the website longer, engage with
-          the content, and potentially make purchases through the affiliate
-          links, helping to increase traffic and revenue for the website.
+          hear from you. Thanks for visiting!
         </p>
       </section>
     </div>
