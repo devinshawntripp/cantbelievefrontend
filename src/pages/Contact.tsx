@@ -48,9 +48,6 @@ const ContactPage: React.FC<IContactPageProps> = (props: {}) => {
   };
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log(message);
-    console.log(email);
-    console.log(subject);
 
     if (email === "" || subject === "" || message === "") {
       // create a toast to display that the user must enter an email or password
@@ -88,7 +85,7 @@ const ContactPage: React.FC<IContactPageProps> = (props: {}) => {
     axios
       .post(`${process.env.NEXT_PUBLIC_APP_URL}/api/sendMail`, payload)
       .then((res) => {
-        notify(res.data);
+        notify("Message was sent successfully!");
       })
       .catch((error) => {
         notify(error);
