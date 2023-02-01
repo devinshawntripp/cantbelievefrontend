@@ -18,8 +18,12 @@ import { useRouter } from "next/router";
 import { store } from "../store/store";
 import { Provider } from "react-redux";
 import AppWrapper from "./AppWrapper";
+import { SessionProvider } from "next-auth/react";
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) {
   const router = useRouter();
   // useEffect(() => {
   //   const handleRouteChange = (url: any) => {
@@ -36,9 +40,11 @@ export default function App({ Component, pageProps }: AppProps) {
   // }, [router.events]);
   return (
     <Provider store={store}>
-      <AppWrapper>
-        <Component {...pageProps} />
-      </AppWrapper>
+      <SessionProvider session={session}>
+        <AppWrapper>
+          <Component {...pageProps} />
+        </AppWrapper>
+      </SessionProvider>
     </Provider>
   );
 }

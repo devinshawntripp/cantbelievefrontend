@@ -6,12 +6,15 @@ import { loadAppData } from "../store/slices/app-slice";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import "react-toastify/dist/ReactToastify.css";
+// import "react-toastify/dist/ReactToastify.css";
+
+import { useSession, signIn, signOut } from "next-auth/react";
 // import { useLocation } from 'react-router'
 
 interface ILoginProps {}
 
 const Login: React.FC<ILoginProps> = ({}) => {
+  const { data: session } = useSession();
   const [email, setEmail] = useState<string>();
   const [pwd, setPwd] = useState<string>();
   const navigate = useRouter();
@@ -40,8 +43,18 @@ const Login: React.FC<ILoginProps> = ({}) => {
       setPwd(e.target.value);
     }
   };
-  const handleLogin = async (e: MouseEvent<HTMLButtonElement>) => {
+  const handleLogin = async (e: any) => {
     e.preventDefault();
+
+    console.log(e);
+
+    if (e.target.ariaLabel === "google") {
+      signIn();
+
+      console.log(session);
+    }
+
+    return;
 
     if (email === "" || pwd === "") {
       // create a toast to display that the user must enter an email or password
@@ -142,18 +155,23 @@ const Login: React.FC<ILoginProps> = ({}) => {
         ></div>
 
         <div className="altSignins">
-          <Button className="altSignins mt-3" variant="primary">
-            Login
+          <Button
+            className="altSignins mt-3"
+            variant="primary"
+            aria-label="google"
+            onClick={handleLogin}
+          >
+            Google
           </Button>
         </div>
         <div className="altSignins">
           <Button className="altSignins mt-3" variant="primary">
-            Login
+            Facebook
           </Button>
         </div>
         <div className="altSignins">
           <Button className="altSignins mt-3" variant="primary">
-            Login
+            Github
           </Button>
         </div>
       </div>
