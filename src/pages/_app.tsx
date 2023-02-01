@@ -18,7 +18,6 @@ import { useRouter } from "next/router";
 import { store } from "../store/store";
 import { Provider } from "react-redux";
 import AppWrapper from "./AppWrapper";
-import { SessionProvider } from "next-auth/react";
 
 export default function App({
   Component,
@@ -40,11 +39,9 @@ export default function App({
   // }, [router.events]);
   return (
     <Provider store={store}>
-      <SessionProvider session={session}>
-        <AppWrapper>
-          <Component {...pageProps} />
-        </AppWrapper>
-      </SessionProvider>
+      <AppWrapper>
+        <Component {...pageProps} />
+      </AppWrapper>
     </Provider>
   );
 }

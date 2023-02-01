@@ -8,13 +8,11 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 // import "react-toastify/dist/ReactToastify.css";
 
-import { useSession, signIn, signOut } from "next-auth/react";
 // import { useLocation } from 'react-router'
 
 interface ILoginProps {}
 
 const Login: React.FC<ILoginProps> = ({}) => {
-  const { data: session } = useSession();
   const [email, setEmail] = useState<string>();
   const [pwd, setPwd] = useState<string>();
   const navigate = useRouter();
@@ -48,11 +46,11 @@ const Login: React.FC<ILoginProps> = ({}) => {
 
     console.log(e);
 
-    if (e.target.ariaLabel === "google") {
-      signIn();
+    // if (e.target.ariaLabel === "google") {
+    //   signIn();
 
-      console.log(session);
-    }
+    //   console.log(session);
+    // }
 
     return;
 
