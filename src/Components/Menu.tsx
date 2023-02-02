@@ -30,7 +30,7 @@ const Menu = (props: {
       loadAppData({
         id: "",
         email: "",
-        admin: false,
+        role: "user",
         vouchers: 0,
         idsSaved: [0],
       })

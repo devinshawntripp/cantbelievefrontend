@@ -6,6 +6,8 @@ import { loadAppData } from "../store/slices/app-slice";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { GoogleLogin } from "@react-oauth/google";
+
 // import "react-toastify/dist/ReactToastify.css";
 
 // import { useLocation } from 'react-router'
@@ -41,19 +43,80 @@ const Login: React.FC<ILoginProps> = ({}) => {
       setPwd(e.target.value);
     }
   };
-  const handleLogin = async (e: any) => {
-    e.preventDefault();
+  const handleLogin = async (
+    e?: any,
+    service?: String,
+    credential?: String | undefined
+  ) => {
+    if (e !== undefined) {
+      e.preventDefault();
+    }
 
     console.log(e);
 
-    // if (e.target.ariaLabel === "google") {
-    //   signIn();
+    if (service === "google") {
+      const payload = { email: "", password: "", jwtGoogleCred: credential };
 
-    //   console.log(session);
-    // }
+      await axios
+        .post(`${process.env.NEXT_PUBLIC_APP_URL}/api/login`, payload)
+        .then((res) => {
+          console.log(res);
+          const user = res.data.user;
+          dispatch(
+            loadAppData({
+              id: user.id,
+              email: user.email,
+              role: user.role,
+              vouchers: user.vouchers,
+              idsSaved: user.idsSaved,
+            })
+          );
+          console.log(res.data.token);
+          localStorage.setItem("auth-token", res.data.token);
+          notify("You have logged in successfully!");
+          navigate.replace("/");
+        })
+        .catch((err) => {
+          console.log(err);
+          notify(err.response.data.msg);
+        });
+    }
 
-    return;
+    if (email === "" || pwd === "") {
+      // create a toast to display that the user must enter an email or password
+      notify("You need to enter a username or password!");
+      return;
+    }
 
+    const payload = { email: email, password: pwd };
+    //request for
+    // console.log("HIIHIHSDKF DSKFL")
+    await axios
+      .post(`${process.env.NEXT_PUBLIC_APP_URL}/api/login`, payload)
+      .then((res) => {
+        console.log(res);
+        const user = res.data.user;
+        dispatch(
+          loadAppData({
+            id: user.id,
+            email: user.email,
+            role: user.role,
+            vouchers: user.vouchers,
+            idsSaved: user.idsSaved,
+          })
+        );
+        console.log(res.data.token);
+        localStorage.setItem("auth-token", res.data.token);
+        notify("You have logged in successfully!");
+        navigate.replace("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        notify(err.response.data.msg);
+      });
+  };
+
+  const handleGoogleLogin = async () => {
     if (email === "" || pwd === "") {
       // create a toast to display that the user must enter an email or password
       return;
@@ -71,7 +134,7 @@ const Login: React.FC<ILoginProps> = ({}) => {
           loadAppData({
             id: user.id,
             email: user.email,
-            admin: user.admin,
+            role: user.role,
             vouchers: user.vouchers,
             idsSaved: user.idsSaved,
           })
@@ -127,7 +190,7 @@ const Login: React.FC<ILoginProps> = ({}) => {
         </div>
         <div className="LoginButton">
           <Button
-            onClick={handleLogin}
+            onClick={(e) => handleLogin(e, "", "")}
             className="LoginButton m-4"
             variant="primary"
           >
@@ -153,14 +216,25 @@ const Login: React.FC<ILoginProps> = ({}) => {
         ></div>
 
         <div className="altSignins">
-          <Button
+          <GoogleLogin
+            aria-label="google"
+            onSuccess={(credentialResponse) => {
+              console.log(credentialResponse);
+              handleLogin(undefined, "google", credentialResponse.credential);
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
+          ;
+          {/* <Button
             className="altSignins mt-3"
             variant="primary"
             aria-label="google"
             onClick={handleLogin}
           >
             Google
-          </Button>
+          </Button> */}
         </div>
         <div className="altSignins">
           <Button className="altSignins mt-3" variant="primary">

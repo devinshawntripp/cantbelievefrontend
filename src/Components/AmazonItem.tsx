@@ -9,6 +9,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { appSelector } from "../store/slices/app-slice";
 import { ToastContainer, toast } from "react-toastify";
+
+import { editProduct } from "../api/index.js";
 import Image from "next/image";
 
 /**
@@ -136,16 +138,24 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
       // formData.append("amzURL", String(amzUrl));
       // formData.append("price", String(price));
 
-      // console.log(formData);
+      console.log(formData);
 
-      await axios
-        .post(`${process.env.NEXT_PUBLIC_APP_URL}/items/UpdateItem`, formData)
+      await editProduct(formData)
         .then((res) => {
           notify("Successfully updated a product: " + res.data.msg);
         })
         .catch((err) => {
-          notify("Something went wrong: " + err);
+          notify("Something went wrong: " + err.response.data.msg);
         });
+
+      // await axios
+      //   .post(`${process.env.NEXT_PUBLIC_APP_URL}/items/UpdateItem`, formData)
+      //   .then((res) => {
+      //     notify("Successfully updated a product: " + res.data.msg);
+      //   })
+      //   .catch((err) => {
+      //     notify("Something went wrong: " + err.response.data.msg);
+      //   });
     } else {
       notify("All values were not entered correctly");
     }
@@ -238,7 +248,7 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
             </p>
             {/* </div> */}
           </div>
-          {user.admin && (
+          {user.role === "admin" && (
             <Button
               variant="success"
               style={{ width: "90%" }}
@@ -292,7 +302,7 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
             </p>
             {/* </div> */}
           </div>
-          {user.admin && (
+          {user.role === "admin" && (
             <Button
               variant="success"
               style={{ width: "90%" }}

@@ -3,6 +3,7 @@ import { Children, useEffect } from "react";
 import { useRouter } from "next/router";
 import Menu from "@/Components/Menu";
 import { useDispatch } from "react-redux";
+import decode from "jwt-decode";
 import Axios from "axios";
 import { loadAppData } from "../store/slices/app-slice";
 // import { BrowserRouter as Router, Route, Link, Routes } from "next/router";
@@ -29,6 +30,7 @@ const navigation = {
 
 import Head from "next/head";
 import { Inter } from "@next/font/google";
+// import { decode } from "punycode";
 
 const inter = Inter({ subsets: ["latin"] });
 const gtag = `https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`;
@@ -36,6 +38,7 @@ const gtag = `https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUB
 export default function AppWrapper(props: {
   children?: React.ReactChild | React.ReactChild[];
 }) {
+  const navigate = useRouter();
   const { brand, links } = navigation;
 
   const dispatch = useDispatch();
@@ -47,29 +50,52 @@ export default function AppWrapper(props: {
       if (token === null || token === "") {
         localStorage.setItem("auth-token", "");
         token = "";
+      } else {
+        const decodedToken: any = decode(token);
+        console.log("Decoded token", decodedToken);
+        console.log("current time", new Date().getTime());
+        console.log("time plus: ", decodedToken.exp * 1000);
+        if (decodedToken.exp * 1000 < new Date().getTime()) {
+          dispatch(
+            loadAppData({
+              id: "",
+              email: "",
+              role: "",
+              vouchers: 0,
+              idsSaved: [0],
+            })
+          );
+
+          localStorage.setItem("auth-token", "");
+
+          // navigate.replace("/Login");
+          return;
+        }
       }
 
       const tokenResponse = await Axios.post(
         `${process.env.NEXT_PUBLIC_APP_URL}/api/checkToken`,
         null,
-        { headers: { "x-auth-token": token } }
+        { headers: { "auth-token": token } }
       );
 
       if (tokenResponse.data) {
         const userRes = await Axios.get(
           `${process.env.NEXT_PUBLIC_APP_URL}/api/loginwithjwt`,
           {
-            headers: { "x-auth-token": token },
+            headers: { "auth-token": token },
           }
         );
         // console.log(userRes.data.user);
         // console.log("HI THERE");
 
+        console.log("USER RES", userRes);
+
         dispatch(
           loadAppData({
             id: userRes.data.user._id,
             email: userRes.data.user.email,
-            admin: userRes.data.user.admin,
+            role: userRes.data.user.role,
             vouchers: userRes.data.user.vouchers,
             idsSaved: userRes.data.user.idsSaved,
           })

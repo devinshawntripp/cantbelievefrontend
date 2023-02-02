@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 import { store } from "../store/store";
 import { Provider } from "react-redux";
 import AppWrapper from "./AppWrapper";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 export default function App({
   Component,
@@ -39,9 +40,11 @@ export default function App({
   // }, [router.events]);
   return (
     <Provider store={store}>
-      <AppWrapper>
-        <Component {...pageProps} />
-      </AppWrapper>
+      <GoogleOAuthProvider clientId="171120276082-puk81l0iku6vp1amdfhu19l45snf3lg4.apps.googleusercontent.com">
+        <AppWrapper>
+          <Component {...pageProps} />
+        </AppWrapper>
+      </GoogleOAuthProvider>
     </Provider>
   );
 }

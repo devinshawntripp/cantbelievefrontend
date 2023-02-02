@@ -7,7 +7,7 @@ import { setAll } from "../../helpers/set-all";
 interface UserType {
   id: string;
   email: string;
-  admin: boolean;
+  role: string;
   vouchers: number;
   idsSaved: [string];
 }
@@ -15,7 +15,7 @@ interface UserType {
 interface UserState {
   id: "";
   email: "";
-  admin: false;
+  role: "";
   voucher: 0;
   idsSaved: [0];
 }
@@ -31,7 +31,7 @@ interface UserState {
 const initialState: UserType = {
   id: "",
   email: "",
-  admin: false,
+  role: "user",
   vouchers: 0,
   idsSaved: [""],
 };

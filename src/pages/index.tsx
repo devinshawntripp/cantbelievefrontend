@@ -102,7 +102,7 @@ export default function Home() {
 
   return (
     <div className="Home">
-      {app.admin && (
+      {app.role == "admin" && (
         <Row>
           <div style={{ marginTop: "10%" }}>
             {/* <Button>Add Product</Button> */}
@@ -126,13 +126,13 @@ export default function Home() {
                   saves={item.saves ?? 0}
                 />
 
-                {app.admin && (
+                {app.role === "admin" && (
                   <Button style={{ width: "90%" }} onClick={togglePopup}>
                     Delete
                   </Button>
                 )}
 
-                {isOpen && app.admin && (
+                {isOpen && app.role === "admin" && (
                   <Popup
                     content={
                       <>
