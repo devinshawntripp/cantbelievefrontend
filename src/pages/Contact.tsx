@@ -88,7 +88,7 @@ const ContactPage: React.FC<IContactPageProps> = (props: {}) => {
         notify("Message was sent successfully!");
       })
       .catch((error) => {
-        notify(error);
+        notify("Message was not sent: " + error.message);
       });
   };
 
