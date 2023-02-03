@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { appSelector } from "../store/slices/app-slice";
 import { ToastContainer, toast } from "react-toastify";
 
-import { editProduct } from "../api/index.js";
+import { editProduct, saveProduct } from "../api/index.js";
 import Image from "next/image";
 
 /**
@@ -169,20 +169,18 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
       itemId: idPassed,
       userId: user.id,
     };
-    await axios
-      .post(`${process.env.NEXT_PUBLIC_APP_URL}/items/saveProduct`, payload)
-      .then((res) => {
-        console.log(res.data);
-        if (res.status === 200) {
-          if (res.data.found) {
-            setPic(saveIconWhite);
-            setSaves(actSaves - 1);
-          } else {
-            setPic(saveIconFilled);
-            setSaves(actSaves + 1);
-          }
+    await saveProduct(payload).then((res) => {
+      console.log(res.data);
+      if (res.status === 200) {
+        if (res.data.found) {
+          setPic(saveIconWhite);
+          setSaves(actSaves - 1);
+        } else {
+          setPic(saveIconFilled);
+          setSaves(actSaves + 1);
         }
-      });
+      }
+    });
   };
 
   return (
