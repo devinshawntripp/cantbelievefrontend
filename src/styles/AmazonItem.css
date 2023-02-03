@@ -74,14 +74,15 @@
     /* width: 300px;
     height: 100px; */
     font-size: 16pt;
-    /* padding-top: 10%; */
+    /* margin-top: 100%; */
+    /* padding-top: 50%; */
   }
 
   .titleContainer {
     color: white;
     font-weight: bold;
     width: 300px;
-    height: 100px;
+    height: 130px;
   }
 
   .desc {

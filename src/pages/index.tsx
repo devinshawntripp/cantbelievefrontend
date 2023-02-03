@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Button, Row } from "react-bootstrap";
 import AmazonItem from "../Components/AmazonItem";
 import { useRouter } from "next/router";
@@ -24,6 +24,10 @@ export default function Home() {
     }>
   >();
 
+  const [displayCount, setDisplayCount] = useState(1);
+
+  const [loading, setLoading] = useState(false);
+
   let navigate = useRouter();
   const routeChange = () => {
     let path = `AddProduct`;
@@ -35,6 +39,34 @@ export default function Home() {
   const togglePopup = () => {
     setIsOpen(!isOpen);
   };
+
+  const listInnerRef = useRef<any>();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight;
+      const clientHeight = document.documentElement.clientHeight;
+
+      // console.log("SCROLLING ", scrollTop);
+      // console.log("CLIENT HEIGHT: ", clientHeight);
+      // console.log("SCROLL HEIGHT: ", scrollHeight);
+      // console.log("LOADING?: ", loading);
+
+      if (scrollTop + clientHeight >= scrollHeight - 330 && !loading) {
+        setLoading(true);
+        setDisplayCount(displayCount + 1);
+        console.log(displayCount);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [displayCount, loading]);
 
   let getStuff: boolean = useMediaQuery("(max-width: 600px)");
 
@@ -60,28 +92,45 @@ export default function Home() {
 
   const getAllItems = async () => {
     await axios
-      .get(`${process.env.NEXT_PUBLIC_APP_URL}/api/items`)
+      .post(
+        `${process.env.NEXT_PUBLIC_APP_URL}/api/items?pageNumber=${displayCount}`
+      )
       .then((res) => {
         if (res.status === 200) {
-          setItems(res.data.items);
+          // fasdf
+
+          if (items) {
+            console.log(res.data.items.length);
+            if (
+              res.data.items.length > 0 &&
+              !items.includes(res.data.items.at(0)._id)
+            ) {
+              setItems(items.concat(res.data.items));
+            }
+          } else {
+            setItems(res.data.items);
+          }
+          setLoading(false);
         } else {
           //some error message for later
+          setLoading(false);
         }
       })
       .catch((err) => {
         console.log(err);
         // console.log("HI THERE");
+        setLoading(false);
       });
   };
 
   useEffect(() => {
     getAllItems();
-  }, []);
+  }, [displayCount]);
 
   const productsStyle: CSS.Properties = {
     display: "flex",
     width: "100%",
-    marginTop: "5%",
+    // marginTop: "5%",
     // marginLeft: "10%",
     // marginRight: "10%",
 

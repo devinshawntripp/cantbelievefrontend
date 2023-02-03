@@ -43,11 +43,11 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
   var { name, url, desc, imgUrl, price, saves, id } = props;
   var showUrl = url;
 
-  if (showUrl.length > 30) {
+  if (showUrl && showUrl.length > 30) {
     showUrl = showUrl.slice(0, 30) + "...";
   }
 
-  if (name.length > 68) {
+  if (name && name.length > 68) {
     name = name.slice(0, 68) + "...";
   }
   const notify = (msg: any) =>
