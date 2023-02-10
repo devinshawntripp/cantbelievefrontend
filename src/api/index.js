@@ -30,3 +30,4 @@ API.interceptors.request.use(
 
 export const editProduct = (payload) => API.post("/items/UpdateItem", payload);
 export const saveProduct = (payload) => API.post("/items/saveProduct", payload);
+export const getPostById = (id) => API.get(`/blog/get-blog-post/${id}`, id);

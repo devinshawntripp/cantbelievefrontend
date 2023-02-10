@@ -1,0 +1,84 @@
+//1.FONT
+@import url(https://fonts.bunny.net/css?family=chivo:700|manrope:400,500,700,800|shippori-mincho:700,800);
+$font-manrope: "Manrope", sans-serif;
+$font-shippori: "shippori-mincho", sans-serif;
+$font-chivo: "chivo", sans-serif;
+$font-3xs: 8px;
+$font-2xs: 10px;
+$font-xs: 12px;
+$font-sm: 14px;
+$font-md: 16px;
+$font-lg: 18px;
+$font-xl: 20px;
+$font-2xl: 24px;
+$font-3xl: 30px;
+//2.COLOR
+// New Ecom
+$color-brand-1: #024430;
+$color-brand-1-hover: #066a4c;
+$color-brand-2: #ffe7bb;
+$color-brand-3: #afeae4;
+$color-brand-4: #e8b0e8;
+$color-brand-5: #155d3c;
+$color-success: #06d6a0;
+$color-danger: #ef476f;
+$color-warning: #ffd166;
+$color-mutted: #cfdee3;
+$color-info: #28a7e6;
+$color-gray-50: #ecf1f2;
+$color-gray-60: #e0f1f4;
+$color-gray-80: #cde2e7;
+$color-gray-100: #b9cad0;
+$color-gray-200: #8ea4ac;
+$color-gray-300: #6a838c;
+$color-gray-400: #4e6770;
+$color-gray-500: #3d565f;
+$color-gray-600: #1f3c45;
+$color-gray-700: #0e2932;
+$color-gray-800: #122830;
+$color-gray-900: #071920;
+$color-white: #fff;
+$color-black: #414357;
+$color-blue: #006d77;
+// End New
+
+//3.Boxshadow
+$box-shadow-1: 0px 0px 30px 0px rgba(14, 41, 50, 0.08);
+$box-shadow-1-1: 14px 14px 36px rgba(153, 153, 153, 0.22);
+$box-shadow-2: 0px 0px 20px 0px rgba(14, 41, 50, 0.17);
+$box-shadow-3: 9px 11px 23px 0px rgba(6, 61, 79, 0.12);
+$box-shadow-4: 4px 6px 23px rgba(228, 92, 35, 0.1);
+$box-shadow-5: 4px 4px 40px rgba(16, 24, 40, 0.1);
+$box-shadow-inner: inset 0px 40px 80px #fcfcfc;
+$box-shadow-6: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+//5. Background
+// New
+$background-white: #ffffff;
+$background-bg-1: #efe9ff;
+$background-bg-2: #ffeade;
+$background-bg-3: #fdffd4;
+$background-bg-4: #d1ecf7;
+$background-bg-5: #dff9f3;
+$background-bg-7: #ffefd1;
+$background-bg-8: #ebf5f8;
+$background-bg-9: #f9faf5;
+$background-bg-10: #b7ddec;
+$background-bg-11: #e0f0fc;
+// End new
+// 6. text-shadow
+$text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+// 7. breakpoints
+$grid-breakpoints: (
+  xs: 0,
+  xxsm: 350px,
+  xssm: 450px,
+  xsm: 500px,
+  sm: 576px,
+  smd: 650px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+);

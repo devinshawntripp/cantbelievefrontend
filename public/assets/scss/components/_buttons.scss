@@ -1,0 +1,221 @@
+.btn {
+  border-radius: 4px;
+  padding: 10px 0px 10px 22px;
+  font-family: $font-manrope;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  text-decoration: none;
+  position: relative;
+  &.btn-brand-1 {
+    padding: 15px 24px;
+    @include theme() {
+      color: theme-get("color-brand-2") !important;
+    }
+    background: $color-brand-1;
+    border-radius: 4px;
+    font-size: $font-sm;
+    line-height: 18px;
+    font-weight: 700;
+    svg {
+      color: $color-brand-2;
+    }
+    &:hover {
+      background-color: $color-brand-1-hover;
+      color: $color-brand-2;
+    }
+    &:hover * {
+      color: $color-brand-1;
+    }
+  }
+  &.btn-border-brand-1 {
+    border: 1px solid $color-brand-1;
+    @include theme() {
+      color: theme-get("color-brand-1");
+    }
+    // color: $color-brand-1;
+    border-radius: 4px;
+    padding: 8px 10px 8px 11px;
+    font-size: 12px;
+    line-height: 12px;
+    font-weight: 12px;
+
+    &:hover {
+      background-color: $color-brand-1;
+      @include theme() {
+        color: theme-get("color-inner-btn");
+      }
+      // color: $color-gray-80;
+    }
+  }
+}
+
+.read-or-hide {
+  color: rgb(192, 192, 192);
+  cursor: pointer;
+}
+
+/* CSS for switch*/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+/* Hiding the default checkbox*/
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $color-brand-1;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+/* Before sliding */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  transform: rotate(90deg);
+  background-image: url("../imgs/icons/icons8-crescent-moon-50-filled.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: none;
+  // background-position: 80% 20%;
+  // background-color: white;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+input:checked + .slider {
+  background-color: #000000;
+}
+input:focus + .slider {
+  box-shadow: 0 0 1px #564311;
+}
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+  background-image: url("../imgs/icons/icons8-crescent-moon-50-white-filled.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: none;
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+// .icon {
+//   width: 20px;
+//   height: 20px;
+//   svg {
+//     width: 20px !important;
+//     height: 20px !important;
+//     &:hover {
+//       fill: red !important;
+//       // filter: saturate(300%);
+//       -webkit-transition: 0.3s;
+//       transition: 0.3s;
+//     }
+//     &:hover * {
+//       fill: red;
+//       filter: saturate(300%);
+//       background-color: #000000;
+//     }
+//   }
+
+//   svg:hover {
+//     fill: red;
+//   }
+// }
+
+svg.dislike {
+  width: 20px !important;
+  height: 20px !important;
+  fill: gray !important;
+  &:hover {
+    fill: red !important;
+    // filter: saturate(300%);
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+  }
+  &:hover * {
+    fill: red;
+    filter: saturate(300%);
+    background-color: #000000;
+  }
+}
+
+svg.like {
+  width: 20px;
+  height: 20px;
+  transform: rotate(180deg);
+  fill: $color-brand-1 !important;
+  &:hover {
+    fill: blue !important;
+    // filter: saturate(300%);
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+  }
+  &:hover * {
+    fill: blue;
+  }
+}
+
+// svg.profile path {
+//   fill: green !important;
+//   // &:hover {
+//   //   fill: blue !important;
+//   //   // filter: saturate(300%);
+//   //   -webkit-transition: 10s;
+//   //   transition: 10s;
+//   // }
+//   // &:hover * {
+//   //   fill: blue;
+//   // }
+// }
+
+svg.dark-icon path {
+  fill: white !important;
+  stroke: white !important;
+}
+svg.dark-icon {
+  fill: white !important;
+}
+
+// path.dark-icon {
+//   width: 35px;
+//   height: 35px;
+// }
+
+svg.graph {
+  width: 35px;
+  height: 35px;
+  &:hover {
+    fill: blue !important;
+    // filter: saturate(300%);
+    -webkit-transition: 10s;
+    transition: 10s;
+  }
+  &:hover * {
+    fill: blue;
+  }
+}

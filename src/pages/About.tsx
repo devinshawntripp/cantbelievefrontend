@@ -2,12 +2,27 @@ import React from "react";
 // import { Container } from "react-bootstrap";
 import CSS from "csstype";
 import myimage from "../images/product_research.png";
+import Head from "next/head";
 
 interface IAboutPageProps {}
 
 const About: React.FC<IAboutPageProps> = (props: {}) => {
   return (
     <div className="about_container_style">
+      <Head>
+        <title>About Us - Why Are You Buying This</title>
+        <meta
+          name="description"
+          content="Learn about the purpose and mission behind whyareyoubuyingthis.com, a comedy website that provides valuable product information and reviews while earning extra cash through affiliate links. Read our About Us page now."
+        />
+        <meta
+          name="keywords"
+          content="About Us, Why Are You Buying This, Comedy Website, Product Information, Product Reviews, Affiliate Links, Extra Cash"
+        />
+        <meta name="robots" content="index, follow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charSet="UTF-8" />
+      </Head>
       <section className="about_sectionOne_style">
         <img
           className="about_imgStyle_style"

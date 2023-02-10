@@ -55,8 +55,8 @@ const Footer: React.FC<FooterProps> = (props: {}) => {
       </Row>
 
       <Row className="rowStyle">
-        <Col className="colStyle">
-          <h1 className="footer-header-style">Information</h1>
+        <Col className="colStyle font-md">
+          <h3 className="footer-header-style">Information</h3>
           <Link className="footer-link-style" href="/About">
             About us
           </Link>
@@ -77,7 +77,7 @@ const Footer: React.FC<FooterProps> = (props: {}) => {
           </Link>
         </Col>
         <Col className="colStyle">
-          <h1 className="footer-header-style">Social</h1>
+          <h3 className="footer-header-style">Social</h3>
           <a className="footer-link-style" href="#">
             Faceboook
           </a>
@@ -99,7 +99,7 @@ const Footer: React.FC<FooterProps> = (props: {}) => {
         </Col>
 
         <Col className="colStyle">
-          <h1 className="footer-header-style">Services</h1>
+          <h3 className="footer-header-style">Services</h3>
           <a className="footer-link-style" href="#">
             Affiliate Marketing
           </a>

@@ -1,15 +1,16 @@
-import "@/styles/globals.css";
-import "@/styles/Menu.css";
-import "@/styles/AmazonItem.css";
-import "@/styles/popup.css";
-import "@/styles/Blog.css";
-import "@/styles/forms.css";
-import "@/styles/Home.css";
-import "@/styles/Login.css";
-import "@/styles/Register.css";
-import "@/styles/Footer.css";
-import "@/styles/About.css";
+// import "@/styles/globals.css";
+// import "@/styles/Menu.css";
+// import "@/styles/AmazonItem.css";
+// import "@/styles/popup.css";
+// import "@/styles/Blog.css";
+// import "@/styles/forms.css";
+// import "@/styles/Home.css";
+// import "@/styles/Login.css";
+// import "@/styles/Register.css";
+// import "@/styles/Footer.css";
+// import "@/styles/About.css";
 import "react-toastify/scss/main.scss";
+import "../../public/assets/css/ScssStyles.css";
 // import "bootstrap/dist/css/bootstrap.css";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import type { AppProps } from "next/app";
@@ -19,6 +20,7 @@ import { store } from "../store/store";
 import { Provider } from "react-redux";
 import AppWrapper from "./AppWrapper";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Theme from "../Components/Theme";
 
 export default function App({
   Component,
@@ -40,11 +42,13 @@ export default function App({
   // }, [router.events]);
   return (
     <Provider store={store}>
-      <GoogleOAuthProvider clientId="171120276082-puk81l0iku6vp1amdfhu19l45snf3lg4.apps.googleusercontent.com">
-        <AppWrapper>
-          <Component {...pageProps} />
-        </AppWrapper>
-      </GoogleOAuthProvider>
+      <Theme>
+        <GoogleOAuthProvider clientId="171120276082-puk81l0iku6vp1amdfhu19l45snf3lg4.apps.googleusercontent.com">
+          <AppWrapper>
+            <Component {...pageProps} />
+          </AppWrapper>
+        </GoogleOAuthProvider>
+      </Theme>
     </Provider>
   );
 }

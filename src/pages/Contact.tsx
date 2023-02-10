@@ -1,16 +1,11 @@
 import React, { useState, MouseEvent } from "react";
 import { Button, Form } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
-// import { useNavigate } from "react-router-dom";
-// import { useDispatch } from "react-redux";
-// import { loadAppData } from "../store/slices/app-slice";
 
 import { render } from "@react-email/render";
-// import { Email } from './email';
+import Head from "next/head";
 
 import { Html } from "@react-email/html";
-// import { Button as ButtonHtml } from "@react-email/button";
-// import { Button } from "@react-email/button";
 
 import axios from "axios";
 
@@ -94,6 +89,21 @@ const ContactPage: React.FC<IContactPageProps> = (props: {}) => {
 
   return (
     <div className="container">
+      <Head>
+        <title>Contact Us - Why Are You Buying This</title>
+        <meta
+          name="description"
+          content="Get in touch with the team behind whyareyoubuyingthis.com. Reach out to us for any questions, comments, or concerns. Contact us now."
+        />
+        <meta
+          name="keywords"
+          content="Contact Us, Why Are You Buying This, Questions, Comments, Concerns"
+        />
+        <meta name="robots" content="index, follow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charSet="UTF-8" />
+      </Head>
+
       <ToastContainer
         toastStyle={{
           backgroundColor: "white",

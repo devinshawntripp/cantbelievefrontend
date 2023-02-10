@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build && next export",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sass": "sass --watch public/assets/scss/style.scss:public/assets/css/ScssStyles.css"
   },
   "dependencies": {
     "@next/font": "13.1.6",
@@ -14,6 +15,7 @@
     "@react-email/render": "^0.0.6",
     "@react-oauth/google": "^0.6.1",
     "@reduxjs/toolkit": "^1.9.2",
+    "@svgr/webpack": "^6.5.1",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
     "@types/react-dom": "18.0.10",
@@ -31,7 +33,8 @@
     "react-email": "^1.7.9",
     "react-redux": "^8.0.5",
     "react-toastify": "^9.1.1",
-    "sass": "^1.57.1",
+    "react-type-animation": "^2.1.2",
+    "sass": "^1.58.0",
     "typescript": "4.9.4"
   }
 }

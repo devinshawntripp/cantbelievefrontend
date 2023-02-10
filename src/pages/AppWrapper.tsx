@@ -20,7 +20,7 @@ const navigation = {
   brand: { name: "Why Are You Buying This?!", to: "/" },
   links: [
     { name: "About Me", to: "/About" },
-    { name: "Blog", to: "/Blog" },
+    { name: "Blog", to: "/blog" },
     { name: "Affiliate Link", to: "/AffiliateLink" },
     // { name: "Developement", to: "/dev" },
     // { name: "Graphic Design", to: "/design" },

@@ -41,32 +41,40 @@ export default function AffiliateLink(props: {}) {
   };
 
   return (
-    <div className="formInputs">
-      <div>Paste the amazon link then press enter to get an aff link:</div>{" "}
-      <Form className="w-50" style={{ marginLeft: "10%" }}>
-        <Form.Group className="inputG" controlId="exampleForm.ControlInput1">
-          <Form.Control
-            type="link"
-            placeholder="ex: www.amazon.com/dp/BGHDLSKEH"
-            aria-label="link"
-            onChange={handleChange}
-          />
-        </Form.Group>
-        <div className="sendButton">
-          <Button
-            onClick={handleSubmit}
-            className="LoginButton m-4"
-            variant="primary"
+    <main className="container mt-200">
+      <section className="section">
+        <div className="font-md">
+          Paste the amazon link then press enter to get an aff link:
+        </div>{" "}
+        <Form className="w-100 d-flex">
+          <Form.Group className="" controlId="exampleForm.ControlInput1">
+            <Form.Control
+              type="link"
+              placeholder="ex: www.amazon.com/dp/BGHDLSKEH"
+              aria-label="link"
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <div className="sendButton">
+            <a
+              onClick={(e: any) => handleSubmit(e)}
+              className="btn btn-brand-1 mt-10"
+            >
+              Get Link
+            </a>
+          </div>
+        </Form>
+        {affLink && (
+          <a
+            className="font-md"
+            target="_blank"
+            rel="noopener noreferrer"
+            href={String(affLink)}
           >
-            Get Link
-          </Button>
-        </div>
-      </Form>
-      {affLink && (
-        <a target="_blank" rel="noopener noreferrer" href={String(affLink)}>
-          {affLink}
-        </a>
-      )}
-    </div>
+            {affLink}
+          </a>
+        )}
+      </section>
+    </main>
   );
 }

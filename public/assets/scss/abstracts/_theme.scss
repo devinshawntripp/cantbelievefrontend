@@ -1,0 +1,64 @@
+//
+
+$textColorLight: #000000;
+$bgColorLight: #ffffff;
+$textColorDark: #ffffff;
+$bgColorDark: #000000;
+$infoColorDark: #a29494;
+$infoColorLight: #04a9dc;
+$btnBgDark: #a29494;
+$btnBgLight: #04a9dc;
+$btnColorDark: #000000;
+$btnColorLight: #ffffff;
+$color-brand-5-dark: invert($color-brand-5);
+
+// map
+$themes: (
+  //outter map
+  dark-mode:
+    (
+      //inner map (dark mode map)
+      "text-color": $textColorDark,
+      "bg-color": $bgColorDark,
+      "bg-opp-color": $bgColorLight,
+      "info-color": $infoColorDark,
+      "btn-bg": $btnBgDark,
+      "btn-color": $btnColorDark,
+      "brand-one-color": $color-brand-5-dark,
+      "color-brand-2": $color-gray-200,
+      "color-brand-1": white,
+      "color-inner-btn": rgb(255, 89, 255)
+    ),
+  light-mode: (
+    //inner map (light mode map)
+    "text-color": $textColorLight,
+    "bg-color": $bgColorLight,
+    "bg-opp-color": $bgColorDark,
+    "info-color": $infoColorLight,
+    "btn-bg": $btnBgLight,
+    "btn-color": $btnColorLight,
+    "brand-one-color": $color-brand-5,
+    "color-brand-2": $color-brand-2,
+    "color-brand-1": $color-brand-1,
+    "color-inner-btn": $color-gray-80
+  )
+);
+
+// mixin
+@mixin theme() {
+  @each $theme, $map in $themes {
+    //iterrates on themes
+    $theme-map: $map !global; // not global variable
+    .#{$theme} & {
+      //outputs mode selector
+      @content; // apply styles from .content
+    }
+  }
+  $theme-map: null !global; // eventually null $theme-map
+}
+
+@function theme-get($key) {
+  //helper function
+  //outputs value of specific key inside $theme-map (its name)
+  @return map-get($theme-map, $key);
+}

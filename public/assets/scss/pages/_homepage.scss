@@ -1,0 +1,85 @@
+.Home {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  font-family: var(--fontHeading);
+  font-weight: 500;
+}
+
+.Item {
+  margin-right: 3%;
+}
+.banner-12 {
+  // background-image: url("../../../src/images/product_research.png");
+  background-color: black;
+  background-size: cover;
+  // border-radius: 90%;
+  min-height: 700px;
+  position: relative;
+}
+
+.banner-h1 {
+  color: white;
+  z-index: 10;
+}
+
+@media only screen and (max-width: 1023px) {
+  .waves canvas {
+    bottom: 0px;
+    position: absolute;
+    overflow: hidden;
+  }
+}
+
+body {
+  // background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)
+  //   no-repeat;
+  @include theme() {
+    background: theme-get("bg-color");
+  }
+  // background: black;
+  // background-size: 10000% 10000%;
+  background-size: 1000% 1000%;
+
+  // height: 100vh !important;
+  // animation: gradient 15s ease infinite;
+  height: 100vh;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.type::after {
+  content: "?" !important;
+  animation: cursor 1.1s infinite step-start !important;
+}
+
+@keyframes cursor {
+  50% {
+    opacity: 0 !important;
+  }
+}
+
+.waves {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 1;
+  overflow: hidden;
+}

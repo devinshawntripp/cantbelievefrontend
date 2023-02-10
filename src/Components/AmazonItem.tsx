@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 // import picture from "../images/nail_stamper.jpg";
 import { Button, Form } from "react-bootstrap";
 // import saveIcon from "../images/heartIcon.png";
 import saveIconFilled from "../images/heartIconFilled.png";
 import saveIconWhite from "../images/heartIconWhite.png";
+import saveIconBlack from "../images/heartIcon.png";
 // import CSS from "csstype";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -12,6 +13,8 @@ import { ToastContainer, toast } from "react-toastify";
 
 import { editProduct, saveProduct } from "../api/index.js";
 import Image from "next/image";
+import ReadMore from "./ReadMore";
+import { ThemeContext } from "../Components/Theme";
 
 /**
  * TODO:
@@ -43,6 +46,8 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
   var { name, url, desc, imgUrl, price, saves, id } = props;
   var showUrl = url;
 
+  const { dark } = useContext(ThemeContext);
+
   if (showUrl && showUrl.length > 30) {
     showUrl = showUrl.slice(0, 30) + "...";
   }
@@ -65,7 +70,8 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
 
   const user = useSelector(appSelector);
 
-  const [pic, setPic] = useState(saveIconWhite);
+  // const [pic, setPic] = useState(saveIconWhite);
+  const [pic, setPic] = useState(dark ? saveIconWhite : saveIconBlack);
 
   useEffect(() => {
     user.idsSaved.map((userIdsSaved: String) => {
@@ -83,7 +89,8 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
   };
 
   const handleMouseLeave = () => {
-    setPic(saveIconWhite);
+    // setPic(saveIconWhite);
+    setPic(dark ? saveIconWhite : saveIconBlack);
   };
 
   const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -163,7 +170,10 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
 
   const handleClickSave = async (idPassed: String) => {
     //get the id of the item
-    console.log(user);
+    if (user.email == "") {
+      notify("You must log in to use this!");
+      return;
+    }
 
     const payload = {
       itemId: idPassed,
@@ -198,9 +208,9 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
         pauseOnHover
       />
       {isEdit ? (
-        <div className="AmazonItemBox">
-          <div className="titleContainer">
-            <p className="amz-item-title">{String(name)}</p>
+        <div className="card-product-grid">
+          <div className="card-title mb-20">
+            <h6>{String(name)}</h6>
           </div>
 
           {/* <div className="imgContainer"> */}
@@ -210,7 +220,7 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
             <p>Not avail</p>
           )}
           {/* </div> */}
-          <div className="ItemDetails">
+          <div className="card-info">
             {/* <p className="text desc">{String(desc).trim()}</p> */}
             <Form.Control
               as="textarea"
@@ -257,45 +267,52 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
           )}
         </div>
       ) : (
-        <div className="AmazonItemBox">
-          <div className="titleContainer">
-            <p className="amz-item-title">{String(name)}</p>
+        <div className="card-product-grid card-product-grid-2 hover-up">
+          <div className="card-title">
+            <h6>{String(name)}</h6>
           </div>
           {/* <div className="imgContainer"> */}
-          {imgUrl ? (
-            <img style={{ marginTop: "4%" }} src={String(imgUrl)} />
-          ) : (
-            <p>Not avail</p>
-          )}
+          <div className="card-image">
+            <img className="" src={String(imgUrl)} alt="image not found" />
+          </div>
+
           {/* </div> */}
-          <div className="ItemDetails">
-            <p className="text desc">{String(desc).trim()}</p>
+          <div className="card-info mt-20">
+            <ReadMore class="font-md">
+              <p className="">{String(desc).trim()}</p>
+            </ReadMore>
           </div>
           {/* <div style={PriceAndLink}> */}
-          <div className="priceAndLink">
-            <a target="_blank" rel="noopener noreferrer" href={String(url)}>
-              <Button
+          <div className="d-flex mt-20 align-items-center border-top pt-20 justify-content-around text-align-center">
+            <a
+              className="btn btn-border-brand-1 mr-20"
+              target="_blank"
+              rel="noopener noreferrer"
+              href={String(url)}
+            >
+              {/* <Button
                 variant="success"
                 // style={{ backgroundColor: "green" }}
                 // target="_blank"
                 // rel="noopener noreferrer"
                 // className="btn btn-primary"
-              >
-                Click Me
-              </Button>
+              > */}
+              Click Me
+              {/* </Button> */}
             </a>
 
-            <div className="saves">
+            <div className="d-flex flex-column mr-20 align-items-center">
               <img
                 onMouseOver={handleMouseOver}
                 onMouseLeave={handleMouseLeave}
                 onClick={() => handleClickSave(String(id))}
                 style={{ width: "20px", height: "20px", objectFit: "fill" }}
+                className="hover-up"
                 src={pic.src}
               />
-              <p>{String(actSaves)} Saves</p>
+              <p className="light-text">{String(actSaves)} Saves</p>
             </div>
-            <p className="price">
+            <p className="price light-text">
               ${String(Number(price).toLocaleString("en"))}
             </p>
             {/* </div> */}
@@ -312,6 +329,134 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
         </div>
       )}
     </>
+    // <>
+    //   <ToastContainer
+    //     toastStyle={{ backgroundColor: "black" }}
+    //     position="top-right"
+    //     autoClose={5000}
+    //     hideProgressBar={false}
+    //     newestOnTop={false}
+    //     closeOnClick
+    //     rtl={false}
+    //     pauseOnFocusLoss
+    //     draggable
+    //     pauseOnHover
+    //   />
+    //   {isEdit ? (
+    //     <div className="AmazonItemBox">
+    //       <div className="titleContainer">
+    //         <p className="amz-item-title">{String(name)}</p>
+    //       </div>
+
+    //       {/* <div className="imgContainer"> */}
+    //       {imgUrl ? (
+    //         <img style={{ marginTop: "0%" }} src={String(imgUrl)} />
+    //       ) : (
+    //         <p>Not avail</p>
+    //       )}
+    //       {/* </div> */}
+    //       <div className="ItemDetails">
+    //         {/* <p className="text desc">{String(desc).trim()}</p> */}
+    //         <Form.Control
+    //           as="textarea"
+    //           rows={5}
+    //           value={editDesc}
+    //           aria-label="Desc"
+    //           onChange={handleChange}
+    //         />
+    //       </div>
+    //       {/* <div style={PriceAndLink}> */}
+    //       <div className="priceAndLink">
+    //         {/* <Button
+    //           href={String(url)}
+    //           target="_blank"
+    //           rel="noopener noreferrer"
+    //           className="clickme-button"
+    //         >
+    //           Click Me
+    //         </Button> */}
+
+    //         <div className="saves">
+    //           <img
+    //             onMouseOver={handleMouseOver}
+    //             onMouseLeave={handleMouseLeave}
+    //             onClick={() => handleClickSave(String(id))}
+    //             style={{ width: "20px", height: "20px", objectFit: "fill" }}
+    //             src={pic.src}
+    //           />
+    //           <p>{String(actSaves)} Saves</p>
+    //         </div>
+    //         <p className="price">
+    //           ${String(Number(price).toLocaleString("en"))}
+    //         </p>
+    //         {/* </div> */}
+    //       </div>
+    //       {user.role === "admin" && (
+    //         <Button
+    //           variant="success"
+    //           style={{ width: "90%" }}
+    //           onClick={toggleEdit}
+    //         >
+    //           Submit
+    //         </Button>
+    //       )}
+    //     </div>
+    //   ) : (
+    //     <div className="AmazonItemBox">
+    //       <div className="titleContainer">
+    //         <p className="amz-item-title">{String(name)}</p>
+    //       </div>
+    //       {/* <div className="imgContainer"> */}
+    //       {imgUrl ? (
+    //         <img style={{ marginTop: "4%" }} src={String(imgUrl)} />
+    //       ) : (
+    //         <p>Not avail</p>
+    //       )}
+    //       {/* </div> */}
+    //       <div className="ItemDetails">
+    //         <p className="text desc">{String(desc).trim()}</p>
+    //       </div>
+    //       {/* <div style={PriceAndLink}> */}
+    //       <div className="priceAndLink">
+    //         <a target="_blank" rel="noopener noreferrer" href={String(url)}>
+    //           <Button
+    //             variant="success"
+    //             // style={{ backgroundColor: "green" }}
+    //             // target="_blank"
+    //             // rel="noopener noreferrer"
+    //             // className="btn btn-primary"
+    //           >
+    //             Click Me
+    //           </Button>
+    //         </a>
+
+    //         <div className="saves">
+    //           <img
+    //             onMouseOver={handleMouseOver}
+    //             onMouseLeave={handleMouseLeave}
+    //             onClick={() => handleClickSave(String(id))}
+    //             style={{ width: "20px", height: "20px", objectFit: "fill" }}
+    //             src={pic.src}
+    //           />
+    //           <p>{String(actSaves)} Saves</p>
+    //         </div>
+    //         <p className="price">
+    //           ${String(Number(price).toLocaleString("en"))}
+    //         </p>
+    //         {/* </div> */}
+    //       </div>
+    //       {user.role === "admin" && (
+    //         <Button
+    //           variant="success"
+    //           style={{ width: "90%" }}
+    //           onClick={toggleEdit}
+    //         >
+    //           Edit
+    //         </Button>
+    //       )}
+    //     </div>
+    //   )}
+    // </>
   );
 };
 

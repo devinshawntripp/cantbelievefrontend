@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { Button, Row } from "react-bootstrap";
 import AmazonItem from "../Components/AmazonItem";
 import { useRouter } from "next/router";
@@ -8,6 +8,8 @@ import { appSelector } from "../store/slices/app-slice";
 import { useSelector } from "react-redux";
 import useMediaQuery from "../hooks/useMediaQuery";
 import Popup from "../Components/Popup";
+import { waves } from "../Components/waves";
+import { TypeAnimation } from "react-type-animation";
 
 export interface IHomeProps {}
 
@@ -43,6 +45,10 @@ export default function Home() {
   const listInnerRef = useRef<any>();
 
   useEffect(() => {
+    waves();
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
       const scrollTop =
         window.pageYOffset || document.documentElement.scrollTop;
@@ -68,7 +74,7 @@ export default function Home() {
     };
   }, [displayCount, loading]);
 
-  let getStuff: boolean = useMediaQuery("(max-width: 600px)");
+  // let getStuff: boolean = useMediaQuery("(max-width: 600px)");
 
   const deleteItem = async (id: string) => {
     // console.log(id);
@@ -100,7 +106,11 @@ export default function Home() {
           // fasdf
 
           if (items) {
-            console.log(res.data.items.length);
+            if (res.data.items.length > 0) {
+              res.data.items.map((it: any) => {
+                if (items.includes(it._id)) return;
+              });
+            }
             if (
               res.data.items.length > 0 &&
               !items.includes(res.data.items.at(0)._id)
@@ -127,96 +137,99 @@ export default function Home() {
     getAllItems();
   }, [displayCount]);
 
-  const productsStyle: CSS.Properties = {
-    display: "flex",
-    width: "100%",
-    // marginTop: "5%",
-    // marginLeft: "10%",
-    // marginRight: "10%",
-
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
-  };
-
-  const productItem: CSS.Properties = {
-    display: "flex",
-    flexDirection: "column",
-    width: getStuff ? "100% " : "20%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: "2%",
-    marginTop: "2%",
-  };
-
   return (
-    <div className="Home">
-      {app.role == "admin" && (
-        <Row>
-          <div style={{ marginTop: "10%" }}>
-            {/* <Button>Add Product</Button> */}
-            <Button onClick={routeChange}>Add Product</Button>
-          </div>
-        </Row>
-      )}
-      <div style={productsStyle}>
-        {items &&
-          items.map((item) => {
-            // console.log(item);
-            return (
-              <div key={item._id} style={productItem}>
-                <AmazonItem
-                  id={item._id}
-                  name={item.name}
-                  url={item.url}
-                  imgUrl={item.imgUrl}
-                  desc={item.desc}
-                  price={item.price ?? 0}
-                  saves={item.saves ?? 0}
-                />
+    <main className="main">
+      <section className="section banner-12 mt-70 d-flex align-items-center justify-content-center">
+        <TypeAnimation
+          sequence={[
+            "Why are you buying this", // Types 'One'
+            4000,
+            "", // Waits 1s
+            // Deletes 'One' and types 'Two'
+            () => {
+              console.log("Done typing!"); // Place optional callbacks anywhere in the array
+            },
+          ]}
+          wrapper="h1"
+          className="banner-h1 nav-item type"
+          cursor={false}
+          repeat={Infinity}
+          style={{ fontSize: "2em" }}
+        >
+          {/* <h1 className="banner-h1">Why Are You Buying This?</h1> */}
+        </TypeAnimation>
+        <div className="waves"></div>
+      </section>
+      <section className="container">
+        {app.role == "admin" && (
+          <Row>
+            <div className="mt-10">
+              {/* <Button>Add Product</Button> */}
+              <Button onClick={routeChange}>Add Product</Button>
+            </div>
+          </Row>
+        )}
 
-                {app.role === "admin" && (
-                  <Button style={{ width: "90%" }} onClick={togglePopup}>
-                    Delete
-                  </Button>
-                )}
-
-                {isOpen && app.role === "admin" && (
-                  <Popup
-                    content={
-                      <>
-                        <h1>Are you sure you want to delete?</h1>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-around",
-                          }}
-                        >
-                          <Button
-                            onClick={() => deleteItem(item._id)}
-                            style={{ width: "20%" }}
-                            variant="danger"
-                          >
-                            Yes
-                          </Button>
-
-                          <Button
-                            onClick={togglePopup}
-                            style={{ width: "20%" }}
-                            variant="success"
-                          >
-                            No
-                          </Button>
-                        </div>
-                      </>
-                    }
-                    handleClose={togglePopup}
+        <div className="row mt-100">
+          {items &&
+            items.map((item) => {
+              // console.log(item);
+              return (
+                // <div key={item._id} style={productItem}>
+                <div key={item._id} className="col-xl-3 col-lg-6 col-md-6">
+                  <AmazonItem
+                    id={item._id}
+                    name={item.name}
+                    url={item.url}
+                    imgUrl={item.imgUrl}
+                    desc={item.desc}
+                    price={item.price ?? 0}
+                    saves={item.saves ?? 0}
                   />
-                )}
-              </div>
-            );
-          })}
-      </div>
-    </div>
+
+                  {app.role === "admin" && (
+                    <Button style={{ width: "90%" }} onClick={togglePopup}>
+                      Delete
+                    </Button>
+                  )}
+
+                  {isOpen && app.role === "admin" && (
+                    <Popup
+                      content={
+                        <>
+                          <h1>Are you sure you want to delete?</h1>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-around",
+                            }}
+                          >
+                            <Button
+                              onClick={() => deleteItem(item._id)}
+                              style={{ width: "20%" }}
+                              variant="danger"
+                            >
+                              Yes
+                            </Button>
+
+                            <Button
+                              onClick={togglePopup}
+                              style={{ width: "20%" }}
+                              variant="success"
+                            >
+                              No
+                            </Button>
+                          </div>
+                        </>
+                      }
+                      handleClose={togglePopup}
+                    />
+                  )}
+                </div>
+              );
+            })}
+        </div>
+      </section>
+    </main>
   );
 }
