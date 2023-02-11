@@ -1,5 +1,5 @@
 import React, { useState, useEffect, MouseEvent, ChangeEvent } from "react";
-import { InputGroup, FormControl, Button } from "react-bootstrap";
+// import { InputGroup, FormControl, Button } from "react-bootstrap";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loadAppData } from "../store/slices/app-slice";
@@ -166,7 +166,7 @@ const Login: React.FC<ILoginProps> = ({}) => {
       />
       <div className="card">
         <div className="inputG">
-          <InputGroup>
+          {/* <InputGroup>
             <InputGroup.Text id="basic-addon1">Email</InputGroup.Text>
             <FormControl
               placeholder="Username"
@@ -174,10 +174,10 @@ const Login: React.FC<ILoginProps> = ({}) => {
               aria-describedby="basic-addon1"
               onChange={handleChange}
             />
-          </InputGroup>
+          </InputGroup> */}
         </div>
         <div className="inputG">
-          <InputGroup className="mt-3">
+          {/* <InputGroup className="mt-3">
             <InputGroup.Text id="password-1">Password</InputGroup.Text>
             <FormControl
               placeholder="Password"
@@ -186,16 +186,16 @@ const Login: React.FC<ILoginProps> = ({}) => {
               type="password"
               onChange={handleChange}
             />
-          </InputGroup>
+          </InputGroup> */}
         </div>
         <div className="LoginButton">
-          <Button
+          {/* <Button
             onClick={(e) => handleLogin(e, "", "")}
             className="LoginButton m-4"
             variant="primary"
           >
             Login
-          </Button>
+          </Button> */}
         </div>
         <div>
           <Link href="/Register">
@@ -236,7 +236,7 @@ const Login: React.FC<ILoginProps> = ({}) => {
             Google
           </Button> */}
         </div>
-        <div className="altSignins">
+        {/* <div className="altSignins">
           <Button className="altSignins mt-3" variant="primary">
             Facebook
           </Button>
@@ -245,7 +245,7 @@ const Login: React.FC<ILoginProps> = ({}) => {
           <Button className="altSignins mt-3" variant="primary">
             Github
           </Button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

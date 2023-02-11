@@ -67,6 +67,7 @@
   opacity: 0;
   width: 0;
   height: 0;
+  border: none !important;
 }
 /* The slider */
 .slider {
@@ -76,9 +77,10 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: $color-brand-1;
+  background-color: white;
   -webkit-transition: 0.3s;
   transition: 0.3s;
+  border: none !important;
 }
 /* Before sliding */
 .slider:before {
@@ -92,7 +94,7 @@
   background-image: url("../imgs/icons/icons8-crescent-moon-50-filled.png");
   background-repeat: no-repeat;
   background-size: contain;
-  border: none;
+  border: none !important;
   // background-position: 80% 20%;
   // background-color: white;
   -webkit-transition: 0.3s;
@@ -101,9 +103,9 @@
 input:checked + .slider {
   background-color: #000000;
 }
-input:focus + .slider {
-  box-shadow: 0 0 1px #564311;
-}
+// input:focus + .slider {
+//   // box-shadow: 0 0 1px #564311;
+// }
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
@@ -116,11 +118,13 @@ input:checked + .slider:before {
 
 /* Rounded sliders */
 .slider.round {
-  border-radius: 34px;
+  // border-radius: 34px;
+  border: none !important;
 }
 
 .slider.round:before {
-  border-radius: 50%;
+  // border-radius: 50%;
+  border: none !important;
 }
 
 // .icon {
@@ -218,4 +222,85 @@ svg.graph {
   &:hover * {
     fill: blue;
   }
+}
+
+.plus {
+  --b: 4px; /* the thickness */
+  width: 40px; /* the size */
+  aspect-ratio: 1;
+  height: 40px;
+  border: 10px solid #000; /* the outer space */
+  background: conic-gradient(
+      from 90deg at var(--b) var(--b),
+      #000 90deg,
+      #fff 0
+    )
+    calc(100% + var(--b) / 2) calc(100% + var(--b) / 2) / calc(50% + var(--b))
+    calc(50% + var(--b));
+  display: inline-block;
+  transform: rotate(0deg);
+  transition: 0.5s;
+  margin-right: 20px;
+}
+
+.dark-plus {
+  --b: 4px; /* the thickness */
+  width: 40px; /* the size */
+  height: 40px;
+  aspect-ratio: 1.2;
+  border: 10px solid rgb(255, 255, 255); /* the outer space */
+  background: conic-gradient(
+      from 90deg at var(--b) var(--b),
+      rgb(255, 255, 255) 90deg,
+      rgb(1, 1, 1) 0
+    )
+    calc(100% + var(--b) / 2) calc(100% + var(--b) / 2) / calc(50% + var(--b))
+    calc(50% + var(--b));
+  display: inline-block;
+  transform: rotate(0deg);
+  transition: 0.5s;
+  margin-right: 20px;
+}
+
+.dark-plus.active {
+  transform: rotate(45deg);
+  transition: 0.5s;
+}
+
+.plus.active {
+  transform: rotate(45deg);
+  transition: 0.5s;
+}
+
+// .dark-plus:active {
+//   transform: rotate(30deg);
+//   transition: 0.5s;
+// }
+
+.alt {
+  border: none;
+  margin: 10px;
+  background: conic-gradient(
+      from 90deg at var(--b) var(--b),
+      #fff 90deg,
+      #000 0
+    )
+    calc(100% + var(--b) / 2) calc(100% + var(--b) / 2) / calc(50% + var(--b))
+    calc(50% + var(--b));
+}
+.radius {
+  border-radius: 50%;
+}
+
+.popover-plus {
+  background: transparent !important;
+  border: none !important;
+}
+
+.popover-arrow {
+  display: none !important;
+}
+
+.plus-container {
+  border-right: 1px solid $color-gray-100;
 }

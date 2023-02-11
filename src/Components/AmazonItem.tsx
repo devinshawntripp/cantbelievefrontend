@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 // import picture from "../images/nail_stamper.jpg";
-import { Button, Form } from "react-bootstrap";
+// import { Button, Form } from "react-bootstrap";
 // import saveIcon from "../images/heartIcon.png";
 import saveIconFilled from "../images/heartIconFilled.png";
 import saveIconWhite from "../images/heartIconWhite.png";
@@ -222,13 +222,13 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
           {/* </div> */}
           <div className="card-info">
             {/* <p className="text desc">{String(desc).trim()}</p> */}
-            <Form.Control
+            {/* <Form.Control
               as="textarea"
               rows={5}
               value={editDesc}
               aria-label="Desc"
               onChange={handleChange}
-            />
+            /> */}
           </div>
           {/* <div style={PriceAndLink}> */}
           <div className="priceAndLink">
@@ -257,13 +257,14 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
             {/* </div> */}
           </div>
           {user.role === "admin" && (
-            <Button
-              variant="success"
-              style={{ width: "90%" }}
-              onClick={toggleEdit}
-            >
-              Submit
-            </Button>
+            // <Button
+            //   variant="success"
+            //   style={{ width: "90%" }}
+            //   onClick={toggleEdit}
+            // >
+            //   Submit
+            // </Button>
+            <div></div>
           )}
         </div>
       ) : (
@@ -317,7 +318,7 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
             </p>
             {/* </div> */}
           </div>
-          {user.role === "admin" && (
+          {/* {user.role === "admin" && (
             <Button
               variant="success"
               style={{ width: "90%" }}
@@ -325,7 +326,7 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
             >
               Edit
             </Button>
-          )}
+          )} */}
         </div>
       )}
     </>

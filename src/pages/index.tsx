@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState, useRef, useContext } from "react";
-import { Button, Row } from "react-bootstrap";
+// import { Button, Row } from "react-bootstrap";
 import AmazonItem from "../Components/AmazonItem";
 import { useRouter } from "next/router";
 import CSS from "csstype";
@@ -162,12 +162,13 @@ export default function Home() {
       </section>
       <section className="container">
         {app.role == "admin" && (
-          <Row>
-            <div className="mt-10">
-              {/* <Button>Add Product</Button> */}
-              <Button onClick={routeChange}>Add Product</Button>
-            </div>
-          </Row>
+          // <Row>
+          //   <div className="mt-10">
+          //     {/* <Button>Add Product</Button> */}
+          //     <Button onClick={routeChange}>Add Product</Button>
+          //   </div>
+          // </Row>
+          <div></div>
         )}
 
         <div className="row mt-100">
@@ -188,9 +189,10 @@ export default function Home() {
                   />
 
                   {app.role === "admin" && (
-                    <Button style={{ width: "90%" }} onClick={togglePopup}>
-                      Delete
-                    </Button>
+                    // <Button style={{ width: "90%" }} onClick={togglePopup}>
+                    //   Delete
+                    // </Button>
+                    <div></div>
                   )}
 
                   {isOpen && app.role === "admin" && (
@@ -204,7 +206,7 @@ export default function Home() {
                               justifyContent: "space-around",
                             }}
                           >
-                            <Button
+                            {/* <Button
                               onClick={() => deleteItem(item._id)}
                               style={{ width: "20%" }}
                               variant="danger"
@@ -218,7 +220,7 @@ export default function Home() {
                               variant="success"
                             >
                               No
-                            </Button>
+                            </Button> */}
                           </div>
                         </>
                       }

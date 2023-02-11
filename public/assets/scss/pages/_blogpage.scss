@@ -1,0 +1,11 @@
+.text-light-some {
+  @include theme() {
+    color: theme-get("text-color") !important;
+  }
+
+  &p {
+    @include theme() {
+      color: theme-get("text-color");
+    }
+  }
+}

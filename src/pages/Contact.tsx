@@ -1,5 +1,5 @@
 import React, { useState, MouseEvent } from "react";
-import { Button, Form } from "react-bootstrap";
+// import { Button, Form } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 
 import { render } from "@react-email/render";
@@ -88,7 +88,7 @@ const ContactPage: React.FC<IContactPageProps> = (props: {}) => {
   };
 
   return (
-    <div className="container">
+    <div className="container mt-200">
       <Head>
         <title>Contact Us - Why Are You Buying This</title>
         <meta
@@ -119,47 +119,67 @@ const ContactPage: React.FC<IContactPageProps> = (props: {}) => {
         draggable
         pauseOnHover
       />
-      <Form className="formInputs">
-        <Form.Group className="inputG" controlId="exampleForm.ControlInput1">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="ex: youremail@gmail.com"
-            aria-label="email"
-            onChange={handleChange}
-          />
-        </Form.Group>
-        <Form.Group className="inputG" controlId="exampleForm.ControlInput1">
-          <Form.Label>Subject</Form.Label>
-          <Form.Control
-            type="subject"
-            placeholder="ex: business inquiry"
-            aria-label="subject"
-            onChange={handleChange}
-          />
-        </Form.Group>
+      <section className="container section ">
+        <div className="row contact d-flex align-items-center">
+          <div className="col-lg-6 contact-left col-sm-3">
+            <h2 className="contact-h2">Send us some friendly mail!</h2>
+            <br></br>
+            <h6>We will get back to you within 24h!</h6>
+          </div>
 
-        <Form.Group className="inputG" controlId="exampleForm.ControlTextarea1">
-          <Form.Label>Write me a compelling email!</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={6}
-            aria-label="emailbody"
-            onChange={handleChange}
-          />
-        </Form.Group>
-        <div className="sendButton">
-          <Button
-            onClick={handleSubmit}
-            className="LoginButton m-4"
-            variant="primary"
-          >
-            Send
-          </Button>
+          <div className="col-lg-6 col-sm-6">
+            {/* <Form> */}
+            {/* <Form.Group
+                className="inputG"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  className="font-md"
+                  placeholder="ex: youremail@gmail.com"
+                  aria-label="email"
+                  onChange={handleChange}
+                />
+              </Form.Group> */}
+            {/* <Form.Group
+                className="mt-20"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>Subject</Form.Label>
+                <Form.Control
+                  type="subject"
+                  placeholder="ex: business inquiry"
+                  aria-label="subject"
+                  onChange={handleChange}
+                />
+              </Form.Group> */}
+            {/* 
+              <Form.Group
+                className="mt-20"
+                controlId="exampleForm.ControlTextarea1"
+              >
+                <Form.Label>Write me a compelling email!</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={6}
+                  aria-label="emailbody"
+                  onChange={handleChange}
+                />
+              </Form.Group> */}
+            <div className="sendButton">
+              <a
+                onClick={(e: any) => handleSubmit(e)}
+                className="btn btn-brand-1 m-4 ml-200"
+              >
+                Send
+              </a>
+            </div>
+            {/* </Form> */}
+          </div>
         </div>
-      </Form>
+      </section>
     </div>
-    // </div>
   );
 };
 

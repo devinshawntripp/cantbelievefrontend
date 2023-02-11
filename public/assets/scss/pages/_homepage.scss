@@ -36,6 +36,17 @@
   }
 }
 
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 body {
   // background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)
   //   no-repeat;
@@ -44,11 +55,16 @@ body {
   }
   // background: black;
   // background-size: 10000% 10000%;
-  background-size: 1000% 1000%;
+  // background-size: 1000% 1000%;
 
   // height: 100vh !important;
   // animation: gradient 15s ease infinite;
-  height: 100vh;
+  position: relative;
+  margin-top: 70px !important;
+  overflow-x: hidden;
+  // min-height: 100%;
+  // border: 3px;
+  // box-sizing: border-box;
 }
 
 @keyframes gradient {

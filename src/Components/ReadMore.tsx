@@ -9,7 +9,7 @@ const ReadMore = (props: { children: any; class: string }) => {
   };
   return (
     <p className={props.class}>
-      {isReadMore ? String(text).slice(0, 150) : text}
+      {isReadMore ? String(text).slice(0, 140) : text}
       {text.length > 150 && (
         <span onClick={toggleReadMore} className="light-text">
           {isReadMore ? "...read more" : " show less"}

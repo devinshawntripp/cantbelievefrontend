@@ -1,8 +1,13 @@
-import React, { useState, useRef } from "react";
-import { InputGroup, FormControl, Button, Form } from "react-bootstrap";
+import React, { useState, useRef, useContext, useEffect } from "react";
+import { OverlayTrigger, Popover } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import Axios from "axios";
 import CSS from "csstype";
+import { ThemeContext } from "../../Components/Theme";
+import Imageimg from "../../../public/assets/imgs/icons/image-svgrepo-com.svg";
+import YoutubeImg from "../../../public/assets/imgs/icons/youtube-svgrepo-com.svg";
+import EmbededImg from "../../../public/assets/imgs/icons/embed-post-svgrepo-com.svg";
+import CodeImg from "../../../public/assets/imgs/icons/code-tag-svgrepo-com.svg";
 
 interface IAddProductProps {}
 
@@ -15,6 +20,22 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   const fileRef = useRef<HTMLInputElement>(null);
   const [price, setPrice] = useState<Number>(0);
   const [showImg, setShowImg] = useState<any>(null);
+  const [isActive, setIsActive] = useState({
+    status: false,
+  });
+
+  const { dark } = useContext(ThemeContext);
+
+  const popoverRef = useRef();
+  // useEffect(() => {
+  //   var popover = new bootstrap.Popover(popoverRef.current, {
+  //     content: "Hello popover content!",
+  //     title: "My Popover",
+  //   });
+  // }, []);
+
+  const targetRef = useRef(null);
+  const [html, setHtml] = useState(true);
 
   const notify = (msg: string) =>
     toast(msg, {
@@ -68,6 +89,19 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
       reader.readAsDataURL(file);
     });
 
+  const toggleActive = (e: any) => {
+    const newStatus = {
+      status: !isActive.status,
+    };
+    setIsActive(newStatus);
+  };
+
+  const showModal = () => {
+    const { Modal } = require("bootstrap");
+    const myModal = new Modal("#exampleModal");
+    myModal.show();
+  };
+
   const submitForm = async () => {
     //validate
 
@@ -116,8 +150,48 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
     height: "100%",
   };
 
+  const popoverRight = (
+    <Popover
+      id="popover-positioned-right"
+      className="h-40 d-flex text-align-center align-items-center justify-content-center p-20 popover-plus"
+    >
+      <div className="m-20 add-content-icon hover-up">
+        <Imageimg
+          width="15px"
+          height="15px"
+          fill="green"
+          // className={`${dark ? "dark-icon" : "dark-icon"}`}
+        />
+      </div>
+      <div className="m-20 add-content-icon hover-up">
+        <YoutubeImg
+          width="15px"
+          height="15px"
+          fill="green"
+          // className={`${dark ? "dark-icon" : "profile"} hover-up mr-10`}
+        />
+      </div>
+      <div className="m-20 add-content-icon hover-up">
+        <EmbededImg
+          width="15px"
+          height="15px"
+          fill="green"
+          // className={`${dark ? "dark-icon" : "profile"} hover-up mr-10`}
+        />
+      </div>
+      <div className="m-20 add-content-icon hover-up add-content-icon-code">
+        <CodeImg
+          width="15px"
+          height="15px"
+          fill="green"
+          // className={`${dark ? "dark-icon" : "profile"} hover-up`}
+        ></CodeImg>
+      </div>
+    </Popover>
+  );
+
   return (
-    <div className="about_container_style">
+    <div className="container mt-100">
       {showImg && (
         <section className="about_sectionOne_style">
           <img className="about_imgStyle_style" src={showImg} />
@@ -135,8 +209,44 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
         draggable
         pauseOnHover
       />
-      <div className="">
-        <Form style={formCss}>
+      <div className="container">
+        <div className="w-80 d-flex align-items-center justify-content-center ml-50">
+          <OverlayTrigger
+            trigger="click"
+            placement="right"
+            overlay={popoverRight}
+          >
+            <div className="plus-container mr-20">
+              <div
+                onClick={(e: any) => toggleActive(e)}
+                className={`${dark ? "dark-plus" : "plus"} radius ${
+                  isActive.status && "active"
+                } hover-up`}
+              ></div>
+            </div>
+          </OverlayTrigger>
+
+          <div className="col-lg-6">
+            <div className="form-group">
+              <input
+                type="text"
+                // placeholder="Enter something"
+                className="form-control icon-email"
+              ></input>
+            </div>
+          </div>
+
+          {/* <button
+            type="button"
+            className="btn btn-lg btn-danger"
+            data-bs-toggle="popover"
+            data-bs-title="Popover title"
+            data-bs-content="And here's some amazing content. It's very engaging. Right?"
+          >
+            Click to toggle popover
+          </button> */}
+        </div>
+        {/* <Form style={formCss}>
           {showImg ? (
             <></>
           ) : (
@@ -149,8 +259,8 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
                 onChange={handleDisplayFileDetails}
               />
             </Form.Group>
-          )}
-          {/* <Form.Group
+          )} */}
+        {/* <Form.Group
             className="mb-3 w-90"
             controlId="exampleForm.ControlInput1"
           >
@@ -196,8 +306,8 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
               onChange={handleChange}
             />
           </Form.Group> */}
-        </Form>
-        <div className="LoginButton">
+        {/* </Form> */}
+        {/* <div className="LoginButton">
           <Button
             onClick={submitForm}
             className="LoginButton m-4"
@@ -205,7 +315,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
           >
             Add Product
           </Button>
-        </div>
+        </div> */}
 
         {/* <div
           className="blackLine"

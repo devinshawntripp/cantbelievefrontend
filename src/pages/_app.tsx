@@ -11,8 +11,9 @@
 // import "@/styles/About.css";
 import "react-toastify/scss/main.scss";
 import "../../public/assets/css/ScssStyles.css";
-// import "bootstrap/dist/css/bootstrap.css";
-// import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import type { AppProps } from "next/app";
 import { useEffect } from "react";
 import { useRouter } from "next/router";

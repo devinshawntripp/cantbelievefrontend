@@ -21,14 +21,14 @@ const Blog: React.FC<IBlogPageProps> = (props: {}) => {
       </Head>
       <main className="container mt-200">
         <div className="mb-50">
-          <Link className="btn btn-brand-1" href="/create-post">
+          <Link className="btn btn-brand-1" href="/blog/create-post">
             Add Post
           </Link>
         </div>
         <section className="section">
           <div className="col-xl-3">
             <div className="card-product-grid card-product-grid-2 hover-up">
-              <div className="d-flex align-items-center justify-content-around mb-10 border-bottom p-10">
+              <div className="d-flex align-items-center justify-content-around mb-30 border-bottom p-10">
                 <div className="col-xl-3 d-flex align-items-center justify-content-center">
                   <div className="d-flex flex-direction-row">
                     <Graph
@@ -36,19 +36,19 @@ const Blog: React.FC<IBlogPageProps> = (props: {}) => {
                       height="35px"
                       className={`${dark ? "dark-icon" : "profile"}`}
                     />
-                    <div className="mt-15">10</div>
+                    <div className="mt-10 text-light-some">10</div>
                   </div>
                 </div>
                 <div className="col-xl-3 d-flex align-items-center justify-content-center">
                   <div className="d-flex flex-direction-row">
                     <DarkLike className="like mr-2 mt-8" />
-                    <div className="ml-5 mt-10">3</div>
+                    <div className="ml-5 mt-10 text-light-some">3</div>
                   </div>
                 </div>
                 <div className="col-xl-3 d-flex align-items-center justify-content-center">
                   <div className="d-flex flex-direction-row">
                     <DarkLike className="dislike mr-2 mt-8 hover-up" />
-                    <div className="ml-5 mt-10">10</div>
+                    <div className="ml-5 mt-10 text-light-some">10</div>
                   </div>
                 </div>
                 <div className="col-xl-3 d-flex align-items-center justify-content-center">
@@ -74,7 +74,7 @@ const Blog: React.FC<IBlogPageProps> = (props: {}) => {
               </div>
               <div className="d-flex mt-20 align-items-center border-top pt-20 justify-content-around text-align-center">
                 <a
-                  className="btn btn-border-brand-1 mr-20"
+                  className="btn btn-border-brand-1 mr-20 "
                   target="_blank"
                   rel="noopener noreferrer"
                   href=""
@@ -90,10 +90,10 @@ const Blog: React.FC<IBlogPageProps> = (props: {}) => {
                   {/* </Button> */}
                 </a>
 
-                <div className="d-flex flex-column mr-20 align-items-center">
+                <div className="d-flex flex-column mr-20 align-items-center text-light-some">
                   <p>...5 min read</p>
                 </div>
-                <p className="price">
+                <p className="price text-light-some">
                   {/* ${String(Number(price).toLocaleString("en"))} */}
                   more..
                 </p>

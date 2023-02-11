@@ -9,7 +9,7 @@
 
 .Navbar {
   position: fixed;
-  top: 0;
+  top: 0 !important;
   @include theme() {
     background-color: theme-get("bg-color");
   }
@@ -17,13 +17,14 @@
   // color: var(--light);
   min-height: 70px;
   height: 70px;
+  // margin-bottom
   display: flex;
   flex-direction: row !important;
   justify-content: space-between;
   align-items: center;
   padding: 0 12px;
   width: 100%;
-  z-index: 100;
+  z-index: 1000000000;
 }
 
 .menu-img-style {

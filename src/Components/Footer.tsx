@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
+// import { Row, Col } from "react-bootstrap";
 import Link from "next/link";
 
 import CSS from "csstype";
@@ -7,119 +7,93 @@ import CSS from "csstype";
 interface FooterProps {}
 
 const Footer: React.FC<FooterProps> = (props: {}) => {
-  const rowStyle: CSS.Properties = {
-    // height: "200px",
-    marginTop: "2%",
-    marginLeft: "10%",
-  };
-
-  const colStyle: CSS.Properties = {
-    width: "25%",
-    // justifyContent: "center",
-    display: "flex",
-    flexDirection: "column",
-    textAlign: "left",
-    top: "0",
-    marginBottom: "3%",
-    // height: "200px",
-  };
-
-  const colStyleCopy: CSS.Properties = {
-    width: "20%",
-    // justifyContent: "center",
-    color: "white",
-    display: "flex",
-    flexDirection: "column",
-    textAlign: "left",
-    top: "0",
-    // marginBottom: "3%",
-    fontSize: "10pt",
-    // height: "200px",
-  };
-
   return (
-    <div className="containerFooter">
-      <Row className="rowStyle">
-        <div
-          className="blackLine"
-          style={{
-            color: "Black",
-            width: "90%",
-            backgroundColor: "Black",
-            height: 3,
-            borderTop: "2px solid #fff ",
-            borderRadius: "3px",
-            marginBottom: 0,
-          }}
-        ></div>
-      </Row>
+    <div className="footer">
+      <main className="containerFooter ">
+        <div className="container ">
+          <div className="row rowStyle">
+            <div
+              className="blackLine"
+              style={{
+                color: "Black",
+                width: "90%",
+                backgroundColor: "Black",
+                height: 3,
+                borderTop: "2px solid #fff ",
+                borderRadius: "3px",
+                marginBottom: 0,
+              }}
+            ></div>
+          </div>
+          {/* <div className="d-flex align-items-center"> */}
+          <div className="row rowStyle">
+            <div className="col-lg-4 colStyle font-md">
+              <h3 className="footer-header-style">Information</h3>
+              <Link className="footer-link-style" href="/About">
+                About us
+              </Link>
+              <a className="footer-link-style" href="#">
+                Contact us
+              </a>
+              <a className="footer-link-style" href="#">
+                Add a product
+              </a>
+              <Link className="footer-link-style" href="/AffiliateLink">
+                Make an aff link
+              </Link>
+              <Link className="footer-link-style" href="/legal/privacypolicy">
+                Privacy Policy
+              </Link>
+              <Link className="footer-link-style" href="/legal/termsofservice">
+                Terms of Service
+              </Link>
+            </div>
+            <div className="col-lg-4 colStyle">
+              <h3 className="footer-header-style">Social</h3>
+              <a className="footer-link-style" href="#">
+                Faceboook
+              </a>
+              <a className="footer-link-style" href="#">
+                Youtube
+              </a>
+              <a
+                className="footer-link-style"
+                href="https://twitter.com/WhyAreYouBuying"
+              >
+                Twitter
+              </a>
+              <a className="footer-link-style" href="#">
+                Instagram
+              </a>
+              <a className="footer-link-style" href="#">
+                TikTok
+              </a>
+            </div>
 
-      <Row className="rowStyle">
-        <Col className="colStyle font-md">
-          <h3 className="footer-header-style">Information</h3>
-          <Link className="footer-link-style" href="/About">
-            About us
-          </Link>
-          <a className="footer-link-style" href="#">
-            Contact us
-          </a>
-          <a className="footer-link-style" href="#">
-            Add a product
-          </a>
-          <Link className="footer-link-style" href="/AffiliateLink">
-            Make an aff link
-          </Link>
-          <Link className="footer-link-style" href="/legal/privacypolicy">
-            Privacy Policy
-          </Link>
-          <Link className="footer-link-style" href="/legal/termsofservice">
-            Terms of Service
-          </Link>
-        </Col>
-        <Col className="colStyle">
-          <h3 className="footer-header-style">Social</h3>
-          <a className="footer-link-style" href="#">
-            Faceboook
-          </a>
-          <a className="footer-link-style" href="#">
-            Youtube
-          </a>
-          <a
-            className="footer-link-style"
-            href="https://twitter.com/WhyAreYouBuying"
-          >
-            Twitter
-          </a>
-          <a className="footer-link-style" href="#">
-            Instagram
-          </a>
-          <a className="footer-link-style" href="#">
-            TikTok
-          </a>
-        </Col>
-
-        <Col className="colStyle">
-          <h3 className="footer-header-style">Services</h3>
-          <a className="footer-link-style" href="#">
-            Affiliate Marketing
-          </a>
-          <a className="footer-link-style" href="#">
-            Development
-          </a>
-          <a className="footer-link-style" href="#">
-            SEO Audit
-          </a>
-          <a className="footer-link-style" href="#">
-            Architech Consulting
-          </a>
-        </Col>
-      </Row>
-
-      <Col className="colStyleCopy">
-        <p>
-          &copy; {String(new Date().getFullYear() + "")} all rights reserved
-        </p>
-      </Col>
+            <div className="col-lg-4 colStyle">
+              <h3 className="footer-header-style">Services</h3>
+              <a className="footer-link-style" href="#">
+                Affiliate Marketing
+              </a>
+              <a className="footer-link-style" href="#">
+                Development
+              </a>
+              <a className="footer-link-style" href="#">
+                SEO Audit
+              </a>
+              <a className="footer-link-style" href="#">
+                Architech Consulting
+              </a>
+            </div>
+          </div>
+          {/* </div> */}
+        </div>
+        <div className="col colStyleCopy">
+          <p>
+            &copy; {String(new Date().getFullYear() + "")} all rights reserved
+          </p>
+        </div>
+      </main>
     </div>
   );
 };
