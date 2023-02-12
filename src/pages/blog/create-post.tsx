@@ -11,6 +11,16 @@ import CodeImg from "../../../public/assets/imgs/icons/code-tag-svgrepo-com.svg"
 
 interface IAddProductProps {}
 
+interface Attributes {
+  bold: false;
+}
+
+interface BlogItem {
+  type: string;
+  value: string;
+  attributes: Attributes;
+}
+
 const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   const [title, setTitle] = useState<String>();
   const [desc, setDesc] = useState<String>();
@@ -25,14 +35,6 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   });
 
   const { dark } = useContext(ThemeContext);
-
-  const popoverRef = useRef();
-  // useEffect(() => {
-  //   var popover = new bootstrap.Popover(popoverRef.current, {
-  //     content: "Hello popover content!",
-  //     title: "My Popover",
-  //   });
-  // }, []);
 
   const targetRef = useRef(null);
   const [html, setHtml] = useState(true);
@@ -96,12 +98,6 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
     setIsActive(newStatus);
   };
 
-  const showModal = () => {
-    const { Modal } = require("bootstrap");
-    const myModal = new Modal("#exampleModal");
-    myModal.show();
-  };
-
   const submitForm = async () => {
     //validate
 
@@ -138,18 +134,6 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
     }
   };
 
-  const formCss: CSS.Properties = {
-    width: "100% !important",
-    marginTop: "3%",
-  };
-
-  const cardCss: CSS.Properties = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100%",
-  };
-
   const popoverRight = (
     <Popover
       id="popover-positioned-right"
@@ -160,6 +144,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
           width="15px"
           height="15px"
           fill="green"
+          // onClick={}
           // className={`${dark ? "dark-icon" : "dark-icon"}`}
         />
       </div>
@@ -216,13 +201,15 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
             placement="right"
             overlay={popoverRight}
           >
-            <div className="plus-container mr-20">
-              <div
-                onClick={(e: any) => toggleActive(e)}
-                className={`${dark ? "dark-plus" : "plus"} radius ${
-                  isActive.status && "active"
-                } hover-up`}
-              ></div>
+            <div className="plus-plus-container">
+              <div className="plus-container hover-up mr-20">
+                <div
+                  onClick={(e: any) => toggleActive(e)}
+                  className={`${dark ? "dark-plus" : "plus"} radius ${
+                    isActive.status && "active"
+                  } `}
+                ></div>
+              </div>
             </div>
           </OverlayTrigger>
 
@@ -235,16 +222,6 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
               ></input>
             </div>
           </div>
-
-          {/* <button
-            type="button"
-            className="btn btn-lg btn-danger"
-            data-bs-toggle="popover"
-            data-bs-title="Popover title"
-            data-bs-content="And here's some amazing content. It's very engaging. Right?"
-          >
-            Click to toggle popover
-          </button> */}
         </div>
         {/* <Form style={formCss}>
           {showImg ? (
@@ -316,19 +293,6 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
             Add Product
           </Button>
         </div> */}
-
-        {/* <div
-          className="blackLine"
-          style={{
-            color: "Black",
-            width: "90%",
-            backgroundColor: "Black",
-            height: 3,
-            borderTop: "2px solid #fff ",
-            borderRadius: "3px",
-            marginBottom: 0,
-          }}
-        ></div> */}
       </div>
     </div>
   );
