@@ -72,6 +72,9 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
 
   // const [pic, setPic] = useState(saveIconWhite);
   const [pic, setPic] = useState(dark ? saveIconWhite : saveIconBlack);
+  useEffect(() => {
+    setPic(dark ? saveIconWhite : saveIconBlack);
+  }, [dark]);
 
   useEffect(() => {
     user.idsSaved.map((userIdsSaved: String) => {

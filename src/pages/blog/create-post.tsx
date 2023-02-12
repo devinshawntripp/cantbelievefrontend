@@ -17,8 +17,8 @@ interface Attributes {
 
 interface BlogItem {
   type: string;
-  value: string;
-  attributes: Attributes;
+  value: any;
+  attributes?: Attributes;
 }
 
 const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
@@ -33,6 +33,8 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   const [isActive, setIsActive] = useState({
     status: false,
   });
+
+  const [blogPost, setBlogPost] = useState<Array<BlogItem>>();
 
   const { dark } = useContext(ThemeContext);
 
@@ -68,27 +70,57 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
     }
   };
 
-  const handleDisplayFileDetails = () => {
-    // console.log(fileRef.current?.files);
-    fileRef.current?.files && setFileName(fileRef.current.files[0].name);
-    fileRef.current?.files && setFile(fileRef.current.files[0]);
-    const fr = new FileReader();
-    fileRef.current?.files &&
-      setShowImg(fr.readAsDataURL(fileRef.current?.files[0]));
+  const handleFileGet = (event: any) => {
+    event.preventDefault();
+    fileRef.current?.click();
+  };
 
-    fileRef.current?.files &&
-      fileToDataUri(fileRef.current?.files[0]).then((dataUri) => {
-        setShowImg(dataUri);
-      });
+  const handleFileChange = (event: any) => {
+    const fileUploaded = event.target.files[0];
+  };
+
+  const handleDisplayFileDetails = async (e: any) => {
+    // console.log(fileRef.current?.files);
+    // fileRef.current?.files && setFileName(fileRef.current.files[0].name);
+    // fileRef.current?.files && setFile(fileRef.current.files[0]);
+    // const fr = new FileReader();
+
+    // fileRef.current?.files && setShowImg(fr.readAsDataURL(e.target.files[0]));
+    // console.log(e.target.files);
+    fileToDataUri(e.target.files[0]).then((dataUri) => {
+      console.log("DATA URI ", dataUri);
+      const newBlogItem: BlogItem = {
+        type: "img",
+        value: String(dataUri),
+        attributes: { bold: false },
+      };
+
+      setBlogPost((prevBlogPost) => [...(prevBlogPost || []), newBlogItem]);
+
+      e.target.value = null;
+
+      // setBlogPost((blogi) => ({ ...blogPostsRef.current, type: "img" }));
+      setShowImg(dataUri);
+    });
   };
 
   const fileToDataUri = (file: File) =>
     new Promise((resolve, reject) => {
+      console.log("HERE IS THE FILE ", file);
+      if (!file) {
+        return;
+      }
+      console.log(file);
       const reader = new FileReader();
       reader.onload = (event: any) => {
         resolve(event.target.result);
       };
-      reader.readAsDataURL(file);
+
+      if (file && file.type.match("image.*")) {
+        console.log("IS A FILE");
+
+        reader.readAsDataURL(file);
+      }
     });
 
   const toggleActive = (e: any) => {
@@ -139,15 +171,18 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
       id="popover-positioned-right"
       className="h-40 d-flex text-align-center align-items-center justify-content-center p-20 popover-plus"
     >
-      <div className="m-20 add-content-icon hover-up">
-        <Imageimg
-          width="15px"
-          height="15px"
-          fill="green"
-          // onClick={}
-          // className={`${dark ? "dark-icon" : "dark-icon"}`}
-        />
-      </div>
+      <label htmlFor="file">
+        <div className="m-20 add-content-icon hover-up">
+          <Imageimg
+            onClick={handleFileGet}
+            width="15px"
+            height="15px"
+            fill="green"
+
+            // className={`${dark ? "dark-icon" : "dark-icon"}`}
+          />
+        </div>
+      </label>
       <div className="m-20 add-content-icon hover-up">
         <YoutubeImg
           width="15px"
@@ -177,11 +212,11 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
 
   return (
     <div className="container mt-100">
-      {showImg && (
+      {/* {showImg && (
         <section className="about_sectionOne_style">
           <img className="about_imgStyle_style" src={showImg} />
         </section>
-      )}
+      )} */}
       <ToastContainer
         toastStyle={{ backgroundColor: "black" }}
         position="top-right"
@@ -194,20 +229,38 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
         draggable
         pauseOnHover
       />
-      <div className="container">
-        <div className="w-80 d-flex align-items-center justify-content-center ml-50">
+      <div className="container d-flex flex-column col-xl-12 align-items-center justify-content-center">
+        <input
+          type="file"
+          id="file"
+          ref={fileRef}
+          onChange={(e: any) => handleDisplayFileDetails(e)}
+          style={{ display: "none" }}
+          // accept="video/*"
+        />
+        {blogPost?.map((blogItem: any, key: any) => {
+          console.log(blogItem);
+          return React.createElement(
+            blogItem.type,
+            { key: key, src: blogItem.value },
+            null
+          );
+        })}
+        <div className="w-80 d-flex align-items-center justify-content-center ml-50 mb-100">
           <OverlayTrigger
             trigger="click"
             placement="right"
             overlay={popoverRight}
           >
-            <div className="plus-plus-container">
-              <div className="plus-container hover-up mr-20">
+            <div className={`plus-plus-container`}>
+              <div
+                className={`${
+                  isActive.status && "active"
+                } plus-container mr-20`}
+              >
                 <div
                   onClick={(e: any) => toggleActive(e)}
-                  className={`${dark ? "dark-plus" : "plus"} radius ${
-                    isActive.status && "active"
-                  } `}
+                  className={`${dark ? "dark-plus" : "plus"} radius`}
                 ></div>
               </div>
             </div>

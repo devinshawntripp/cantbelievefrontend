@@ -1154,11 +1154,6 @@ svg.graph:hover * {
   transition: 0.5s;
 }
 
-.plus.active {
-  transform: rotate(45deg);
-  transition: 0.5s;
-}
-
 .alt {
   border: none;
   margin: 10px;
@@ -1186,11 +1181,18 @@ svg.graph:hover * {
   padding-right: 5px !important;
   border: 1px solid black;
   border-radius: 50%;
+  transform: rotate(0deg);
+  transition: 0.5s;
 }
 
 .plus-plus-container {
   border-right: 1px solid #b9cad0;
   margin-right: 20px;
+}
+
+.plus-container.active {
+  transform: rotate(45deg);
+  transition: 0.5s;
 }
 
 .Home {
