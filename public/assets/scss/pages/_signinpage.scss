@@ -1,0 +1,30 @@
+.signin-banner {
+  background-image: url(../imgs/pages/login/playful_picture_that_would_be_a_banner_picture_for_a_sign.png);
+  background-size: cover;
+  object-fit: cover;
+  //   height: 100%;
+  //   width: 90%;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  margin-left: auto;
+  margin-bottom: 100px;
+  right: 0 !important;
+}
+
+.login-form {
+  padding-left: 50px !important;
+}
+
+@include media-breakpoint-down(xlg) {
+  .login-form {
+    padding-left: 100px !important;
+    padding-right: 100px !important;
+  }
+}
+
+.altSignins {
+  display: flex;
+  flex-direction: row;
+}

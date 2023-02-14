@@ -8,17 +8,23 @@ import Imageimg from "../../../public/assets/imgs/icons/image-svgrepo-com.svg";
 import YoutubeImg from "../../../public/assets/imgs/icons/youtube-svgrepo-com.svg";
 import EmbededImg from "../../../public/assets/imgs/icons/embed-post-svgrepo-com.svg";
 import CodeImg from "../../../public/assets/imgs/icons/code-tag-svgrepo-com.svg";
+import BlogItem from "@/Components/BlogItem";
 
 interface IAddProductProps {}
 
 interface Attributes {
-  bold: false;
+  bold?: false;
+  src?: string;
+  altText?: string;
+  contentEditable?: string;
+  className?: string;
 }
 
 interface BlogItem {
   type: string;
   value: any;
   attributes?: Attributes;
+  changed: boolean;
 }
 
 const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
@@ -33,6 +39,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   const [isActive, setIsActive] = useState({
     status: false,
   });
+  const [blogTextEle, setBlogTextElement] = useState<string>("");
 
   const [blogPost, setBlogPost] = useState<Array<BlogItem>>();
 
@@ -52,21 +59,61 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
       progress: undefined,
     });
 
+  const handleKeyDown = (event: any) => {
+    console.log("User pressed: ", event.key);
+
+    if (event.key === "Enter") {
+      // 👇️ your logic here
+      const newBlogItem: BlogItem = {
+        type: "p",
+        value: blogTextEle,
+        attributes: { bold: false, src: undefined, altText: undefined },
+        changed: true,
+      };
+
+      setBlogPost((prevBlogPost) => [...(prevBlogPost || []), newBlogItem]);
+      setBlogTextElement("");
+    }
+
+    if (event.key === "Backspace") {
+      setBlogPost((prevBlogPost) => [
+        ...(prevBlogPost?.splice(prevBlogPost.length - 1, 1) || []),
+      ]);
+    }
+  };
+
+  // useEffect(() => {
+  //   const keyDownHandler = (event: any) => {
+  //     console.log("User pressed: ", event.key);
+
+  //     if (event.key === "Enter") {
+  //       event.preventDefault();
+
+  //       const newBlogItem: BlogItem = {
+  //         type: "p",
+  //         value: blogTextEle,
+  //         attributes: { bold: false, src: undefined, altText: undefined },
+  //         changed: true,
+  //       };
+
+  //       setBlogPost((prevBlogPost) => [...(prevBlogPost || []), newBlogItem]);
+
+  //       // 👇️ your logic here
+  //       // myFunction();
+  //     }
+  //   };
+
+  //   document.addEventListener("keydown", keyDownHandler);
+
+  //   return () => {
+  //     document.removeEventListener("keydown", keyDownHandler);
+  //   };
+  // }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.ariaLabel === "Title") {
-      setTitle(e.target.value);
-    }
-
-    if (e.target.ariaLabel === "Desc") {
-      setDesc(e.target.value);
-    }
-
-    if (e.target.ariaLabel === "AmzUrl") {
-      setAmzUrl(e.target.value);
-    }
-
-    if (e.target.ariaLabel === "Price" && !isNaN(e.target.valueAsNumber)) {
-      setPrice(e.target.valueAsNumber);
+    if (e.target.ariaLabel === "blogText") {
+      // setBlogPost((prevBlogPost) => [...(prevBlogPost || []), newBlogItem]);
+      setBlogTextElement(e.target.value);
     }
   };
 
@@ -80,33 +127,25 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   };
 
   const handleDisplayFileDetails = async (e: any) => {
-    // console.log(fileRef.current?.files);
-    // fileRef.current?.files && setFileName(fileRef.current.files[0].name);
-    // fileRef.current?.files && setFile(fileRef.current.files[0]);
-    // const fr = new FileReader();
-
-    // fileRef.current?.files && setShowImg(fr.readAsDataURL(e.target.files[0]));
-    // console.log(e.target.files);
     fileToDataUri(e.target.files[0]).then((dataUri) => {
       console.log("DATA URI ", dataUri);
       const newBlogItem: BlogItem = {
         type: "img",
-        value: String(dataUri),
-        attributes: { bold: false },
+        value: null,
+        attributes: { bold: false, src: String(dataUri) },
+        changed: true,
       };
 
       setBlogPost((prevBlogPost) => [...(prevBlogPost || []), newBlogItem]);
 
       e.target.value = null;
 
-      // setBlogPost((blogi) => ({ ...blogPostsRef.current, type: "img" }));
       setShowImg(dataUri);
     });
   };
 
   const fileToDataUri = (file: File) =>
     new Promise((resolve, reject) => {
-      console.log("HERE IS THE FILE ", file);
       if (!file) {
         return;
       }
@@ -117,8 +156,6 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
       };
 
       if (file && file.type.match("image.*")) {
-        console.log("IS A FILE");
-
         reader.readAsDataURL(file);
       }
     });
@@ -240,28 +277,27 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
         />
         {blogPost?.map((blogItem: any, key: any) => {
           console.log(blogItem);
-          return React.createElement(
-            blogItem.type,
-            { key: key, src: blogItem.value },
-            null
-          );
+          return <BlogItem blogItem={blogItem} key={key} />;
         })}
-        <div className="w-80 d-flex align-items-center justify-content-center ml-50 mb-100">
+        <div className="w-80 d-flex align-items-center justify-content-center mr-80 mb-100">
           <OverlayTrigger
             trigger="click"
             placement="right"
             overlay={popoverRight}
           >
             <div className={`plus-plus-container`}>
-              <div
-                className={`${
-                  isActive.status && "active"
-                } plus-container mr-20`}
-              >
+              <div>
                 <div
+                  className={`${
+                    isActive.status ? "active" : "notactive"
+                  } plus-container mr-20`}
                   onClick={(e: any) => toggleActive(e)}
-                  className={`${dark ? "dark-plus" : "plus"} radius`}
-                ></div>
+                >
+                  <div
+                    onClick={(e: any) => toggleActive(e)}
+                    className={`${dark ? "dark-plus" : "plus"} radius`}
+                  ></div>
+                </div>
               </div>
             </div>
           </OverlayTrigger>
@@ -271,7 +307,11 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
               <input
                 type="text"
                 // placeholder="Enter something"
+                aria-label="blogText"
                 className="form-control icon-email"
+                value={blogTextEle}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
               ></input>
             </div>
           </div>

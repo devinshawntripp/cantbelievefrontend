@@ -128,6 +128,39 @@ const ContactPage: React.FC<IContactPageProps> = (props: {}) => {
           </div>
 
           <div className="col-lg-6 col-sm-6">
+            <form>
+              <div className="form-group">
+                {/* <label className="form-label">Email: </label> */}
+                <input
+                  type="email"
+                  className="form-control font-md"
+                  placeholder="Email: "
+                  aria-label="email"
+                  onChange={handleChange}
+                ></input>
+              </div>
+              <div className="form-group">
+                {/* <label className="form-label">Email: </label> */}
+                <input
+                  type="subject"
+                  className="form-control font-md"
+                  placeholder="subject: "
+                  aria-label="subject"
+                  onChange={handleChange}
+                ></input>
+              </div>
+              <div className="form-group">
+                {/* <label className="form-label">Email: </label> */}
+                <input
+                  type="textarea"
+                  className="form-control font-md"
+                  placeholder="Message: "
+                  aria-label="emailbody"
+                  aria-rowspan={6}
+                  onChange={handleChange}
+                ></input>
+              </div>
+            </form>
             {/* <Form> */}
             {/* <Form.Group
                 className="inputG"

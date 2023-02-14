@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState, useRef, useContext } from "react";
-// import { Button, Row } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
 import AmazonItem from "../Components/AmazonItem";
 import { useRouter } from "next/router";
 import CSS from "csstype";
@@ -189,10 +189,9 @@ export default function Home() {
                   />
 
                   {app.role === "admin" && (
-                    // <Button style={{ width: "90%" }} onClick={togglePopup}>
-                    //   Delete
-                    // </Button>
-                    <div></div>
+                    <Button style={{ width: "90%" }} onClick={togglePopup}>
+                      Delete
+                    </Button>
                   )}
 
                   {isOpen && app.role === "admin" && (
@@ -206,7 +205,7 @@ export default function Home() {
                               justifyContent: "space-around",
                             }}
                           >
-                            {/* <Button
+                            <Button
                               onClick={() => deleteItem(item._id)}
                               style={{ width: "20%" }}
                               variant="danger"
@@ -220,7 +219,7 @@ export default function Home() {
                               variant="success"
                             >
                               No
-                            </Button> */}
+                            </Button>
                           </div>
                         </>
                       }

@@ -6,6 +6,7 @@ import { store } from "../store/store";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
 import logo from "../images/whyareyoubuyingthislogo.png";
+import newLogo from "../../public/assets/imgs/pages/homepage/whyyoubuyinglogo.png";
 import blackLogo from "../images/whyareyoubuyingthislogoblack.png";
 import { ThemeContext } from "./Theme";
 import moonIcon from "../../public/assets/imgs/icons/icons8-crescent-moon-50.png";
@@ -60,7 +61,8 @@ const Menu = (props: {
                 // marginLeft: "-15px",
               }
             }
-            src={dark ? logo.src : blackLogo.src}
+            // src={dark ? logo.src : blackLogo.src}
+            src={newLogo.src}
           />
           {/* {brand.name} */}
         </Link>

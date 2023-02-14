@@ -6,9 +6,14 @@
 }
 .icon-email {
   background-image: url(../imgs/icons/email.svg);
+  // background-color: black;
   background-repeat: no-repeat;
+  // width: 300px;
+  // height: 300px;
+  // background-size: 100000% 100000%;
   background-position: right 15px center;
   padding-right: 40px;
+  z-index: 100000000 !important;
 }
 .icon-phone {
   background-image: url(../imgs/icons/phone.svg);
@@ -21,6 +26,10 @@
   background-repeat: no-repeat;
   background-position: right 15px center;
   padding-right: 40px;
+}
+
+.form-control {
+  z-index: -100 !important;
 }
 
 .add-content-icon {
@@ -37,39 +46,6 @@
   -webkit-animation: fadein 0.3s ease-in;
   -moz-animation: fadein 0.3s ease-in;
   animation: fadein 0.3s ease-in;
-}
-
-@-webkit-keyframes fadein {
-  from {
-    opacity: 0;
-    scale: 0;
-  }
-  to {
-    opacity: 1;
-    scale: 1;
-  }
-}
-
-@-moz-keyframes fadein {
-  from {
-    opacity: 0;
-    scale: 0;
-  }
-  to {
-    opacity: 1;
-    scale: 1;
-  }
-}
-
-@keyframes fadein {
-  from {
-    opacity: 0;
-    scale: 0;
-  }
-  to {
-    opacity: 1;
-    scale: 1;
-  }
 }
 
 .add-content-icon-code path {

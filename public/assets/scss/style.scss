@@ -1,7 +1,8 @@
 @import "abstracts/functions", "abstracts/mixins", "abstracts/variables",
-  "abstracts/theme";
+  "abstracts/theme", "abstracts/animations";
 @import "base/common", "base/icons", "base/inputs";
-@import "components/productItem", "components/buttons";
+@import "components/productItem", "components/buttons", "components/cards",
+  "components/form";
 @import "pages/homepage", "pages/contactpage", "pages/aboutpage",
-  "pages/blogpage";
+  "pages/blogpage", "pages/signinpage";
 @import "layout/responsive", "layout/spacing", "layout/menu", "layout/footer";

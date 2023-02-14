@@ -48,6 +48,34 @@
       // color: $color-gray-80;
     }
   }
+
+  &.btn-submit-newsletter {
+    padding: 15px 16px 16px 16px;
+    background-color: $color-brand-1;
+    border-radius: 8px;
+    svg {
+      color: $color-white;
+    }
+    &:hover {
+      background-color: $color-brand-1-hover;
+    }
+  }
+
+  &.btn-brand-lg {
+    padding: 20px 24px;
+    color: $color-brand-2;
+    background: $color-brand-1;
+    border-radius: 8px;
+    font-size: $font-sm;
+    line-height: 18px;
+    font-weight: 700;
+    &:hover {
+      background-color: $color-brand-1-hover;
+    }
+  }
+  &.btn-full {
+    width: 100%;
+  }
 }
 
 .read-or-hide {
@@ -305,8 +333,7 @@ svg.graph {
   padding-right: 5px !important;
   border: 1px solid black;
   border-radius: 50%;
-  transform: rotate(0deg);
-  transition: 0.5s;
+  // animation: rotate-right 0.5s normal;
 }
 
 .plus-plus-container {
@@ -315,6 +342,13 @@ svg.graph {
 }
 
 .plus-container.active {
-  transform: rotate(45deg);
-  transition: 0.5s;
+  animation: rotate-right 0.2s linear;
+  animation-fill-mode: forwards;
+  // transform: rotate(45deg);
+  // transition: 0.5s;
+}
+
+.plus-container.notactive {
+  animation: rotate-left 0.05s linear;
+  animation-fill-mode: forwards;
 }
