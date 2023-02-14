@@ -8,14 +8,14 @@ interface Attributes {
   className?: string;
 }
 
-interface BlogItem {
+interface IBlogItem {
   type: string;
   value: any;
   attributes?: Attributes;
   changed: boolean;
 }
 
-const BlogItem = (props: { blogItem: BlogItem; key: number }) => {
+const BlogItem = (props: { blogItem: IBlogItem; key: number }) => {
   const [att, setAtt] = useState<Attributes>();
   const [blogEleValue, setBlogEleValue] = useState(props.blogItem.value);
 

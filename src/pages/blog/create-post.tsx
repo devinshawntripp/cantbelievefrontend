@@ -20,7 +20,7 @@ interface Attributes {
   className?: string;
 }
 
-interface BlogItem {
+interface IBlogItem {
   type: string;
   value: any;
   attributes?: Attributes;
@@ -41,7 +41,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   });
   const [blogTextEle, setBlogTextElement] = useState<string>("");
 
-  const [blogPost, setBlogPost] = useState<Array<BlogItem>>();
+  const [blogPost, setBlogPost] = useState<Array<IBlogItem>>();
 
   const { dark } = useContext(ThemeContext);
 
@@ -64,7 +64,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
 
     if (event.key === "Enter") {
       // 👇️ your logic here
-      const newBlogItem: BlogItem = {
+      const newBlogItem: IBlogItem = {
         type: "p",
         value: blogTextEle,
         attributes: { bold: false, src: undefined, altText: undefined },
@@ -129,7 +129,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   const handleDisplayFileDetails = async (e: any) => {
     fileToDataUri(e.target.files[0]).then((dataUri) => {
       console.log("DATA URI ", dataUri);
-      const newBlogItem: BlogItem = {
+      const newBlogItem: IBlogItem = {
         type: "img",
         value: null,
         attributes: { bold: false, src: String(dataUri) },
