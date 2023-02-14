@@ -234,7 +234,7 @@ const Login: React.FC<ILoginProps> = ({}) => {
                     <div className="col-lg-6 col-6 mt-15">
                       <div className="form-group mb-25">
                         <label className="cb-container">
-                          <input type="checkbox" defaultChecked="checked" />
+                          <input type="checkbox" defaultChecked={true} />
                           <span className="text-small">Remember me</span>
                           <span className="checkmark" />
                         </label>

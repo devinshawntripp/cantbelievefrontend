@@ -229,7 +229,7 @@ const Register: React.FC<IRegisterProps> = ({}) => {
                   <div className="col-lg-12 mt-15">
                     <div className="form-group mb-25">
                       <label className="cb-container">
-                        <input type="checkbox" defaultChecked="checked" />
+                        <input type="checkbox" defaultChecked={true} />
                         <span className="text-small">
                           I have read and agree to the Terms &amp; Conditions
                           and the Privacy Policy of this website.
