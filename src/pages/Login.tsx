@@ -373,7 +373,7 @@ const Login: React.FC<ILoginProps> = ({}) => {
                 placeholder="Email:"
               />
               <small id="emailHelp" className="form-text text-muted">
-                We'll never share your email with anyone else.
+                We&apos;ll never share your email with anyone else.
               </small>
             </div>
           </form>
