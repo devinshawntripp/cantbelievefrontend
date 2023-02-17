@@ -18,6 +18,7 @@ interface Attributes {
   altText?: string;
   contentEditable?: string;
   className?: string;
+  onDoubleClick?: () => void;
 }
 
 interface IBlogItem {

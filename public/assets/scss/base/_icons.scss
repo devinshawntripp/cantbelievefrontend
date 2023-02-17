@@ -51,3 +51,27 @@
 .add-content-icon-code path {
   fill: green !important;
 }
+
+.format-text-icon {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  -webkit-animation: fadein 0.3s ease-in;
+  -moz-animation: fadein 0.3s ease-in;
+  animation: fadein 0.3s ease-in;
+}
+.format-text-icon:hover {
+  background-color: $color-gray-100;
+
+  -webkit-animation: fadein 0.3s ease-in;
+  -moz-animation: fadein 0.3s ease-in;
+  animation: fadein 0.3s ease-in;
+}
+
+.border-right {
+  border-right: 1px solid $color-gray-300;
+}

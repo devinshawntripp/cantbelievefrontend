@@ -15,7 +15,35 @@
 }
 
 .blog-item-p {
+  width: 100%;
+
+  // border: 1px solid black;
+}
+
+.displayOverany {
+  z-index: 1000000000 !important;
+  // @include theme() {
+  //   background-color: theme-get("bg-color") !important;
+  // }
+}
+
+#tooltip-top > .tooltip-inner {
+  @include theme() {
+    color: theme-get("text-color") !important;
+    background-color: theme-get("text-color") !important;
+    border: 1px solid theme-get("text-color") !important;
+  }
+}
+
+#tooltip-top > .tooltip-arrow {
+  @include theme() {
+    background-color: theme-get("text-color") !important;
+    color: theme-get("text-color") !important;
+  }
+}
+
+.graf {
   min-height: 50px;
   min-width: 500px;
-  // border: 1px solid black;
+  max-width: 700px;
 }

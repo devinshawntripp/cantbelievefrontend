@@ -910,6 +910,28 @@ mr-auto {
   fill: green !important;
 }
 
+.format-text-icon {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-animation: fadein 0.3s ease-in;
+  -moz-animation: fadein 0.3s ease-in;
+  animation: fadein 0.3s ease-in;
+}
+
+.format-text-icon:hover {
+  background-color: #b9cad0;
+  -webkit-animation: fadein 0.3s ease-in;
+  -moz-animation: fadein 0.3s ease-in;
+  animation: fadein 0.3s ease-in;
+}
+
+.border-right {
+  border-right: 1px solid #6a838c;
+}
+
 textarea.textarea-control {
   height: auto;
   min-height: 150px;
@@ -1630,8 +1652,37 @@ body {
 }
 
 .blog-item-p {
+  width: 100%;
+}
+
+.displayOverany {
+  z-index: 1000000000 !important;
+}
+
+.dark-mode #tooltip-top > .tooltip-inner {
+  color: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 1px solid #ffffff !important;
+}
+.light-mode #tooltip-top > .tooltip-inner {
+  color: #000000 !important;
+  background-color: #000000 !important;
+  border: 1px solid #000000 !important;
+}
+
+.dark-mode #tooltip-top > .tooltip-arrow {
+  background-color: #ffffff !important;
+  color: #ffffff !important;
+}
+.light-mode #tooltip-top > .tooltip-arrow {
+  background-color: #000000 !important;
+  color: #000000 !important;
+}
+
+.graf {
   min-height: 50px;
   min-width: 500px;
+  max-width: 700px;
 }
 
 .signin-banner {
