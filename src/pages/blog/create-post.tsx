@@ -1,4 +1,10 @@
-import React, { useState, useRef, useContext, useEffect } from "react";
+import React, {
+  useState,
+  useRef,
+  useContext,
+  useEffect,
+  ChangeEvent,
+} from "react";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import Axios from "axios";
@@ -9,11 +15,12 @@ import YoutubeImg from "../../../public/assets/imgs/icons/youtube-svgrepo-com.sv
 import EmbededImg from "../../../public/assets/imgs/icons/embed-post-svgrepo-com.svg";
 import CodeImg from "../../../public/assets/imgs/icons/code-tag-svgrepo-com.svg";
 import BlogItem from "@/Components/BlogItem";
+import { FALSE } from "sass";
 
 interface IAddProductProps {}
 
 interface Attributes {
-  bold?: false;
+  bold?: boolean;
   src?: string;
   altText?: string;
   contentEditable?: string;
@@ -112,6 +119,8 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   // }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e);
+
     if (e.target.ariaLabel === "blogText") {
       // setBlogPost((prevBlogPost) => [...(prevBlogPost || []), newBlogItem]);
       setBlogTextElement(e.target.value);
@@ -166,6 +175,36 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
       status: !isActive.status,
     };
     setIsActive(newStatus);
+  };
+
+  const changeBlogItem = (
+    event: ChangeEvent<HTMLDivElement>,
+    keyNum: number
+  ) => {
+    event.preventDefault();
+    console.log("HERE IS ALL OF THE BLOG POSTS: ", blogPost);
+    console.log("HERE IS THE NUM CLICKED ON : ", keyNum);
+    console.log("Value: ", event.target.innerHTML);
+
+    // console.log(keyNum);
+
+    const newArr: Array<IBlogItem> = [...(blogPost || [])];
+    console.log(
+      "HERE IS WHAT THE INNER HTML IS NOW: ",
+      newArr.at(keyNum)?.value
+    );
+
+    if (newArr.at(keyNum) !== undefined) {
+      newArr.at(keyNum)!.value = event.currentTarget.innerHTML;
+    }
+
+    // newArr.at(Number(keyNum))!.changed = true;
+
+    setBlogPost(newArr);
+
+    // console.log(bi);
+
+    // setBlogEleValue(event.target.value);
   };
 
   const submitForm = async () => {
@@ -276,9 +315,16 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
           style={{ display: "none" }}
           // accept="video/*"
         />
-        {blogPost?.map((blogItem: any, key: any) => {
-          console.log(blogItem);
-          return <BlogItem blogItem={blogItem} key={key} />;
+        {blogPost?.map((blogItem: any, key: number) => {
+          console.log(key);
+          return (
+            <BlogItem
+              blogItem={blogItem}
+              onChange={changeBlogItem}
+              keyNum={key}
+              key={key}
+            />
+          );
         })}
         <div className="w-80 d-flex align-items-center justify-content-center mr-80 mb-100">
           <OverlayTrigger
