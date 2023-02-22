@@ -10,12 +10,9 @@ import { ToastContainer, toast } from "react-toastify";
 import Axios from "axios";
 import CSS from "csstype";
 import { ThemeContext } from "../../Components/Theme";
-import Imageimg from "../../../public/assets/imgs/icons/image-svgrepo-com.svg";
-import YoutubeImg from "../../../public/assets/imgs/icons/youtube-svgrepo-com.svg";
-import EmbededImg from "../../../public/assets/imgs/icons/embed-post-svgrepo-com.svg";
-import CodeImg from "../../../public/assets/imgs/icons/code-tag-svgrepo-com.svg";
 import BlogItem from "@/Components/BlogItem";
-import { FALSE } from "sass";
+// import { FALSE } from "sass";
+import { PopoverForContent } from "@/Components/BlogComponents/PopoverForContent";
 
 interface IAddProductProps {}
 
@@ -47,9 +44,12 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   const [isActive, setIsActive] = useState({
     status: false,
   });
+  const [showOverlay, setShowOverlay] = useState<boolean>(false);
   const [blogTextEle, setBlogTextElement] = useState<string>("");
 
   const [blogPost, setBlogPost] = useState<Array<IBlogItem>>();
+  const [showYoutubeEmbed, setShowYoutubeEmbed] = useState<boolean>(false);
+  const youtubeRef = useRef<HTMLInputElement>(null);
 
   const { dark } = useContext(ThemeContext);
 
@@ -68,17 +68,33 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
     });
 
   const handleKeyDown = (event: any) => {
-    console.log("User pressed: ", event.key);
+    // console.log("User pressed: ", event.key);
 
     if (event.key === "Enter") {
       // 👇️ your logic here
-      const newBlogItem: IBlogItem = {
+      var newBlogItem: IBlogItem = {
         type: "p",
         value: blogTextEle,
         attributes: { bold: false, src: undefined, altText: undefined },
         changed: true,
       };
-
+      if (event.target.ariaLabel === "blogText") {
+        newBlogItem = {
+          type: "p",
+          value: blogTextEle,
+          attributes: { src: undefined, altText: undefined },
+          changed: true,
+        };
+      }
+      if (event.target.ariaLabel === "youtubeEmbed") {
+        newBlogItem = {
+          type: "frame",
+          value: "",
+          attributes: { src: youtubeLink, altText: "" },
+          changed: true,
+        };
+      }
+      setShowYoutubeEmbed(false);
       setBlogPost((prevBlogPost) => [...(prevBlogPost || []), newBlogItem]);
       setBlogTextElement("");
     }
@@ -118,12 +134,17 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   //   };
   // }, []);
 
+  const [youtubeLink, setYoutubeLink] = useState<string>("");
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
+    // console.log(e);
 
     if (e.target.ariaLabel === "blogText") {
       // setBlogPost((prevBlogPost) => [...(prevBlogPost || []), newBlogItem]);
       setBlogTextElement(e.target.value);
+    }
+
+    if (e.target.ariaLabel === "youtubeEmbed") {
+      setYoutubeLink(e.target.value);
     }
   };
 
@@ -132,9 +153,23 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
     fileRef.current?.click();
   };
 
-  const handleFileChange = (event: any) => {
-    const fileUploaded = event.target.files[0];
+  const handleYoutubeEmbed = (event: any) => {
+    const newStatus = {
+      status: !isActive.status,
+    };
+
+    setIsActive(newStatus);
+    setShowOverlay(false);
+    setShowYoutubeEmbed(true);
+    youtubeRef.current?.focus();
   };
+  useEffect(() => {
+    youtubeRef.current?.focus();
+  }, [youtubeRef.current, showYoutubeEmbed]);
+
+  // const handleFileChange = (event: any) => {
+  //   const fileUploaded = event.target.files[0];
+  // };
 
   const handleDisplayFileDetails = async (e: any) => {
     fileToDataUri(e.target.files[0]).then((dataUri) => {
@@ -174,6 +209,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
     const newStatus = {
       status: !isActive.status,
     };
+    setShowOverlay(!showOverlay);
     setIsActive(newStatus);
   };
 
@@ -182,110 +218,51 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
     keyNum: number
   ) => {
     event.preventDefault();
-    console.log("HERE IS ALL OF THE BLOG POSTS: ", blogPost);
-    console.log("HERE IS THE NUM CLICKED ON : ", keyNum);
-    console.log("Value: ", event.target.innerHTML);
-
-    // console.log(keyNum);
 
     const newArr: Array<IBlogItem> = [...(blogPost || [])];
-    console.log(
-      "HERE IS WHAT THE INNER HTML IS NOW: ",
-      newArr.at(keyNum)?.value
-    );
 
     if (newArr.at(keyNum) !== undefined) {
       newArr.at(keyNum)!.value = event.currentTarget.innerHTML;
     }
 
-    // newArr.at(Number(keyNum))!.changed = true;
-
     setBlogPost(newArr);
-
-    // console.log(bi);
-
-    // setBlogEleValue(event.target.value);
   };
 
-  const submitForm = async () => {
-    //validate
+  // const submitForm = async () => {
+  //   //validate
 
-    if (
-      fileRef.current?.files &&
-      file &&
-      fileName != "" &&
-      title != "" &&
-      desc != "" &&
-      amzUrl != "" &&
-      desc != undefined &&
-      amzUrl != undefined &&
-      title != undefined &&
-      price != 0
-    ) {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("fileName", String(fileName));
-      formData.append("title", String(title));
-      formData.append("desc", String(desc));
-      formData.append("amzURL", String(amzUrl));
-      formData.append("price", String(price));
+  //   if (
+  //     fileRef.current?.files &&
+  //     file &&
+  //     fileName != "" &&
+  //     title != "" &&
+  //     desc != "" &&
+  //     amzUrl != "" &&
+  //     desc != undefined &&
+  //     amzUrl != undefined &&
+  //     title != undefined &&
+  //     price != 0
+  //   ) {
+  //     const formData = new FormData();
+  //     formData.append("file", file);
+  //     formData.append("fileName", String(fileName));
+  //     formData.append("title", String(title));
+  //     formData.append("desc", String(desc));
+  //     formData.append("amzURL", String(amzUrl));
+  //     formData.append("price", String(price));
 
-      // console.log(formData);
+  //     // console.log(formData);
 
-      await Axios.post(
-        `${process.env.NEXT_PUBLIC_APP_URL}/items/AddProduct`,
-        formData
-      ).then(() => {
-        notify("Successfully added a product");
-      });
-    } else {
-      notify("All values were not entered correctly");
-    }
-  };
-
-  const popoverRight = (
-    <Popover
-      id="popover-positioned-right"
-      className="h-40 d-flex text-align-center align-items-center justify-content-center p-20 popover-plus"
-    >
-      <label htmlFor="file">
-        <div className="m-20 add-content-icon hover-up">
-          <Imageimg
-            onClick={handleFileGet}
-            width="15px"
-            height="15px"
-            fill="green"
-
-            // className={`${dark ? "dark-icon" : "dark-icon"}`}
-          />
-        </div>
-      </label>
-      <div className="m-20 add-content-icon hover-up">
-        <YoutubeImg
-          width="15px"
-          height="15px"
-          fill="green"
-          // className={`${dark ? "dark-icon" : "profile"} hover-up mr-10`}
-        />
-      </div>
-      <div className="m-20 add-content-icon hover-up">
-        <EmbededImg
-          width="15px"
-          height="15px"
-          fill="green"
-          // className={`${dark ? "dark-icon" : "profile"} hover-up mr-10`}
-        />
-      </div>
-      <div className="m-20 add-content-icon hover-up add-content-icon-code">
-        <CodeImg
-          width="15px"
-          height="15px"
-          fill="green"
-          // className={`${dark ? "dark-icon" : "profile"} hover-up`}
-        ></CodeImg>
-      </div>
-    </Popover>
-  );
+  //     await Axios.post(
+  //       `${process.env.NEXT_PUBLIC_APP_URL}/items/AddProduct`,
+  //       formData
+  //     ).then(() => {
+  //       notify("Successfully added a product");
+  //     });
+  //   } else {
+  //     notify("All values were not entered correctly");
+  //   }
+  // };
 
   return (
     <div className="container mt-100">
@@ -316,7 +293,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
           // accept="video/*"
         />
         {blogPost?.map((blogItem: any, key: number) => {
-          console.log(key);
+          // console.log(key);
           return (
             <BlogItem
               blogItem={blogItem}
@@ -330,7 +307,14 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
           <OverlayTrigger
             trigger="click"
             placement="right"
-            overlay={popoverRight}
+            show={showOverlay}
+            overlay={
+              <PopoverForContent
+                className="h-40 d-flex text-align-center align-items-center justify-content-center p-20 popover-plus"
+                handlefileget={handleFileGet}
+                handleyoutubeembed={handleYoutubeEmbed}
+              />
+            }
           >
             <div className={`plus-plus-container`}>
               <div>
@@ -351,88 +335,32 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
 
           <div className="col-lg-6">
             <div className="form-group">
-              <input
-                type="text"
-                // placeholder="Enter something"
-                aria-label="blogText"
-                className="form-control icon-email"
-                value={blogTextEle}
-                onChange={handleChange}
-                onKeyDown={handleKeyDown}
-              ></input>
+              {!showYoutubeEmbed && (
+                <input
+                  type="text"
+                  aria-label="blogText"
+                  className="form-control icon-email"
+                  value={blogTextEle}
+                  onChange={handleChange}
+                  onKeyDown={handleKeyDown}
+                ></input>
+              )}
+              {showYoutubeEmbed && (
+                <input
+                  id="youtubeEmbedId"
+                  type="text"
+                  aria-label="youtubeEmbed"
+                  className="form-control icon-email youtube-embed"
+                  value={youtubeLink}
+                  ref={youtubeRef}
+                  placeholder="...<Paste youtube link and hit enter key>"
+                  onChange={handleChange}
+                  onKeyDown={handleKeyDown}
+                ></input>
+              )}
             </div>
           </div>
         </div>
-        {/* <Form style={formCss}>
-          {showImg ? (
-            <></>
-          ) : (
-            <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label>Image</Form.Label>
-              <Form.Control
-                type="file"
-                // onChange={handleChange}
-                ref={fileRef}
-                onChange={handleDisplayFileDetails}
-              />
-            </Form.Group>
-          )} */}
-        {/* <Form.Group
-            className="mb-3 w-90"
-            controlId="exampleForm.ControlInput1"
-          >
-            <Form.Label>Product Title</Form.Label>
-            <Form.Control
-              type="title"
-              placeholder="ex: Love you caitlyn"
-              aria-label="Title"
-              onChange={handleChange}
-            />
-          </Form.Group>
-          <Form.Group
-            className="mb-3 w-90"
-            controlId="exampleForm.ControlInput1"
-          >
-            <Form.Label>Product Price</Form.Label>
-            <Form.Control
-              type="number"
-              placeholder="ex: 20.90"
-              aria-label="Price"
-              onChange={handleChange}
-            />
-          </Form.Group>
-          <Form.Group
-            className="mb-3 w-90"
-            controlId="exampleForm.ControlInput1"
-          >
-            <Form.Label>Amazon Aff URL</Form.Label>
-            <Form.Control
-              type="title"
-              placeholder="ex: Link"
-              aria-label="AmzUrl"
-              onChange={handleChange}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Product Description</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={3}
-              aria-label="Desc"
-              onChange={handleChange}
-            />
-          </Form.Group> */}
-        {/* </Form> */}
-        {/* <div className="LoginButton">
-          <Button
-            onClick={submitForm}
-            className="LoginButton m-4"
-            variant="primary"
-          >
-            Add Product
-          </Button>
-        </div> */}
       </div>
     </div>
   );

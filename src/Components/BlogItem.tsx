@@ -1,22 +1,29 @@
-import React, { useEffect, useState, useRef, ChangeEvent } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  ChangeEvent,
+  HTMLAttributes,
+} from "react";
 import { Tooltip, Overlay } from "react-bootstrap";
 import TextOverlayIcons from "./TextOverlayIcons";
 
-interface Attributes {
-  bold?: boolean;
+interface Attributes extends HTMLAttributes<HTMLDivElement> {
+  //   bold?: boolean;
   src?: string;
   altText?: string;
-  contentEditable?: string;
-  suppressContentEditableWarning?: string;
-  className?: string;
-  onDoubleClick?: (event: any) => void;
+  //   contentEditable?: string;
+  //   suppressContentEditableWarning?: string;
+  //   className?: string;
+  //   onDoubleClick?: (event: any) => void;
   handleTextOverlayClick?: (event: any) => void;
-  ["aria-label"]?: string;
-  ["aria-current"]?: string;
+  //   ["aria-label"]?: string;
+  //   ["aria-current"]?: string;
   ref?: React.RefObject<HTMLDivElement>;
-  onInput?: (e: any) => void;
-  type?: string;
-  value?: string;
+  //   onInput?: (e: any) => void;
+  //   type?: string;
+  //   value?: string;
+  //   onClick?: (event: any) => void;
 }
 
 interface IBlogItem {
@@ -41,11 +48,11 @@ function useOutsideAlerter(
       if (ref.current && ref.current.contains(event.target)) {
         // alert("You clicked outside of me!");
         const text = window.getSelection()?.toString();
-        console.log(text);
+        // console.log(text);
         // Set the selected text state
         setSelectedText(text);
         setShow(true);
-        console.log(show);
+        // console.log(show);
 
         // Get the coordinates of the selected text area
         const rect = window
@@ -56,7 +63,7 @@ function useOutsideAlerter(
         setOffset(rect);
 
         // Do something with the coordinates, such as rendering a popup menu
-        console.log(rect);
+        // console.log(rect);
       } else {
         setShow(false);
       }
@@ -79,7 +86,7 @@ function useOutsideAlerter(
     function handleClickOutside(event: any) {
       if (ref.current && !ref.current.contains(event.target)) {
         // alert("You clicked outside of me!");
-        console.log("fhjdhjdghjf ffhjgj");
+        // console.log("fhjdhjdghjf ffhjgj");
         // setShow(false);
       }
     }
@@ -105,11 +112,18 @@ interface IBlogItemProps {
 const BlogItem: React.FC<IBlogItemProps> = (props) => {
   const [att, setAtt] = useState<Attributes>();
   const [blogEleValue, setBlogEleValue] = useState(props.blogItem.value);
+  const [altTextValue, setAltTextValue] = useState(
+    props.blogItem.attributes?.altText
+  );
   const targetDiv = useRef<HTMLDivElement>(null);
   const [offset, show, setShow] = useOutsideAlerter(targetDiv, false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
+  const targetImg = useRef<HTMLDivElement>(null);
+  const [showAltTextOverlay, setShowAltTextOverlay] = useState<boolean>(false);
+
+  const [showAltTextInput, setShowAltTextInput] = useState<boolean>(false);
 
   const handleChange = (event: ChangeEvent<HTMLDivElement>) => {
     // setBlogEleValue(event.currentTarget.innerHTML);
@@ -121,6 +135,22 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
   const handleClickTextEdit = (event: any) => {
     if (event.target.ariaLabel === "bold") {
     }
+  };
+
+  const handleClickAltText = (event: any) => {
+    setShowAltTextInput(true);
+  };
+
+  const handleAltTextChange = (event: any) => {
+    // setAltTextValue()
+  };
+
+  const handleClickedImg = (event: any) => {
+    setShowAltTextOverlay(true);
+  };
+
+  const handleLeftImg = (event: any) => {
+    setShowAltTextOverlay(false);
   };
 
   useEffect(() => {
@@ -136,12 +166,14 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
     if (props.blogItem.type.match("img")) {
       //build img tag
       const newAtt: Attributes = {
-        bold: props.blogItem.attributes?.bold,
+        // bold: props.blogItem.attributes?.bold,
         src: props.blogItem.attributes?.src,
         altText: props.blogItem.attributes?.altText,
         className: props.blogItem.attributes?.className,
         ["aria-label"]: "image",
-        ref: targetDiv,
+        ref: targetImg,
+        onClick: (e) => handleClickedImg(e),
+        onMouseLeave: (e: any) => handleLeftImg(e),
         // onDoubleClick: showToolTip,
       };
       props.blogItem.changed = false;
@@ -150,58 +182,29 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
 
     if (props.blogItem.type.match("p")) {
       const newAtt: Attributes = {
-        bold: props.blogItem.attributes?.bold,
+        // bold: props.blogItem.attributes?.bold,
         src: props.blogItem.attributes?.src,
         contentEditable: "true",
-        suppressContentEditableWarning: "true",
+        suppressContentEditableWarning: true,
         className:
           props.blogItem.attributes?.className + " blog-item-p font-xl",
         ["aria-label"]: "text",
         ref: targetDiv,
-        // value: blogEleValue,
-        // onInput: (e: any) => props.onChange(e, props.keyNum),
+
         onInput: (e: any) => handleChange(e),
-        // type: "textarea",
-        // onDoubleClick: showToolTip,
       };
       props.blogItem.changed = false;
       setAtt(newAtt);
+    }
+
+    if (props.blogItem.type.match("")) {
     }
   }, [props.blogItem.changed == true]);
 
   return (
     <div className="mb-25 graf" key={props.keyNum}>
-      {props.blogItem.type.match("p") && (
-        <p
-          onInput={(e: any) => handleChange(e)}
-          className={`${props.blogItem.attributes?.className} blog-item-p font-xl`}
-          contentEditable="true"
-          suppressContentEditableWarning={true}
-          ref={targetDiv}
-        >
-          {blogEleValue}
-        </p>
-      )}
-      {/* {React.createElement(props.blogItem.type, att, blogEleValue)} */}
-      {/* {props.blogItem.type != "img" && (
-        <input
-          type="hidden"
-          className="form-control"
-          //   onChange={(e: any) => props.onChange(e, props.keyNum)}
-          onChange={handleChange}
-          //   style={{
-          //     position: "absolute",
-          //     top: position.y,
-          //     left: position.x,
-          //     height: height,
-          //     width: width,
-          //     zIndex: 100000000000,
-          //   }}
-          // value={"lksjdlfkjalskdjfsd"}
-          //   value={props.blogItem.value}
-          value={blogEleValue}
-        />
-      )} */}
+      {React.createElement(props.blogItem.type, att, blogEleValue)}
+
       <Overlay target={targetDiv.current} show={show} placement="top">
         {(props) => (
           <Tooltip className="displayOverany" id="tooltip-top" {...props}>
@@ -209,6 +212,25 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
           </Tooltip>
         )}
       </Overlay>
+      <Overlay
+        target={targetImg.current}
+        show={showAltTextOverlay}
+        placement="top"
+      >
+        {(props) => (
+          <Tooltip
+            onClick={handleClickAltText}
+            // className="displayOverany"
+            id="tooltip-top-example"
+            {...props}
+          >
+            <p className="text">Alt Text</p>
+          </Tooltip>
+        )}
+      </Overlay>
+      {showAltTextInput && (
+        <input className="form-control" placeholder="some text"></input>
+      )}
     </div>
   );
 };

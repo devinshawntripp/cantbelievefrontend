@@ -19,6 +19,7 @@ $themes: (
     (
       //inner map (dark mode map)
       "text-color": $textColorDark,
+      "text-opp-color": $textColorLight,
       "bg-color": $bgColorDark,
       "bg-opp-color": $bgColorLight,
       "info-color": $infoColorDark,
@@ -32,6 +33,7 @@ $themes: (
   light-mode: (
     //inner map (light mode map)
     "text-color": $textColorLight,
+    "text-opp-color": $textColorDark,
     "bg-color": $bgColorLight,
     "bg-opp-color": $bgColorDark,
     "info-color": $infoColorLight,

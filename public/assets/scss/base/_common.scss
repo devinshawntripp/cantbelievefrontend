@@ -669,6 +669,13 @@ span,
   }
 }
 
+.text {
+  // color: white !important;
+  @include theme() {
+    color: theme-get("text-opp-color");
+  }
+}
+
 .light-text {
   color: rgb(192, 192, 192) !important;
   cursor: pointer;

@@ -816,6 +816,13 @@ a:hover {
   color: #000000;
 }
 
+.dark-mode .text {
+  color: #000000;
+}
+.light-mode .text {
+  color: #ffffff;
+}
+
 .light-text {
   color: rgb(192, 192, 192) !important;
   cursor: pointer;
