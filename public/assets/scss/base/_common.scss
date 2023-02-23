@@ -660,9 +660,6 @@ a {
 h1,
 h2,
 h3,
-h4,
-h5,
-span,
 .btn {
   @include theme() {
     color: theme-get("text-color");
@@ -670,10 +667,20 @@ span,
 }
 
 .text {
+  @include theme() {
+    color: theme-get("text-color");
+  }
+}
+
+.text-opp {
   // color: white !important;
   @include theme() {
-    color: theme-get("text-opp-color");
+    color: theme-get("text-opp-color") !important;
   }
+}
+
+.color-text {
+  color: white !important;
 }
 
 .light-text {

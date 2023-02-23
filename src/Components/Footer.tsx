@@ -1,7 +1,7 @@
 import React from "react";
 // import { Row, Col } from "react-bootstrap";
 import Link from "next/link";
-
+import newLogo from "../../public/assets/imgs/pages/homepage/whyyoubuyinglogo.png";
 import CSS from "csstype";
 
 interface FooterProps {}
@@ -27,7 +27,18 @@ const Footer: React.FC<FooterProps> = (props: {}) => {
           </div>
           {/* <div className="d-flex align-items-center"> */}
           <div className="row rowStyle">
-            <div className="col-lg-4 colStyle font-md">
+            <div className="col-lg-2 colStyle font-md mr-30">
+              <Link className="footer-link-style" href="/">
+                <img src={newLogo.src} />
+              </Link>
+              <h5 className="text-white">
+                1234 Some address
+                <br></br>
+                Grapevine, Texas, 76208
+              </h5>
+              <h6 className="text-white">devin@onetripp.com</h6>
+            </div>
+            <div className="col-lg-3 colStyle font-md mt-100">
               <h3 className="footer-header-style">Information</h3>
               <Link className="footer-link-style" href="/About">
                 About us
@@ -48,7 +59,7 @@ const Footer: React.FC<FooterProps> = (props: {}) => {
                 Terms of Service
               </Link>
             </div>
-            <div className="col-lg-4 colStyle">
+            <div className="col-lg-3 colStyle mt-100">
               <h3 className="footer-header-style">Social</h3>
               <a className="footer-link-style" href="#">
                 Faceboook
@@ -70,7 +81,7 @@ const Footer: React.FC<FooterProps> = (props: {}) => {
               </a>
             </div>
 
-            <div className="col-lg-4 colStyle">
+            <div className="col-lg-3 colStyle mt-100">
               <h3 className="footer-header-style">Services</h3>
               <a className="footer-link-style" href="#">
                 Affiliate Marketing

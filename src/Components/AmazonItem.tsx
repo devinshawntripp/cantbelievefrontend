@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 // import picture from "../images/nail_stamper.jpg";
-// import { Button, Form } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 // import saveIcon from "../images/heartIcon.png";
 import saveIconFilled from "../images/heartIconFilled.png";
 import saveIconWhite from "../images/heartIconWhite.png";
@@ -321,16 +321,17 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
             </p>
             {/* </div> */}
           </div>
-          {/* {user.role === "admin" && (
-            <Button
-              variant="success"
-              style={{ width: "90%" }}
-              onClick={toggleEdit}
-            >
-              Edit
-            </Button>
-          )} */}
         </div>
+      )}
+      {user.role === "admin" && (
+        <Button
+          variant="success"
+          className="mb-20 ml-15"
+          style={{ width: "90%" }}
+          onClick={toggleEdit}
+        >
+          Edit
+        </Button>
       )}
     </>
     // <>

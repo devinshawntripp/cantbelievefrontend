@@ -6,6 +6,7 @@ import React, {
   HTMLAttributes,
 } from "react";
 import { Tooltip, Overlay } from "react-bootstrap";
+import CodeSyntaxBox from "./BlogComponents/CodeSyntaxBox";
 import TextOverlayIcons from "./TextOverlayIcons";
 
 interface Attributes extends HTMLAttributes<HTMLDivElement> {
@@ -30,7 +31,9 @@ interface IBlogItem {
   type: string;
   value: any;
   attributes?: Attributes;
+  language?: string;
   changed: boolean;
+  handlelangaugeselect?: (e: any, keyNum: number) => void;
 }
 
 function useOutsideAlerter(
@@ -107,6 +110,8 @@ interface IBlogItemProps {
   blogItem: IBlogItem;
   keyNum: number;
   onChange: (event: any, keyNum: number) => void;
+  language?: string;
+  handlelangaugeselect?: (e: any, keyNum: number) => void;
 }
 
 const BlogItem: React.FC<IBlogItemProps> = (props) => {
@@ -180,6 +185,25 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
       setAtt(newAtt);
     }
 
+    // if (props.blogItem.type.match("iframe")) {
+    //   //build img tag
+    //   const newAtt: Attributes = {
+    //     // bold: props.blogItem.attributes?.bold,
+    //     src: props.blogItem.attributes?.src,
+    //     altText: props.blogItem.attributes?.altText,
+    //     className: props.blogItem.attributes?.className,
+    //     ["aria-label"]: "frame",
+    //     ref: targetImg,
+    //     frameborder: 0,
+    //     allowFullScreen,
+    //     onClick: (e) => handleClickedImg(e),
+    //     onMouseLeave: (e: any) => handleLeftImg(e),
+    //     // onDoubleClick: showToolTip,
+    //   };
+    //   props.blogItem.changed = false;
+    //   setAtt(newAtt);
+    // }
+
     if (props.blogItem.type.match("p")) {
       const newAtt: Attributes = {
         // bold: props.blogItem.attributes?.bold,
@@ -187,7 +211,7 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
         contentEditable: "true",
         suppressContentEditableWarning: true,
         className:
-          props.blogItem.attributes?.className + " blog-item-p font-xl",
+          props.blogItem.attributes?.className + " blog-item-p font-xl text",
         ["aria-label"]: "text",
         ref: targetDiv,
 
@@ -203,8 +227,33 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
 
   return (
     <div className="mb-25 graf" key={props.keyNum}>
-      {React.createElement(props.blogItem.type, att, blogEleValue)}
+      {props.blogItem.type !== "iframe" &&
+        props.blogItem.type !== "code" &&
+        React.createElement(props.blogItem.type, att, blogEleValue)}
+      <div className="youtubeVid">
+        {props.blogItem.type === "iframe" && (
+          <iframe
+            className="youtubeVid"
+            data-width={854}
+            data-height={480}
+            width={700}
+            height={393}
+            src={`https://www.youtube.com/embed/${props.blogItem.attributes?.src}`}
+            data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Fi.ytimg.com%2Fvi%2FLQT47aMSTRE%2Fhqdefault.jpg&key=a19fcc184b9711e1b4764040d3dc5c07"
+            allowFullScreen
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
+          ></iframe>
+        )}
+      </div>
 
+      {props.blogItem.type === "code" && (
+        <CodeSyntaxBox
+          codeString={props.blogItem.value}
+          language={props.blogItem.language}
+          keyNum={props.keyNum}
+          handlelangaugeselect={props.handlelangaugeselect!}
+        />
+      )}
       <Overlay target={targetDiv.current} show={show} placement="top">
         {(props) => (
           <Tooltip className="displayOverany" id="tooltip-top" {...props}>

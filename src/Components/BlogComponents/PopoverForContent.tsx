@@ -8,6 +8,7 @@ import CodeImg from "../../../public/assets/imgs/icons/code-tag-svgrepo-com.svg"
 interface IPopoverForContentProps {
   handlefileget: (e: any) => void;
   handleyoutubeembed: (e: any) => void;
+  handlecode: (e: any) => void;
   className: string;
   // youtubeFor: string;
 
@@ -55,6 +56,7 @@ export const PopoverForContent = forwardRef<Ref, IPopoverForContentProps>(
             width="15px"
             height="15px"
             fill="green"
+            onClick={props.handlecode}
             // className={`${dark ? "dark-icon" : "profile"} hover-up`}
           ></CodeImg>
         </div>

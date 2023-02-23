@@ -7,6 +7,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { GoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
+import FacebookLogin from "@greatsumini/react-facebook-login";
 import Image from "next/image";
 
 // import "react-toastify/dist/ReactToastify.css";
@@ -117,38 +119,32 @@ const Login: React.FC<ILoginProps> = ({}) => {
       });
   };
 
+  const credentialResponse = useGoogleLogin({
+    onSuccess: async (credentialResponse) => {
+      console.log(credentialResponse);
+      const googleUser = await fetch(
+        `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${credentialResponse.access_token}`
+      )
+        .then((response) => response.json())
+        .then((data) => console.log(btoa(data)));
+
+      // console.log(googleUser);
+
+      // handleLogin(undefined, "google", credentialResponse.access_token);
+    },
+  });
+
   const handleGoogleLogin = async () => {
     if (email === "" || pwd === "") {
       // create a toast to display that the user must enter an email or password
       return;
     }
 
-    const payload = { email: email, password: pwd };
-    //request for
-    // console.log("HIIHIHSDKF DSKFL")
-    await axios
-      .post(`${process.env.NEXT_PUBLIC_APP_URL}/api/login`, payload)
-      .then((res) => {
-        console.log(res);
-        const user = res.data.user;
-        dispatch(
-          loadAppData({
-            id: user.id,
-            email: user.email,
-            role: user.role,
-            vouchers: user.vouchers,
-            idsSaved: user.idsSaved,
-          })
-        );
-        console.log(res.data.token);
-        localStorage.setItem("auth-token", res.data.token);
-        notify("You have logged in successfully!");
-        navigate.replace("/");
-      })
-      .catch((err) => {
-        console.log(err);
-        notify(err.response.data.msg);
-      });
+    // handleLogin(
+    //   undefined,
+    //   "google",
+    //   credentialResponse.credential
+    // );
   };
 
   return (
@@ -206,28 +202,32 @@ const Login: React.FC<ILoginProps> = ({}) => {
                         aria-label="google"
                         onSuccess={(credentialResponse) => {
                           console.log(credentialResponse);
-                          handleLogin(
-                            undefined,
-                            "google",
-                            credentialResponse.credential
-                          );
+                          // handleLogin(
+                          //   undefined,
+                          //   "google",
+                          //   credentialResponse.credential
+                          // );
                         }}
                         onError={() => {
                           console.log("Login Failed");
                         }}
                       />
-                      <GoogleLogin
-                        aria-label="google"
-                        onSuccess={(credentialResponse) => {
-                          console.log(credentialResponse);
-                          handleLogin(
-                            undefined,
-                            "google",
-                            credentialResponse.credential
-                          );
-                        }}
-                        onError={() => {
-                          console.log("Login Failed");
+                      <button
+                        onClick={() => credentialResponse()}
+                        className="btn btn-brand-1 mr-10"
+                      >
+                        Google
+                      </button>
+                      <FacebookLogin
+                        appId="1088597931155576"
+                        className="facebook-login"
+                        style={{
+                          backgroundColor: "#4267b2",
+                          color: "#fff",
+                          fontSize: "16px",
+                          padding: "12px 24px",
+                          border: "none",
+                          borderRadius: "4px",
                         }}
                       />
                     </div>
@@ -322,7 +322,7 @@ const Login: React.FC<ILoginProps> = ({}) => {
           </ul> */}
         </div>
       </div>
-      <section className="section mt-50">
+      <section className="section mt-50 mb-50">
         <div className="container">
           <div className="box-newsletter box-newsletter-2">
             <div className="row align-items-center">
@@ -362,104 +362,6 @@ const Login: React.FC<ILoginProps> = ({}) => {
           </div>
         </div>
       </section>
-
-      <div className="card-login-grid">
-        <div className="card-login-grid-2">
-          <form className="">
-            <div className="form-group icon-email">
-              <input
-                type="text"
-                className="form-control icon-email"
-                placeholder="Email:"
-              />
-              <small id="emailHelp" className="form-text text-muted">
-                We&apos;ll never share your email with anyone else.
-              </small>
-            </div>
-          </form>
-          <div className="inputG">
-            {/* <InputGroup>
-            <InputGroup.Text id="basic-addon1">Email</InputGroup.Text>
-            <FormControl
-              placeholder="Username"
-              aria-label="Username"
-              aria-describedby="basic-addon1"
-              onChange={handleChange}
-            />
-          </InputGroup> */}
-          </div>
-          <div className="inputG">
-            {/* <InputGroup className="mt-3">
-            <InputGroup.Text id="password-1">Password</InputGroup.Text>
-            <FormControl
-              placeholder="Password"
-              aria-label="Password"
-              aria-describedby="password-1"
-              type="password"
-              onChange={handleChange}
-            />
-          </InputGroup> */}
-          </div>
-          <div className="LoginButton">
-            {/* <Button
-            onClick={(e) => handleLogin(e, "", "")}
-            className="LoginButton m-4"
-            variant="primary"
-          >
-            Login
-          </Button> */}
-          </div>
-          <div>
-            <Link href="/Register">
-              Don&apos;t have an account? click here to register
-            </Link>
-          </div>
-          <div
-            className="blackLine"
-            style={{
-              color: "Black",
-              width: "90%",
-              backgroundColor: "Black",
-              height: 3,
-              borderTop: "2px solid #fff ",
-              borderRadius: "3px",
-              marginBottom: 0,
-            }}
-          ></div>
-
-          <div className="altSignins">
-            <GoogleLogin
-              aria-label="google"
-              onSuccess={(credentialResponse) => {
-                console.log(credentialResponse);
-                handleLogin(undefined, "google", credentialResponse.credential);
-              }}
-              onError={() => {
-                console.log("Login Failed");
-              }}
-            />
-            ;
-            {/* <Button
-            className="altSignins mt-3"
-            variant="primary"
-            aria-label="google"
-            onClick={handleLogin}
-          >
-            Google
-          </Button> */}
-          </div>
-          {/* <div className="altSignins">
-          <Button className="altSignins mt-3" variant="primary">
-            Facebook
-          </Button>
-        </div>
-        <div className="altSignins">
-          <Button className="altSignins mt-3" variant="primary">
-            Github
-          </Button>
-        </div> */}
-        </div>
-      </div>
     </div>
   );
 };

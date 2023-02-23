@@ -162,13 +162,11 @@ export default function Home() {
       </section>
       <section className="container">
         {app.role == "admin" && (
-          // <Row>
-          //   <div className="mt-10">
-          //     {/* <Button>Add Product</Button> */}
-          //     <Button onClick={routeChange}>Add Product</Button>
-          //   </div>
-          // </Row>
-          <div></div>
+          <div className="d-flex">
+            <div className="mt-10">
+              <Button onClick={routeChange}>Add Product</Button>
+            </div>
+          </div>
         )}
 
         <div className="row mt-100">
@@ -189,7 +187,11 @@ export default function Home() {
                   />
 
                   {app.role === "admin" && (
-                    <Button style={{ width: "90%" }} onClick={togglePopup}>
+                    <Button
+                      className="ml-15 mb-30"
+                      style={{ width: "90%" }}
+                      onClick={togglePopup}
+                    >
                       Delete
                     </Button>
                   )}

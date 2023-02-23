@@ -16,6 +16,12 @@ import { PopoverForContent } from "@/Components/BlogComponents/PopoverForContent
 
 interface IAddProductProps {}
 
+interface Code {
+  codeString: string;
+  langauge: string;
+  show: boolean;
+}
+
 interface Attributes {
   bold?: boolean;
   src?: string;
@@ -29,7 +35,9 @@ interface IBlogItem {
   type: string;
   value: any;
   attributes?: Attributes;
+  language?: string;
   changed: boolean;
+  handlelangaugeselect?: (e: any, keyNum: number) => void;
 }
 
 const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
@@ -41,6 +49,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   const fileRef = useRef<HTMLInputElement>(null);
   const [price, setPrice] = useState<Number>(0);
   const [showImg, setShowImg] = useState<any>(null);
+
   const [isActive, setIsActive] = useState({
     status: false,
   });
@@ -50,11 +59,19 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   const [blogPost, setBlogPost] = useState<Array<IBlogItem>>();
   const [showYoutubeEmbed, setShowYoutubeEmbed] = useState<boolean>(false);
   const youtubeRef = useRef<HTMLInputElement>(null);
+  const codeRef = useRef<HTMLTextAreaElement>(null);
 
   const { dark } = useContext(ThemeContext);
 
   const targetRef = useRef(null);
   const [html, setHtml] = useState(true);
+
+  //code formatting syntax
+  const [code, setCode] = useState<Code>({
+    codeString: "",
+    langauge: "",
+    show: false,
+  });
 
   const notify = (msg: string) =>
     toast(msg, {
@@ -66,6 +83,27 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
       draggable: true,
       progress: undefined,
     });
+
+  const handlelangaugeselect = (e: any, keyNum: number) => {
+    const newCode: Code = {
+      codeString: e.target.value,
+      langauge:
+        code.langauge !== undefined || code.langauge !== ""
+          ? code.langauge
+          : "javascript",
+      show: code.show,
+    };
+
+    setCode(newCode);
+
+    const newArr: Array<IBlogItem> = [...(blogPost || [])];
+
+    if (newArr.at(keyNum) !== undefined) {
+      newArr.at(keyNum)!.language = e.target.value;
+    }
+
+    setBlogPost(newArr);
+  };
 
   const handleKeyDown = (event: any) => {
     // console.log("User pressed: ", event.key);
@@ -87,22 +125,45 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
         };
       }
       if (event.target.ariaLabel === "youtubeEmbed") {
+        ///get the youtube link
+        //get just the id
+        const srcId = youtubeLink.split("watch?v=")[1];
+
         newBlogItem = {
-          type: "frame",
+          type: "iframe",
           value: "",
-          attributes: { src: youtubeLink, altText: "" },
+          attributes: { src: srcId, altText: "" },
           changed: true,
         };
       }
+
+      if (event.target.ariaLabel === "code") {
+        newBlogItem = {
+          type: "code",
+          value: code.codeString,
+          language: code.langauge,
+          attributes: { src: undefined, altText: undefined },
+          changed: true,
+        };
+      }
+
       setShowYoutubeEmbed(false);
       setBlogPost((prevBlogPost) => [...(prevBlogPost || []), newBlogItem]);
       setBlogTextElement("");
+      const newCode: Code = {
+        codeString: "",
+        langauge: "javascript",
+        show: false,
+      };
+      setCode(newCode);
     }
 
     if (event.key === "Backspace") {
-      setBlogPost((prevBlogPost) => [
-        ...(prevBlogPost?.splice(prevBlogPost.length - 1, 1) || []),
-      ]);
+      if (blogTextEle === "") {
+        setBlogPost((prevBlogPost) => [
+          ...(prevBlogPost?.splice(prevBlogPost.length - 1, 1) || []),
+        ]);
+      }
     }
   };
 
@@ -135,7 +196,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   // }, []);
 
   const [youtubeLink, setYoutubeLink] = useState<string>("");
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<any>) => {
     // console.log(e);
 
     if (e.target.ariaLabel === "blogText") {
@@ -146,11 +207,46 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
     if (e.target.ariaLabel === "youtubeEmbed") {
       setYoutubeLink(e.target.value);
     }
+
+    if (e.target.ariaLabel === "code") {
+      const newCode: Code = {
+        codeString: e.target.value,
+        langauge:
+          code.langauge !== undefined || code.langauge !== ""
+            ? code.langauge
+            : "javascript",
+        show: code.show,
+      };
+
+      setCode(newCode);
+    }
   };
 
   const handleFileGet = (event: any) => {
     event.preventDefault();
     fileRef.current?.click();
+  };
+
+  const handleCodeClicked = (event: any) => {
+    const newStatus = {
+      status: !isActive.status,
+    };
+
+    setIsActive(newStatus);
+    setShowOverlay(false);
+
+    const newCode: Code = {
+      codeString: code.codeString,
+      langauge:
+        code.langauge !== undefined || code.langauge !== ""
+          ? code.langauge
+          : "javascript",
+      show: true,
+    };
+
+    setCode(newCode);
+
+    codeRef.current?.focus();
   };
 
   const handleYoutubeEmbed = (event: any) => {
@@ -166,6 +262,10 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   useEffect(() => {
     youtubeRef.current?.focus();
   }, [youtubeRef.current, showYoutubeEmbed]);
+
+  useEffect(() => {
+    codeRef.current?.focus();
+  }, [code.show]);
 
   // const handleFileChange = (event: any) => {
   //   const fileUploaded = event.target.files[0];
@@ -300,6 +400,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
               onChange={changeBlogItem}
               keyNum={key}
               key={key}
+              handlelangaugeselect={handlelangaugeselect}
             />
           );
         })}
@@ -313,6 +414,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
                 className="h-40 d-flex text-align-center align-items-center justify-content-center p-20 popover-plus"
                 handlefileget={handleFileGet}
                 handleyoutubeembed={handleYoutubeEmbed}
+                handlecode={handleCodeClicked}
               />
             }
           >
@@ -335,7 +437,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
 
           <div className="col-lg-6">
             <div className="form-group">
-              {!showYoutubeEmbed && (
+              {!showYoutubeEmbed && !code.show && (
                 <input
                   type="text"
                   aria-label="blogText"
@@ -357,6 +459,19 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
                   onChange={handleChange}
                   onKeyDown={handleKeyDown}
                 ></input>
+              )}
+              {code.show && (
+                <textarea
+                  id="code"
+                  aria-label="code"
+                  className="form-control icon-email youtube-embed"
+                  value={code.codeString}
+                  ref={codeRef}
+                  rows={20}
+                  placeholder="...<Paste your code and hit enter key>"
+                  onChange={handleChange}
+                  onKeyDown={handleKeyDown}
+                />
               )}
             </div>
           </div>

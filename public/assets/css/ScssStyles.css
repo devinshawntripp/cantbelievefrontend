@@ -800,27 +800,32 @@ a:hover {
 .dark-mode h1,
 .dark-mode h2,
 .dark-mode h3,
-.dark-mode h4,
-.dark-mode h5,
-.dark-mode span,
 .dark-mode .btn {
   color: #ffffff;
 }
 .light-mode h1,
 .light-mode h2,
 .light-mode h3,
-.light-mode h4,
-.light-mode h5,
-.light-mode span,
 .light-mode .btn {
   color: #000000;
 }
 
 .dark-mode .text {
-  color: #000000;
+  color: #ffffff;
 }
 .light-mode .text {
-  color: #ffffff;
+  color: #000000;
+}
+
+.dark-mode .text-opp {
+  color: #000000 !important;
+}
+.light-mode .text-opp {
+  color: #ffffff !important;
+}
+
+.color-text {
+  color: white !important;
 }
 
 .light-text {
@@ -1718,6 +1723,15 @@ body {
 .altSignins {
   display: flex;
   flex-direction: row;
+}
+
+.facebook-login {
+  background-color: #4267b2;
+  color: #fff;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
 }
 
 /*LAYOUT -> SPACING**/

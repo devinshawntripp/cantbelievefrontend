@@ -51,16 +51,6 @@ const Menu = (props: {
         <Link className="Brand" href={brand.to}>
           <img
             className="menu-img-style"
-            style={
-              {
-                // maxHeight: "90px",
-                // maxWidth: "120px",
-                // marginRight: "-30px",
-                // marginBottom: "-20px",
-                // marginTop: "-25px",
-                // marginLeft: "-15px",
-              }
-            }
             // src={dark ? logo.src : blackLogo.src}
             src={newLogo.src}
           />
@@ -86,10 +76,10 @@ const Menu = (props: {
         </label>
         {app.email != "" ? (
           <>
-            <div className="Username">{app.email}</div>
-            <a className="nav-item" onClick={handleLogout}>
+            <div className="nav-item">{app.email}</div>
+            <Link className="nav-item" onClick={handleLogout} href="#">
               Logout
-            </a>
+            </Link>
           </>
         ) : (
           <Link className="btn btn-brand-1" href="/Login">
