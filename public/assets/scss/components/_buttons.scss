@@ -28,6 +28,26 @@
       color: $color-brand-1;
     }
   }
+  &.btn-brand-1-nopadding {
+    @include theme() {
+      color: theme-get("color-brand-2") !important;
+    }
+    background: $color-brand-1;
+    border-radius: 4px;
+    font-size: $font-sm;
+    line-height: 18px;
+    font-weight: 700;
+    svg {
+      color: $color-brand-2;
+    }
+    &:hover {
+      background-color: $color-brand-1-hover;
+      color: $color-brand-2;
+    }
+    &:hover * {
+      color: $color-brand-1;
+    }
+  }
   &.btn-border-brand-1 {
     border: 1px solid $color-brand-1;
     @include theme() {

@@ -147,7 +147,7 @@ export default function Home() {
             "", // Waits 1s
             // Deletes 'One' and types 'Two'
             () => {
-              console.log("Done typing!"); // Place optional callbacks anywhere in the array
+              // console.log("Done typing!"); // Place optional callbacks anywhere in the array
             },
           ]}
           wrapper="h1"

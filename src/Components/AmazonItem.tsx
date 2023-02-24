@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 // import picture from "../images/nail_stamper.jpg";
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 // import saveIcon from "../images/heartIcon.png";
 import saveIconFilled from "../images/heartIconFilled.png";
 import saveIconWhite from "../images/heartIconWhite.png";
@@ -106,7 +106,7 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
 
   const [editDesc, setEditDesc] = useState<string>(desc);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<any>) => {
     if (e.target.ariaLabel === "Desc") {
       setEditDesc(e.target.value);
     }
@@ -211,38 +211,44 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
         pauseOnHover
       />
       {isEdit ? (
-        <div className="card-product-grid">
-          <div className="card-title mb-20">
+        <div className="card-product-grid card-product-grid-2 hover-up">
+          <div className="card-title">
             <h6>{String(name)}</h6>
           </div>
 
           {/* <div className="imgContainer"> */}
-          {imgUrl ? (
-            <img style={{ marginTop: "0%" }} src={String(imgUrl)} />
-          ) : (
-            <p>Not avail</p>
-          )}
+          <div className="card-image">
+            <img className="" src={String(imgUrl)} alt="image not found" />
+          </div>
           {/* </div> */}
-          <div className="card-info">
+          <div className="card-info mt-20 h-100">
+            <textarea
+              className="form-control text-area"
+              rows={10}
+              cols={50}
+              value={editDesc}
+              aria-label="Desc"
+              onChange={handleChange}
+            />
+
             {/* <p className="text desc">{String(desc).trim()}</p> */}
             {/* <Form.Control
               as="textarea"
-              rows={5}
+              rows={10}
               value={editDesc}
               aria-label="Desc"
               onChange={handleChange}
             /> */}
           </div>
-          {/* <div style={PriceAndLink}> */}
-          <div className="priceAndLink">
-            {/* <Button
-              href={String(url)}
+          <div className="d-flex mt-20 align-items-center border-top pt-20 justify-content-around text-align-center">
+            <a
+              className="btn btn-border-brand-1 mr-20"
               target="_blank"
               rel="noopener noreferrer"
-              className="clickme-button"
+              href={String(url)}
             >
               Click Me
-            </Button> */}
+            </a>
 
             <div className="saves">
               <img
@@ -260,14 +266,13 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
             {/* </div> */}
           </div>
           {user.role === "admin" && (
-            // <Button
-            //   variant="success"
-            //   style={{ width: "90%" }}
-            //   onClick={toggleEdit}
-            // >
-            //   Submit
-            // </Button>
-            <div></div>
+            <Button
+              variant="success"
+              style={{ width: "90%" }}
+              onClick={toggleEdit}
+            >
+              Submit
+            </Button>
           )}
         </div>
       ) : (
@@ -294,15 +299,7 @@ const AmazonItem: React.FC<IAmazonItemProps> = (props: {
               rel="noopener noreferrer"
               href={String(url)}
             >
-              {/* <Button
-                variant="success"
-                // style={{ backgroundColor: "green" }}
-                // target="_blank"
-                // rel="noopener noreferrer"
-                // className="btn btn-primary"
-              > */}
               Click Me
-              {/* </Button> */}
             </a>
 
             <div className="d-flex flex-column mr-20 align-items-center">

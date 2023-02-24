@@ -14,6 +14,7 @@ const AddProduct: React.FC<IAddProductProps> = (props: {}) => {
   const [file, setFile] = useState<File>();
   const fileRef = useRef<HTMLInputElement>(null);
   const [price, setPrice] = useState<Number>(0);
+  const [altText, setAltText] = useState<string>("");
 
   const notify = (msg: string) =>
     toast(msg, {
@@ -37,6 +38,9 @@ const AddProduct: React.FC<IAddProductProps> = (props: {}) => {
 
     if (e.target.ariaLabel === "AmzUrl") {
       setAmzUrl(e.target.value);
+    }
+    if (e.target.ariaLabel === "alt-text") {
+      setAltText(e.target.value);
     }
 
     if (e.target.ariaLabel === "Price" && !isNaN(e.target.valueAsNumber)) {
@@ -69,6 +73,7 @@ const AddProduct: React.FC<IAddProductProps> = (props: {}) => {
       formData.append("file", file);
       formData.append("fileName", String(fileName));
       formData.append("title", String(title));
+      formData.append("image-alt-text", String(altText));
       formData.append("desc", String(desc));
       formData.append("amzURL", String(amzUrl));
       formData.append("price", String(price));
@@ -159,6 +164,16 @@ const AddProduct: React.FC<IAddProductProps> = (props: {}) => {
               onChange={handleDisplayFileDetails}
             />
           </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Image Alt Text</Form.Label>
+            <Form.Control
+              type="text"
+              aria-label="alt-text"
+              placeholder="Describe the image"
+              onChange={handleChange}
+            />
+          </Form.Group>
+
           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
             <Form.Label>Product Description</Form.Label>
             <Form.Control

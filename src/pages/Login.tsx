@@ -10,14 +10,26 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useGoogleLogin } from "@react-oauth/google";
 import FacebookLogin from "@greatsumini/react-facebook-login";
 import Image from "next/image";
+import { FacebookLoginClient } from "@greatsumini/react-facebook-login";
 
 // import "react-toastify/dist/ReactToastify.css";
 
 // import { useLocation } from 'react-router'
 
 interface ILoginProps {}
+const appId = "3434356016811558";
 
 const Login: React.FC<ILoginProps> = ({}) => {
+  useEffect(() => {
+    loadFB();
+  }, []);
+
+  const loadFB = async () => {
+    FacebookLoginClient.clear();
+    await FacebookLoginClient.loadSdk("en_US");
+    FacebookLoginClient.init({ appId: appId, version: "v9.0" });
+  };
+
   const [email, setEmail] = useState<string>();
   const [pwd, setPwd] = useState<string>();
   const navigate = useRouter();
@@ -55,15 +67,33 @@ const Login: React.FC<ILoginProps> = ({}) => {
       e.preventDefault();
     }
 
-    console.log(e);
+    console.log("service name: ", service);
 
-    if (service === "google") {
-      const payload = { email: "", password: "", jwtGoogleCred: credential };
+    if (service === "google" || service === "facebook") {
+      var facegoogPayload = null;
+
+      if (service === "google") {
+        facegoogPayload = {
+          email: "",
+          password: "",
+          // facebookAccessToken: undefined,
+          googleAccessToken: credential,
+        };
+      } else {
+        facegoogPayload = {
+          email: "",
+          password: "",
+          // googleAccessToken: undefined,
+          facebookAccessToken: credential,
+        };
+      }
+
+      console.log("SENT GOOGLE LOGIN: ", facegoogPayload);
 
       await axios
-        .post(`${process.env.NEXT_PUBLIC_APP_URL}/api/login`, payload)
+        .post(`${process.env.NEXT_PUBLIC_APP_URL}/api/login`, facegoogPayload)
         .then((res) => {
-          console.log(res);
+          console.log("RESPONSE FROM BACKEND: ", res);
           const user = res.data.user;
           dispatch(
             loadAppData({
@@ -83,6 +113,8 @@ const Login: React.FC<ILoginProps> = ({}) => {
           console.log(err);
           notify(err.response.data.msg);
         });
+
+      return;
     }
 
     if (email === "" || pwd === "") {
@@ -121,30 +153,23 @@ const Login: React.FC<ILoginProps> = ({}) => {
 
   const credentialResponse = useGoogleLogin({
     onSuccess: async (credentialResponse) => {
-      console.log(credentialResponse);
-      const googleUser = await fetch(
-        `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${credentialResponse.access_token}`
-      )
-        .then((response) => response.json())
-        .then((data) => console.log(btoa(data)));
+      handleLogin(undefined, "google", credentialResponse.access_token);
+    },
 
-      // console.log(googleUser);
-
-      // handleLogin(undefined, "google", credentialResponse.access_token);
+    onError: () => {
+      notify("Some erorr occurred logging into google");
     },
   });
 
-  const handleGoogleLogin = async () => {
-    if (email === "" || pwd === "") {
-      // create a toast to display that the user must enter an email or password
-      return;
-    }
-
-    // handleLogin(
-    //   undefined,
-    //   "google",
-    //   credentialResponse.credential
-    // );
+  const loginWithFacebook = () => {
+    const facebookcred = FacebookLoginClient.login(
+      (res) => {
+        handleLogin(undefined, "facebook", res.authResponse?.accessToken);
+      },
+      {
+        scope: "public_profile, email",
+      }
+    );
   };
 
   return (
@@ -197,22 +222,68 @@ const Login: React.FC<ILoginProps> = ({}) => {
                         />
                       </div>
                     </div>
-                    <div className="altSignins">
-                      <GoogleLogin
-                        aria-label="google"
-                        onSuccess={(credentialResponse) => {
-                          console.log(credentialResponse);
-                          // handleLogin(
-                          //   undefined,
-                          //   "google",
-                          //   credentialResponse.credential
-                          // );
-                        }}
-                        onError={() => {
-                          console.log("Login Failed");
-                        }}
-                      />
-                      <button
+                    <div className="row align-items-center justify-content-center">
+                      <div className="col-lg-5 col-md-5 col-sm-12 col-12">
+                        <div className="form-group mb-25">
+                          <a
+                            className="btn d-flex btn-brand-1"
+                            onClick={() => credentialResponse()}
+                          >
+                            <img
+                              className="mr-auto"
+                              src="../../../assets/imgs/pages/register/google.svg"
+                              alt="iori"
+                            />
+                            <div className="mt-1">Google</div>
+                          </a>
+                        </div>
+                      </div>
+                      <div className="col-lg-5 col-md-5 col-sm-12">
+                        <div className="form-group mb-25">
+                          <a className="btn d-flex btn-brand-1" href="#">
+                            <img
+                              className="d-inline-block align-middle mr-5"
+                              src="../../../assets/imgs/pages/register/microsoft.svg"
+                              alt="microsoft login"
+                            />
+                            <div className="mt-1">Microsoft</div>
+                          </a>
+                        </div>
+                      </div>
+                      <div className="col-lg-5 col-md-5 col-sm-12 col-12">
+                        <div className="form-group mb-25">
+                          <a className="btn d-flex btn-brand-1" href="#">
+                            <img
+                              className="mr-5"
+                              src="../../../assets/imgs/pages/register/tw.svg"
+                              alt="twitter login"
+                            />
+                            <div className="mt-1">Twitter</div>
+                          </a>
+                        </div>
+                      </div>
+                      <div className="col-lg-5 col-md-5 col-sm-12 col-12">
+                        <div className="form-group mb-25">
+                          <a
+                            className="btn d-flex btn-brand-1"
+                            onClick={() => loginWithFacebook()}
+                          >
+                            <img
+                              className="d-inline-block align-middle mr-5"
+                              src="../../../assets/imgs/pages/register/fb.svg"
+                              alt="facebook login"
+                            />
+                            {/* <FacebookLogin
+                              appId="3434356016811558"
+                              className="facebook-login"
+                            /> */}
+
+                            <div className="mt-1">Facebook</div>
+                          </a>
+                        </div>
+                      </div>
+
+                      {/* <button
                         onClick={() => credentialResponse()}
                         className="btn btn-brand-1 mr-10"
                       >
@@ -229,7 +300,7 @@ const Login: React.FC<ILoginProps> = ({}) => {
                           border: "none",
                           borderRadius: "4px",
                         }}
-                      />
+                      /> */}
                     </div>
                     <div className="col-lg-6 col-6 mt-15">
                       <div className="form-group mb-25">
