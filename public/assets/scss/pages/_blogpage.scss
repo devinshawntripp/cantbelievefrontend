@@ -27,6 +27,13 @@
   //   background-color: theme-get("bg-color") !important;
   // }
 }
+.displayOveranyany {
+  background-color: white;
+  z-index: 1000000000000 !important;
+  // @include theme() {
+  //   background-color: theme-get("bg-color") !important;
+  // }
+}
 
 #tooltip-top > .tooltip-inner {
   @include theme() {

@@ -15,6 +15,7 @@ import axios from "axios";
 // import { FALSE } from "sass";
 import { PopoverForContent } from "@/Components/BlogComponents/PopoverForContent";
 import Popup from "@/Components/Popup";
+import BuildBlogPostForm from "@/Components/BlogComponents/BuildBlogPostForm";
 
 interface IAddProductProps {}
 
@@ -33,11 +34,18 @@ interface Attributes {
   onDoubleClick?: () => void;
 }
 
+interface IInnerTags {
+  type: string;
+  attributes?: Attributes;
+  value: any;
+}
+
 interface IBlogItem {
   type: string;
   value: any;
   attributes?: Attributes;
   language?: string;
+  possibleInnerTags?: Array<IInnerTags>;
   changed: boolean;
   handlelangaugeselect?: (e: any, keyNum: number) => void;
 }
@@ -56,12 +64,12 @@ interface IBlogPost {
 
 const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   const [title, setTitle] = useState<String>();
-  const [desc, setDesc] = useState<String>();
-  const [amzUrl, setAmzUrl] = useState<String>();
-  const [fileName, setFileName] = useState<String>("");
-  const [file, setFile] = useState<File>();
+  // const [desc, setDesc] = useState<String>();
+  // const [amzUrl, setAmzUrl] = useState<String>();
+  // const [fileName, setFileName] = useState<String>("");
+  // const [file, setFile] = useState<File>();
   const fileRef = useRef<HTMLInputElement>(null);
-  const [price, setPrice] = useState<Number>(0);
+  // const [price, setPrice] = useState<Number>(0);
   const [showImg, setShowImg] = useState<any>(null);
 
   const [isActive, setIsActive] = useState({
@@ -89,11 +97,103 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
     show: false,
   });
 
+  const handleTextOverlayClick = (event: any, keyNum: number) => {
+    console.log(event);
+    event.preventDefault();
+    const newArr: Array<IBlogItem> = [...(blogPost || [])];
+    if (event.target.ariaLabel === "title") {
+      if (newArr.at(keyNum) !== undefined) {
+        // const newAtt: Attributes | undefined = newArr.at(keyNum)!.attributes;
+        // newAtt!.className = newAtt?.className + " ";
+
+        if (newArr.at(keyNum)!.type === "h1") {
+          newArr.at(keyNum)!.type = "p";
+        } else {
+          newArr.at(keyNum)!.type = "h1";
+        }
+      }
+      newArr.at(keyNum)!.changed = true;
+      setBlogPost(newArr);
+      console.log("TITLE CLICKED");
+    }
+
+    if (event.target.ariaLabel === "bold") {
+      if (newArr.at(keyNum) !== undefined) {
+        const newAtt: Attributes | undefined = newArr.at(keyNum)!.attributes;
+
+        //changes from bold to non bold toggle
+        if (newAtt!.className?.includes("bold")) {
+          newAtt!.className = newAtt!.className.replace("bold", "");
+        } else {
+          newAtt!.className = newAtt?.className + " bold";
+        }
+
+        newArr.at(keyNum)!.attributes = newAtt;
+        newArr.at(keyNum)!.changed = true;
+        setBlogPost(newArr);
+        console.log("BOLD CLICKED");
+      }
+    }
+
+    if (event.target.ariaLabel === "italics") {
+      if (newArr.at(keyNum) !== undefined) {
+        const newAtt: Attributes | undefined = newArr.at(keyNum)!.attributes;
+
+        //changes from bold to non bold toggle
+        if (newAtt!.className?.includes("fst-italic fw-lighter")) {
+          newAtt!.className = newAtt!.className.replace(
+            "fst-italic fw-lighter",
+            ""
+          );
+        } else {
+          newAtt!.className = newAtt?.className + " fst-italic fw-lighter";
+        }
+
+        newArr.at(keyNum)!.attributes = newAtt;
+        newArr.at(keyNum)!.changed = true;
+        setBlogPost(newArr);
+        console.log("ITALICS CLICKED");
+      }
+
+      // font-italic
+    }
+
+    if (event.target.ariaLabel === "link") {
+      if (newArr.at(keyNum) !== undefined) {
+        const newAtt: Attributes | undefined = newArr.at(keyNum)!.attributes;
+
+        //changes from bold to non bold toggle
+        // if (newAtt!.className?.includes("fst-italic fw-lighter")) {
+        //   newAtt!.className = newAtt!.className.replace(
+        //     "fst-italic fw-lighter",
+        //     ""
+        //   );
+        // } else {
+        //   newAtt!.className = newAtt?.className + " fst-italic fw-lighter";
+        // }
+
+        // newArr.at(keyNum)!.attributes = newAtt;
+        // newArr.at(keyNum)!.changed = true;
+        setBlogPost(newArr);
+        console.log("ITALICS CLICKED");
+      }
+
+      // font-italic
+    }
+  };
+
   const [isOpen, setIsOpen] = useState(false);
 
   const togglePopup = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    if (typeof document !== undefined) {
+      const body = document.querySelector("body");
+      body!.style.overflow = isOpen ? "hidden" : "auto";
+    }
+  }, [isOpen]);
 
   const notify = (msg: string) =>
     toast(msg, {
@@ -193,9 +293,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
 
     if (event.key === "Backspace") {
       if (blogTextEle === "") {
-        setBlogPost((prevBlogPost) => [
-          ...(prevBlogPost?.splice(prevBlogPost.length - 1, 1) || []),
-        ]);
+        setBlogPost((prevBlogPost) => [...(prevBlogPost?.slice(0, -1) || [])]);
       }
     }
   };
@@ -204,20 +302,14 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   //   const keyDownHandler = (event: any) => {
   //     console.log("User pressed: ", event.key);
 
-  //     if (event.key === "Enter") {
-  //       event.preventDefault();
-
-  //       const newBlogItem: BlogItem = {
-  //         type: "p",
-  //         value: blogTextEle,
-  //         attributes: { bold: false, src: undefined, altText: undefined },
-  //         changed: true,
-  //       };
-
-  //       setBlogPost((prevBlogPost) => [...(prevBlogPost || []), newBlogItem]);
-
-  //       // 👇️ your logic here
-  //       // myFunction();
+  //     if (event.key === "Backspace") {
+  //       if (blogTextEle === "") {
+  //         if (blogPost?.length !== 0) {
+  //           setBlogPost((prevBlogPost) => [
+  //             ...(prevBlogPost?.slice(0, -1) || []),
+  //           ]);
+  //         }
+  //       }
   //     }
   //   };
 
@@ -226,7 +318,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   //   return () => {
   //     document.removeEventListener("keydown", keyDownHandler);
   //   };
-  // }, []);
+  // }, [blogPost?.length]);
 
   const [youtubeLink, setYoutubeLink] = useState<string>("");
   const handleChange = (e: React.ChangeEvent<any>) => {
@@ -427,6 +519,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
             style={{ display: "none" }}
             // accept="video/*"
           />
+
           {blogPost?.map((blogItem: any, key: number) => {
             // console.log(key);
             return (
@@ -436,6 +529,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
                 keyNum={key}
                 key={key}
                 handlelangaugeselect={handlelangaugeselect}
+                handletextoverlayclick={handleTextOverlayClick}
               />
             );
           })}
@@ -515,16 +609,17 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
       </div>
       {isOpen && (
         <Popup handleClose={togglePopup}>
-          <div>hjgjhgkjhkjh kjhkj h</div>
+          <BuildBlogPostForm />
         </Popup>
       )}
       <div className="col-lg-3">
         <div className="row d-flex flex-row justify-content-center align-items-center">
-          <div className="col-lg-3">
-            <div className="btn btn-brand-1" onClick={togglePopup}>
-              Publish
-            </div>
-          </div>
+          <div className="col-lg-3"></div>
+        </div>
+      </div>
+      <div className="publish-box">
+        <div className="btn btn-brand-1 publish-btn" onClick={togglePopup}>
+          Publish
         </div>
       </div>
     </div>

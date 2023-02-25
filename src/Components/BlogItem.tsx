@@ -5,9 +5,10 @@ import React, {
   ChangeEvent,
   HTMLAttributes,
 } from "react";
-import { Tooltip, Overlay } from "react-bootstrap";
+import { Tooltip, Overlay, OverlayTrigger } from "react-bootstrap";
 import CodeSyntaxBox from "./BlogComponents/CodeSyntaxBox";
-import TextOverlayIcons from "./TextOverlayIcons";
+import TextOverlayIcons from "./BlogComponents/TextOverlayIcons";
+import TextOverlayIconsNew from "./BlogComponents/TextOverlayIconsNew";
 
 interface Attributes extends HTMLAttributes<HTMLDivElement> {
   //   bold?: boolean;
@@ -17,7 +18,6 @@ interface Attributes extends HTMLAttributes<HTMLDivElement> {
   //   suppressContentEditableWarning?: string;
   //   className?: string;
   //   onDoubleClick?: (event: any) => void;
-  handleTextOverlayClick?: (event: any) => void;
   //   ["aria-label"]?: string;
   //   ["aria-current"]?: string;
   ref?: React.RefObject<HTMLDivElement>;
@@ -27,17 +27,25 @@ interface Attributes extends HTMLAttributes<HTMLDivElement> {
   //   onClick?: (event: any) => void;
 }
 
+interface IInnerTags {
+  type: string;
+  attributes?: Attributes;
+  value: any;
+}
+
 interface IBlogItem {
   type: string;
   value: any;
   attributes?: Attributes;
   language?: string;
   changed: boolean;
+  possibleInnerTags?: Array<IInnerTags>;
   handlelangaugeselect?: (e: any, keyNum: number) => void;
 }
 
 function useOutsideAlerter(
   ref: React.RefObject<HTMLDivElement>,
+  overlayref: any,
   initialShow: boolean
 ) {
   const [show, setShow] = useState(initialShow);
@@ -47,21 +55,30 @@ function useOutsideAlerter(
 
   function handleSelection(event: any) {
     // Get the selected text as a string
+    if (overlayref.current) {
+      console.log("HERE IS THE OVERLAYREF: ", overlayref.current);
+    }
+
     if (typeof window !== undefined) {
-      if (ref.current && ref.current.contains(event.target)) {
+      if (
+        (ref.current && ref.current.contains(event.target)) ||
+        (overlayref.current && overlayref.current.contains(event.target))
+      ) {
         // alert("You clicked outside of me!");
         const text = window.getSelection()?.toString();
         // console.log(text);
         // Set the selected text state
         setSelectedText(text);
         setShow(true);
-        // console.log(show);
+        console.log(show);
 
         // Get the coordinates of the selected text area
         const rect = window
           .getSelection()
           ?.getRangeAt(0)
           .getBoundingClientRect();
+
+        console.log(ref.current);
 
         setOffset(rect);
 
@@ -80,7 +97,7 @@ function useOutsideAlerter(
       // Unbind the event listener on clean up
       document.removeEventListener("mouseup", handleSelection);
     };
-  }, [ref]);
+  }, [ref, overlayref]);
 
   useEffect(() => {
     /**
@@ -103,7 +120,7 @@ function useOutsideAlerter(
     // Add the event listener to the text element
   }, [ref]);
 
-  return [offset, show, setShow] as const;
+  return [selectedText, show, setShow] as const;
 }
 
 interface IBlogItemProps {
@@ -111,7 +128,9 @@ interface IBlogItemProps {
   keyNum: number;
   onChange: (event: any, keyNum: number) => void;
   language?: string;
+  possibleInnerTags?: Array<IInnerTags>;
   handlelangaugeselect?: (e: any, keyNum: number) => void;
+  handletextoverlayclick?: (e: any, keyNum: number) => void;
 }
 
 const BlogItem: React.FC<IBlogItemProps> = (props) => {
@@ -121,7 +140,12 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
     props.blogItem.attributes?.altText
   );
   const targetDiv = useRef<HTMLDivElement>(null);
-  const [offset, show, setShow] = useOutsideAlerter(targetDiv, false);
+  const overlayIconsRef = useRef(null);
+  const [selectedText, show, setShow] = useOutsideAlerter(
+    targetDiv,
+    overlayIconsRef,
+    false
+  );
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
@@ -130,6 +154,8 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
 
   const [showAltTextInput, setShowAltTextInput] = useState<boolean>(false);
 
+  const [link, setLink] = useState("");
+
   const handleChange = (event: ChangeEvent<HTMLDivElement>) => {
     // setBlogEleValue(event.currentTarget.innerHTML);
     // targetDiv.current!.innerHTML = event.currentTarget.innerHTML;
@@ -137,13 +163,18 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
     props.onChange(event, props.keyNum);
   };
 
-  const handleClickTextEdit = (event: any) => {
-    if (event.target.ariaLabel === "bold") {
-    }
-  };
-
   const handleClickAltText = (event: any) => {
     setShowAltTextInput(true);
+  };
+
+  const handleTextIconOverlayChange = (event: any) => {
+    setLink(event.target.value);
+  };
+
+  const handleTextIconOverlayKeyDown = (event: any) => {
+    if (event.key === "enter") {
+      setShow(false);
+    }
   };
 
   const handleAltTextChange = (event: any) => {
@@ -204,7 +235,7 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
     //   setAtt(newAtt);
     // }
 
-    if (props.blogItem.type.match("p")) {
+    if (props.blogItem.type.match("p") || props.blogItem.type.match("h1")) {
       const newAtt: Attributes = {
         // bold: props.blogItem.attributes?.bold,
         src: props.blogItem.attributes?.src,
@@ -227,11 +258,11 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
 
   return (
     <div className="mb-25 graf" key={props.keyNum}>
-      {props.blogItem.type !== "iframe" &&
+      {/* {props.blogItem.type !== "iframe" &&
         props.blogItem.type !== "code" &&
-        React.createElement(props.blogItem.type, att, blogEleValue)}
-      <div className="youtubeVid">
-        {props.blogItem.type === "iframe" && (
+        React.createElement(props.blogItem.type, att, blogEleValue)} */}
+      {props.blogItem.type === "iframe" && (
+        <div className="youtubeVid">
           <iframe
             className="youtubeVid"
             data-width={854}
@@ -243,8 +274,8 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
             allowFullScreen
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
           ></iframe>
-        )}
-      </div>
+        </div>
+      )}
 
       {props.blogItem.type === "code" && (
         <CodeSyntaxBox
@@ -254,13 +285,66 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
           handlelangaugeselect={props.handlelangaugeselect!}
         />
       )}
-      <Overlay target={targetDiv.current} show={show} placement="top">
+
+      {(props.blogItem.type.match("p") || props.blogItem.type.match("h1")) && (
+        // <>
+        //   {show && (
+        //     <TextOverlayIconsNew
+        //       ref={overlayIconsRef}
+        //       handletextoverlayclick={props.handletextoverlayclick!}
+        //       keynum={props.keyNum}
+        //       className="d-flex"
+        //     />
+        //   )}
+        //   {React.createElement(props.blogItem.type, att, blogEleValue)}
+        // </>
+        <OverlayTrigger
+          trigger="click"
+          placement="top"
+          show={show}
+          overlay={
+            <TextOverlayIcons
+              handleChange={handleTextIconOverlayChange}
+              handleKeyDown={handleTextIconOverlayKeyDown}
+              newRef={overlayIconsRef}
+              handletextoverlayclick={props.handletextoverlayclick!}
+              keynum={props.keyNum}
+              className="d-flex"
+            />
+          }
+        >
+          {React.createElement(props.blogItem.type, att, blogEleValue)}
+          {/* {props.blogItem.type === "p" ? <p
+              contentEditable="true"
+              suppressContentEditableWarning={true}
+              className={`${props.blogItem.attributes?.className} + blog-item-p font-xl text`}
+              aria-label="text"
+              ref={targetDiv}
+              onInput={(e: any) => handleChange(e)}
+            >
+              {blogEleValue}
+            </p> : <h1></h1>} */}
+        </OverlayTrigger>
+      )}
+
+      {/* <Overlay target={targetDiv.current} show={show} placement="top">
         {(props) => (
           <Tooltip className="displayOverany" id="tooltip-top" {...props}>
-            <TextOverlayIcons handleTextOverlayClick={handleClickTextEdit} />
+            <div className="row">
+              <div
+                aria-label="btn btn-brand-1 title color-text displayOveranyany"
+                onClick={handleClickTextEdit}
+              >
+                CLICK ME
+              </div>
+            </div>
+            <TextOverlayIcons
+              handleTextOverlayClick={handleClickTextEdit}
+              keyNum={props.keyNum}
+            />
           </Tooltip>
         )}
-      </Overlay>
+      </Overlay> */}
       <Overlay
         target={targetImg.current}
         show={showAltTextOverlay}

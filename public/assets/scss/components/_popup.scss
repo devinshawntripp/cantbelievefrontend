@@ -8,6 +8,7 @@
   top: 0;
   left: 0;
   z-index: 1000000000000;
+  overflow: scroll !important;
 }
 
 .box {
@@ -15,13 +16,16 @@
   width: 70%;
   margin: 100px auto;
   height: auto;
-  max-height: 70vh;
+  color: black;
+  //   min-height: 70vh;
   //   margin-top: calc(100vh - 85vh - 20px);
   background: #fff;
   border-radius: 4px;
   padding: 20px;
   border: 1px solid #999;
-  overflow: auto;
+  z-index: 1000000000000000;
+  overflow: scroll !important;
+
   //   background-color: #00000050;
 }
 

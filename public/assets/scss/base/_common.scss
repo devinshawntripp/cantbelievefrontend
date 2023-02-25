@@ -666,6 +666,10 @@ h3,
   }
 }
 
+.textarea {
+  height: 150px !important;
+}
+
 .text {
   @include theme() {
     color: theme-get("text-color");
@@ -721,6 +725,16 @@ h3,
 
 ml-auto {
   margin-left: auto !important;
+}
+
+h1 {
+  font-size: 3rem !important;
+  line-height: 3rem !important;
+  word-wrap: normal;
+}
+
+.bold {
+  font-weight: 800 !important;
 }
 
 mr-auto {
