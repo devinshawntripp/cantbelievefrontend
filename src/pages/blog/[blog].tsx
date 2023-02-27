@@ -51,7 +51,6 @@ export default function BlogItem() {
       [
         `${props.text ? props.text : ""}`,
         props.extraTags &&
-          props.extraTags &&
           props.extraTags.map((extraT: any, index: any) => {
             console.log(extraT);
             return (

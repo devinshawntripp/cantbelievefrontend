@@ -16,6 +16,8 @@ import axios from "axios";
 import { PopoverForContent } from "@/Components/BlogComponents/PopoverForContent";
 import Popup from "@/Components/Popup";
 import BuildBlogPostForm from "@/Components/BlogComponents/BuildBlogPostForm";
+import { useDispatch, useSelector } from "react-redux";
+import { blogSelector, loadBlogData } from "../../store/slices/blog-slice";
 
 interface IAddProductProps {}
 
@@ -63,6 +65,8 @@ interface IBlogPost {
 }
 
 const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
+  const dispatch = useDispatch();
+
   const [title, setTitle] = useState<String>();
   // const [desc, setDesc] = useState<String>();
   // const [amzUrl, setAmzUrl] = useState<String>();
@@ -97,7 +101,25 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
     show: false,
   });
 
-  const handleTextOverlayClick = (event: any, keyNum: number) => {
+  // dispatch(
+  //   loadBlogData({
+  //     title: "",
+  //     frontFacingPic: null,
+  //     summary: "",
+  //     likes: 0,
+  //     dislikes: 0,
+  //     views: 0,
+  //     author: "",
+  //     authorPic: undefined,
+  //     arrayOfBlogItems: [],
+  //   })
+  // );
+
+  const handleTextOverlayClick = (
+    event: any,
+    keyNum: number,
+    selectedText: string
+  ) => {
     console.log(event);
     event.preventDefault();
     const newArr: Array<IBlogItem> = [...(blogPost || [])];
@@ -175,7 +197,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
         // newArr.at(keyNum)!.attributes = newAtt;
         // newArr.at(keyNum)!.changed = true;
         setBlogPost(newArr);
-        console.log("ITALICS CLICKED");
+        console.log("LINK CLICKED");
       }
 
       // font-italic
@@ -238,6 +260,8 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
     // })
   };
 
+  const blog = useSelector(blogSelector);
+
   const handleKeyDown = (event: any) => {
     // console.log("User pressed: ", event.key);
 
@@ -249,6 +273,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
         attributes: { bold: false, src: undefined, altText: undefined },
         changed: true,
       };
+
       if (event.target.ariaLabel === "blogText") {
         newBlogItem = {
           type: "p",
@@ -279,6 +304,37 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
           changed: true,
         };
       }
+      if (blog.arrayOfBlogItems.length === 0) {
+        dispatch(
+          loadBlogData({
+            title: blog.title,
+            frontFacingPic: blog.frontFacingPic,
+            summary: blog.summary,
+            likes: 0,
+            dislikes: 0,
+            views: 0,
+            author: blog.author,
+            authorPic: undefined,
+            arrayOfBlogItems: [newBlogItem],
+          })
+        );
+      } else {
+        dispatch(
+          loadBlogData({
+            title: blog.title,
+            frontFacingPic: blog.frontFacingPic,
+            summary: blog.summary,
+            likes: 0,
+            dislikes: 0,
+            views: 0,
+            author: blog.author,
+            authorPic: undefined,
+            arrayOfBlogItems: [...blog.arrayOfBlogItems, newBlogItem],
+          })
+        );
+      }
+
+      console.log(blog);
 
       setShowYoutubeEmbed(false);
       setBlogPost((prevBlogPost) => [...(prevBlogPost || []), newBlogItem]);
@@ -350,6 +406,10 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   const handleFileGet = (event: any) => {
     event.preventDefault();
     fileRef.current?.click();
+  };
+
+  const handleLinkSet = (event: any) => {
+    console.log("Link Text event: ", event);
   };
 
   const handleCodeClicked = (event: any) => {
@@ -447,11 +507,16 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
     const newArr: Array<IBlogItem> = [...(blogPost || [])];
 
     if (newArr.at(keyNum) !== undefined) {
-      newArr.at(keyNum)!.value = event.currentTarget.innerHTML;
+      console.log(event);
+      console.log(event.target.innerHTML);
+      console.log(newArr.at(keyNum)!.value);
+      // newArr.at(keyNum)!.value = event.currentTarget.innerHTML;
     }
 
     setBlogPost(newArr);
   };
+
+  const handleLinkKeyDown = (event: any) => {};
 
   // const submitForm = async () => {
   //   //validate
@@ -528,8 +593,10 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
                 onChange={changeBlogItem}
                 keyNum={key}
                 key={key}
+                handlelinkset={handleLinkSet}
                 handlelangaugeselect={handlelangaugeselect}
                 handletextoverlayclick={handleTextOverlayClick}
+                handlekeydown={handleLinkKeyDown}
               />
             );
           })}

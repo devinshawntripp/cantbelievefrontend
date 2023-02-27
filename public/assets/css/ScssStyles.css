@@ -1791,6 +1791,11 @@ body {
   max-width: 700px;
 }
 
+.blog-link {
+  text-decoration: underline;
+  color: green;
+}
+
 .signin-banner {
   background-image: url(../imgs/pages/login/playful_picture_that_would_be_a_banner_picture_for_a_sign.png);
   background-size: cover;
