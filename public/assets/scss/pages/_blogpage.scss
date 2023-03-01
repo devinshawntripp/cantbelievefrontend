@@ -57,8 +57,10 @@
 }
 
 .blog-link {
-  text-decoration: underline;
-  color: green;
+  text-decoration: underline !important;
+  color: green !important;
+  cursor: pointer;
+  transform: skew(-0.06turn, 18deg) !important;
 }
 
 // .youtubeVid {

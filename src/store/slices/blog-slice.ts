@@ -3,12 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import { store } from "../store";
 
 import { setAll } from "../../helpers/set-all";
+import { HTMLAttributes } from "react";
 
-interface Attributes {
+interface Attributes extends HTMLAttributes<HTMLDivElement> {
   bold?: boolean;
   src?: string;
   altText?: string;
-  contentEditable?: string;
   className?: string;
   onDoubleClick?: () => void;
 }
@@ -21,7 +21,7 @@ interface IInnerTags {
 
 interface IBlogItem {
   type: string;
-  value: any;
+  value: Array<any>;
   attributes?: Attributes;
   language?: string;
   possibleInnerTags?: Array<IInnerTags>;

@@ -269,7 +269,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
       // 👇️ your logic here
       var newBlogItem: IBlogItem = {
         type: "p",
-        value: blogTextEle,
+        value: [blogTextEle],
         attributes: { bold: false, src: undefined, altText: undefined },
         changed: true,
       };
@@ -277,7 +277,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
       if (event.target.ariaLabel === "blogText") {
         newBlogItem = {
           type: "p",
-          value: blogTextEle,
+          value: [blogTextEle],
           attributes: { src: undefined, altText: undefined },
           changed: true,
         };
@@ -348,6 +348,7 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
     }
 
     if (event.key === "Backspace") {
+      console.log(blogTextEle);
       if (blogTextEle === "") {
         setBlogPost((prevBlogPost) => [...(prevBlogPost?.slice(0, -1) || [])]);
       }
@@ -466,7 +467,37 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
         changed: true,
       };
 
-      setBlogPost((prevBlogPost) => [...(prevBlogPost || []), newBlogItem]);
+      // setBlogPost((prevBlogPost) => [...(prevBlogPost || []), newBlogItem]);
+
+      if (blog.arrayOfBlogItems.length === 0) {
+        dispatch(
+          loadBlogData({
+            title: blog.title,
+            frontFacingPic: blog.frontFacingPic,
+            summary: blog.summary,
+            likes: 0,
+            dislikes: 0,
+            views: 0,
+            author: blog.author,
+            authorPic: undefined,
+            arrayOfBlogItems: [newBlogItem],
+          })
+        );
+      } else {
+        dispatch(
+          loadBlogData({
+            title: blog.title,
+            frontFacingPic: blog.frontFacingPic,
+            summary: blog.summary,
+            likes: 0,
+            dislikes: 0,
+            views: 0,
+            author: blog.author,
+            authorPic: undefined,
+            arrayOfBlogItems: [...blog.arrayOfBlogItems, newBlogItem],
+          })
+        );
+      }
 
       e.target.value = null;
 
@@ -498,23 +529,23 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
     setIsActive(newStatus);
   };
 
-  const changeBlogItem = (
-    event: ChangeEvent<HTMLDivElement>,
-    keyNum: number
-  ) => {
-    event.preventDefault();
+  // const changeBlogItem = (
+  //   event: ChangeEvent<HTMLDivElement>,
+  //   keyNum: number
+  // ) => {
+  //   event.preventDefault();
 
-    const newArr: Array<IBlogItem> = [...(blogPost || [])];
+  //   const newArr: Array<IBlogItem> = [...(blogPost || [])];
 
-    if (newArr.at(keyNum) !== undefined) {
-      console.log(event);
-      console.log(event.target.innerHTML);
-      console.log(newArr.at(keyNum)!.value);
-      // newArr.at(keyNum)!.value = event.currentTarget.innerHTML;
-    }
+  //   if (newArr.at(keyNum) !== undefined) {
+  //     console.log(event);
+  //     console.log(event.target.innerHTML);
+  //     console.log(newArr.at(keyNum)!.value);
+  //     // newArr.at(keyNum)!.value = event.currentTarget.innerHTML;
+  //   }
 
-    setBlogPost(newArr);
-  };
+  //   setBlogPost(newArr);
+  // };
 
   const handleLinkKeyDown = (event: any) => {};
 
@@ -585,12 +616,12 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
             // accept="video/*"
           />
 
-          {blogPost?.map((blogItem: any, key: number) => {
+          {blog.arrayOfBlogItems.map((blogItem: any, key: number) => {
             // console.log(key);
             return (
               <BlogItem
                 blogItem={blogItem}
-                onChange={changeBlogItem}
+                // onChange={changeBlogItem}
                 keyNum={key}
                 key={key}
                 handlelinkset={handleLinkSet}

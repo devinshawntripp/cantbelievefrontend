@@ -10,6 +10,7 @@ import useMediaQuery from "../hooks/useMediaQuery";
 import Popup from "../Components/Popup";
 import { waves } from "../Components/waves";
 import { TypeAnimation } from "react-type-animation";
+import SearchMenu from "@/Components/HomePageComponents/SearchMenu";
 
 export interface IHomeProps {}
 
@@ -169,7 +170,9 @@ export default function Home() {
           </div>
         )}
 
-        <div className="row mt-100">
+        <SearchMenu />
+
+        <div className="row mt-20">
           {items &&
             items.map((item) => {
               // console.log(item);

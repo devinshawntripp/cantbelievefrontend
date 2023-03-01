@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef, HTMLAttributes, useState } from "react";
 import BoldImg from "../../../public/assets/imgs/icons/text-changes/bold-svgrepo-com.svg";
 import ItalicsImg from "../../../public/assets/imgs/icons/text-changes/italics-svgrepo-com.svg";
 import LinkImg from "../../../public/assets/imgs/icons/text-changes/link-3-svgrepo-com.svg";
@@ -8,7 +8,7 @@ import { Popover } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { blogSelector, loadBlogData } from "@/store/slices/blog-slice";
 
-interface ITextOverlayIconsProps {
+interface ITextOverlayIconsProps extends HTMLAttributes<HTMLDivElement> {
   handletextoverlayclick: (
     e: any,
     keyNum: number,
@@ -22,11 +22,27 @@ interface ITextOverlayIconsProps {
   keynum: number;
   newRef?: React.Ref<HTMLDivElement>;
   onFocus?: (e: any) => void;
+  setShow: (e: any) => void;
+}
+
+interface Attributes extends HTMLAttributes<HTMLDivElement> {
+  bold?: boolean;
+  src?: string;
+  href?: string;
+  altText?: string;
+  className?: string;
+  onDoubleClick?: () => void;
+}
+
+interface IInnerTags {
+  type: string;
+  attributes?: Attributes;
+  value: any;
 }
 
 export type Ref = HTMLDivElement;
 
-const TextOverlayIcons = forwardRef<Ref, ITextOverlayIconsProps>(
+const TextOverlayIcons = React.forwardRef<Ref, ITextOverlayIconsProps>(
   (props, ref) => {
     const [clickedLink, setClickedLink] = useState(false);
     const [link, setLink] = useState("");
@@ -106,14 +122,32 @@ const TextOverlayIcons = forwardRef<Ref, ITextOverlayIconsProps>(
         const att = { ...blogItem.attributes };
         const innerTags = { ...blogItem.possibleInnerTags };
 
+        blogItem.value.map((valueItem) => {
+          if (
+            typeof valueItem === "string" &&
+            valueItem.includes(props.selectedText!.trim())
+          ) {
+            const newItem = valueItem.split(props.selectedText!) as any;
+
+            console.log(newItem);
+            var newValue = [...blogItem.value];
+
+            const newInnerTag: IInnerTags = {
+              type: "a",
+              attributes: { href: link },
+              value: props.selectedText,
+            };
+
+            newItem.splice(1, 0, newInnerTag);
+            console.log(newItem);
+            newValue = newItem;
+            blogItem.value = newItem;
+          }
+        });
+
         console.log(
           "lakjdklfaj lkdsjf alksdj fskdj flk: ",
-          blogItem.value.includes(props.selectedText)
-        );
-
-        blogItem.value.replace(
-          props.selectedText,
-          `<a className="blog-link" href=${link}>${props.selectedText}</a>`
+          blogItem.value.includes(props.selectedText!.trim())
         );
 
         blogItems[props.keynum] = blogItem;
@@ -132,6 +166,7 @@ const TextOverlayIcons = forwardRef<Ref, ITextOverlayIconsProps>(
           })
         );
 
+        props.setShow(false);
         console.log(blog);
       }
 
@@ -142,7 +177,7 @@ const TextOverlayIcons = forwardRef<Ref, ITextOverlayIconsProps>(
 
     return (
       <div ref={props.newRef}>
-        <Popover id="popover-positioned-right" ref={ref} {...props}>
+        <Popover id="popover-positioned-right" {...props} ref={ref}>
           {clickedLink ? (
             <input
               onChange={handleChange}

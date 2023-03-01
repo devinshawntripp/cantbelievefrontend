@@ -1047,6 +1047,55 @@ textarea.textarea-control {
 .light-mode .btn.btn-border-brand-1:hover {
   color: #cde2e7;
 }
+.btn.btn-border-brand-2 {
+  display: flex;
+  font-weight: 600 !important;
+  border: 1px solid #024430;
+  width: 10%;
+  height: 50px !important;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  line-height: 20px !important;
+  border-radius: 4px;
+  padding: 8px 10px 8px 11px;
+  font-size: 12px;
+  line-height: 12px;
+  font-weight: 12px;
+}
+.dark-mode .btn.btn-border-brand-2 {
+  color: white;
+}
+.light-mode .btn.btn-border-brand-2 {
+  color: #024430;
+}
+.btn.btn-border-brand-2.active {
+  background-color: #024430;
+}
+.dark-mode .btn.btn-border-brand-2.active {
+  color: rgb(255, 89, 255) !important;
+}
+.light-mode .btn.btn-border-brand-2.active {
+  color: #cde2e7 !important;
+}
+.btn.btn-border-brand-2:active {
+  background-color: #024430;
+}
+.dark-mode .btn.btn-border-brand-2:active {
+  color: rgb(255, 89, 255) !important;
+}
+.light-mode .btn.btn-border-brand-2:active {
+  color: #cde2e7 !important;
+}
+.btn.btn-border-brand-2:hover {
+  background-color: #024430;
+}
+.dark-mode .btn.btn-border-brand-2:hover {
+  color: rgb(255, 89, 255) !important;
+}
+.light-mode .btn.btn-border-brand-2:hover {
+  color: #cde2e7 !important;
+}
 .btn.btn-submit-newsletter {
   padding: 15px 16px 16px 16px;
   background-color: #024430;
@@ -1570,6 +1619,12 @@ svg.graph:hover * {
     overflow: hidden;
   }
 }
+.filter {
+  width: 100%;
+  height: 100px;
+  background-color: rgba(128, 128, 128, 0.482);
+}
+
 html {
   height: 100%;
   box-sizing: border-box;
@@ -1792,8 +1847,10 @@ body {
 }
 
 .blog-link {
-  text-decoration: underline;
-  color: green;
+  text-decoration: underline !important;
+  color: green !important;
+  cursor: pointer;
+  transform: skew(-0.06turn, 18deg) !important;
 }
 
 .signin-banner {
@@ -1974,6 +2031,10 @@ body {
 
 .p-15 {
   padding: 15px !important;
+}
+
+.p-50 {
+  padding: 50px !important;
 }
 
 .p-20 {
