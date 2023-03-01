@@ -16,6 +16,10 @@ const CustomInnerTag: React.FC<ICustomInnerTagProps> = (props) => {
 
   const handleChange = (event: ChangeEvent<HTMLDivElement>) => {
     console.log(event);
+    if (typeof document !== undefined) {
+      // console.log(document.querySelector())
+    }
+
     // setBlogEleValue(event.target.innerHTML);
     // targetDiv.current!.innerHTML = event.currentTarget.innerHTML;
     // console.log("here");
