@@ -18,7 +18,7 @@ const CustomTag: React.FC<ICustomTagProps> = (props) => {
   const [index, setIndex] = useState(0);
   const divRef = useRef<HTMLDivElement>(null);
   const ptagref = useRef(null);
-  const [ghostValue, setGhostValue] = useState("");
+  const [ghostValue, setGhostValue] = useState<Array<any>>([]);
 
   // const [selection, show, setShow] = useGetSelectionAndSetShow(
   //   divRef,
@@ -33,39 +33,51 @@ const CustomTag: React.FC<ICustomTagProps> = (props) => {
       Array(blogItem.value).find((element) => typeof element === "string") ||
       "";
 
-    value !== "" && setIndex(blogItem.value.indexOf(value));
+    // value !== "" && setIndex(blogItem.value.indexOf(value));
+    // var newValues: any = [];
+    // blogItem.value.forEach((bValue) => {
+    //   if (typeof bValue === "string") {
+    //     newValues.push(bValue);
+    //   } else {
+    //     newValues.push(bValue.value);
+    //   }
+    // });
 
-    setGhostValue(
-      blogItem.value.indexOf(value) !== -1
-        ? blogItem.value.at(blogItem.value.indexOf(value))
-        : blogItem.value.at(0)
-    );
+    // setGhostValue([...newValues]);
+
+    // setGhostValue(
+    //   blogItem.value.indexOf(value) !== -1
+    //     ? blogItem.value.at(blogItem.value.indexOf(value))
+    //     : blogItem.value.at(0)
+    // );
   }, []);
 
   const handleChange = (event: ChangeEvent<HTMLDivElement>) => {
     // setBlogEleValue(event.target.innerHTML);
     // targetDiv.current!.innerHTML = event.currentTarget.innerHTML;
-    // console.log("here");
+    console.log("index: ", index);
+    console.log("EVVENT: ", event.target.children.item(index)?.innerHTML);
 
     const blogItems = [...blog.arrayOfBlogItems]; // Create a new array with the existing blog items
     const blogItem = { ...blogItems[props.keyNum] }; // Create a new object with the blog item at index keyNum
     //find the first string
-    var value =
-      Array(blogItem.value).find((element) => typeof element === "string") ||
-      "";
+    // var value =
+    //   Array(blogItem.value).find((element) => typeof element === "string") ||
+    //   "";
 
-    let index = value === "" ? 0 : blogItem.value.indexOf(value);
-    value = event.target.innerHTML;
+    // let index = value === "" ? 0 : blogItem.value.indexOf(value);
+    // value = event.target.innerHTML;
     const newValue = [...blogItem.value];
 
-    newValue[index] = event.target.innerHTML;
+    // if (typeof newValue[index] === "string") {
+    //   newValue[index] = event.target.innerHTML;
+    // } else {
+    //   newValue[index].value = event.target.innerHTML;
+    // }
 
-    console.log(
-      "HERE IS SOME VALUE: ",
-      blogItem.value,
-      "HERE IS THE ARRAY : ",
-      blogItem.value.at(index)
-    );
+    console.log("NEW VALUE: ", newValue);
+
+    console.log("HERE IS SOME ARRAY: ", blogItem.value);
     // blogItem.value[props.key] = event.target.innerHTML; // Update the value property of the blog item
     blogItem.value = newValue;
     blogItems[props.keyNum] = blogItem; // Update the blog item at index keyNum in the new array
@@ -118,15 +130,34 @@ const CustomTag: React.FC<ICustomTagProps> = (props) => {
         blog.arrayOfBlogItems
           .at(props.keyNum)!
           .value!.map((extraT: any, indexinner: any) => {
-            console.log(extraT);
+            // console.log(extraT);
+
             if (typeof extraT === "string") {
-              return extraT;
+              //   return ghostValue.at(indexinner);
+              //   return extraT;
+              return (
+                <CustomInnerTag
+                  keyNum={props.keyNum}
+                  key={indexinner}
+                  htmlTag="span"
+                  value={extraT}
+                  onClick={(event: any) => setIndex(indexinner)}
+                  //   onKeyDown={(event: any) => setIndex(indexinner)}
+                  //   onKeyUp={(event: any) => setIndex(indexinner)}
+                  //   onFocus={(event: any) => setIndex(indexinner)}
+                />
+              );
             } else {
               return (
                 <CustomInnerTag
                   keyNum={props.keyNum}
                   key={indexinner}
                   htmlTag={extraT.type}
+                  //   value={ghostValue.at(indexinner)}
+                  onClick={(event: any) => setIndex(indexinner)}
+                  //   onKeyDown={(event: any) => setIndex(indexinner)}
+                  //   onKeyUp={(event: any) => setIndex(indexinner)}
+                  //   onFocus={(event: any) => setIndex(indexinner)}
                   value={extraT.value}
                   href={extraT.attributes.href}
                 />
