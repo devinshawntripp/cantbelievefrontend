@@ -43,11 +43,6 @@ interface IBlogItem {
   changed: boolean;
   possibleInnerTags?: Array<IInnerTags>;
   handlelangaugeselect?: (e: any, keyNum: number) => void;
-  handletextoverlayclick?: (
-    e: any,
-    keyNum: number,
-    selectedText: string
-  ) => void;
   handlekeydown: (e: any) => void;
 }
 
@@ -141,11 +136,7 @@ interface IBlogItemProps {
   language?: string;
   possibleInnerTags?: Array<IInnerTags>;
   handlelangaugeselect?: (e: any, keyNum: number) => void;
-  handletextoverlayclick?: (
-    e: any,
-    keyNum: number,
-    selectedText: string
-  ) => void;
+
   handlelinkset: (e: any) => void;
   handlekeydown: (e: any) => void;
 }
@@ -172,7 +163,6 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
   const [showAltTextOverlay, setShowAltTextOverlay] = useState<boolean>(false);
 
   const [showAltTextInput, setShowAltTextInput] = useState<boolean>(false);
-  const ptagref = useRef(props.blogItem.value);
 
   const dispatch = useDispatch();
 
@@ -187,16 +177,6 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
     setLink(event.target.value);
   };
 
-  const handleTextIconOverlayKeyDown = (event: any) => {
-    if (event.key === "enter") {
-      setShow(false);
-    }
-  };
-
-  const handleAltTextChange = (event: any) => {
-    // setAltTextValue()
-  };
-
   const handleClickedImg = (event: any) => {
     setShowAltTextOverlay(true);
   };
@@ -204,33 +184,6 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
   const handleLeftImg = (event: any) => {
     setShowAltTextOverlay(false);
   };
-
-  useEffect(() => {
-    setClassNameState(
-      props.blogItem.attributes?.className + " blog-item-p font-xl text"
-    );
-  }, [props.blogItem.changed == true]);
-
-  useEffect(() => {
-    if (props.blogItem.type.match("p") || props.blogItem.type.match("h1")) {
-      const newAtt: Attributes = {
-        // bold: props.blogItem.attributes?.bold,
-        src: props.blogItem.attributes?.src,
-        contentEditable: "true",
-        suppressContentEditableWarning: true,
-        className:
-          props.blogItem.attributes?.className + " blog-item-p font-xl text",
-        ["aria-label"]: "text",
-        ref: targetDiv,
-
-        // onInput: (e: any) => handleChange(e),
-      };
-      //   props.blogItem.changed = false;
-      setAtt(newAtt);
-    }
-  }, [props.blogItem.changed == true]);
-  //   props.blogItem.changed == true;
-
   const popperConfig = {
     modifiers: [
       {
@@ -244,9 +197,6 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
 
   return (
     <div className="mb-25 graf" key={props.keyNum}>
-      {/* {props.blogItem.type !== "iframe" &&
-        props.blogItem.type !== "code" &&
-        React.createElement(props.blogItem.type, att, blogEleValue)} */}
       {props.blogItem.type === "iframe" && (
         <div className="youtubeVid">
           <iframe
@@ -293,7 +243,6 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
           // handleKeyDown={handleTextIconOverlayKeyDown}
           selectedText={selectedText}
           newRef={overlayIconsRef}
-          handletextoverlayclick={props.handletextoverlayclick!}
           handlekeydown={props.handlekeydown!}
           handlelinkset={props.handlelinkset}
           keynum={props.keyNum}
@@ -304,27 +253,6 @@ const BlogItem: React.FC<IBlogItemProps> = (props) => {
 
       {(props.blogItem.type.match("p") || props.blogItem.type.match("h1")) &&
         !props.blogItem.type.match("img") && (
-          // <OverlayTrigger
-          //   trigger="click"
-          //   placement="top"
-          //   target={targetDiv.current}
-          //   show={show}
-          //   // delay={{ show: 700, hide: 0 }}
-          //   overlay={
-          // <TextOverlayIcons
-          //   handleChange={handleTextIconOverlayChange}
-          //   // handleKeyDown={handleTextIconOverlayKeyDown}
-          //   selectedText={selectedText}
-          //   newRef={overlayIconsRef}
-          //   handletextoverlayclick={props.handletextoverlayclick!}
-          //   handlekeydown={props.handlekeydown!}
-          //   handlelinkset={props.handlelinkset}
-          //   keynum={props.keyNum}
-          //   className="d-flex"
-          // />
-          //   }
-          // >
-          // {({ ref, ...triggerHandler }) => (
           <CustomTag
             htmlTag={props.blogItem.type}
             keyNum={props.keyNum}

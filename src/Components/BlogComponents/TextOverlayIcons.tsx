@@ -9,11 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { blogSelector, loadBlogData } from "@/store/slices/blog-slice";
 
 interface ITextOverlayIconsProps extends HTMLAttributes<HTMLDivElement> {
-  handletextoverlayclick: (
-    e: any,
-    keyNum: number,
-    selectedText: string
-  ) => void;
   handlelinkset: (e: any) => void;
   handleChange: (event: any) => void;
   handlekeydown: (event: any) => void;
@@ -206,9 +201,6 @@ const TextOverlayIcons = React.forwardRef<Ref, ITextOverlayIconsProps>(
               <div
                 className="m-20 format-text-icon hover-up"
                 aria-label="bold"
-                // onClick={(e: any) =>
-                //   props.handletextoverlayclick(e, props.keynum, "")
-                // }
                 onClick={handleClickedIcon}
               >
                 <div aria-label="bold">
@@ -242,10 +234,7 @@ const TextOverlayIcons = React.forwardRef<Ref, ITextOverlayIconsProps>(
               <div
                 className="m-20 format-text-icon hover-up"
                 aria-label="link"
-                onClick={(e: any) =>
-                  // props.handletextoverlayclick(e, props.keynum)
-                  toggleClickedLink(e)
-                }
+                onClick={(e: any) => toggleClickedLink(e)}
               >
                 <div aria-label="link">
                   <LinkImg

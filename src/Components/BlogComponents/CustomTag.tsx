@@ -14,26 +14,13 @@ interface ICustomTagProps {
 const CustomTag: React.FC<ICustomTagProps> = (props) => {
   const blog = useSelector(blogSelector);
   const dispatch = useDispatch();
-  const currentSelection = useRef<Selection | null>(null);
-  const [index, setIndex] = useState(0);
-  const divRef = useRef<HTMLDivElement>(null);
-  const ptagref = useRef(null);
-  const [ghostValue, setGhostValue] = useState<Array<any>>([]);
 
-  // const [selection, show, setShow] = useGetSelectionAndSetShow(
-  //   divRef,
-  //   props.overlayIconsRef,
-  //   false
-  // );
+  const [ghostValue, setGhostValue] = useState<Array<any>>([]);
 
   useEffect(() => {
     const blogItems = [...blog.arrayOfBlogItems]; // Create a new array with the existing blog items
     const blogItem = { ...blogItems[props.keyNum] };
-    var value =
-      Array(blogItem.value).find((element) => typeof element === "string") ||
-      "";
 
-    // value !== "" && setIndex(blogItem.value.indexOf(value));
     var newValues: any = [];
     blogItem.value.forEach((bValue) => {
       if (typeof bValue === "string") {
@@ -44,12 +31,6 @@ const CustomTag: React.FC<ICustomTagProps> = (props) => {
     });
 
     setGhostValue([...newValues]);
-
-    // setGhostValue(
-    //   blogItem.value.indexOf(value) !== -1
-    //     ? blogItem.value.at(blogItem.value.indexOf(value))
-    //     : blogItem.value.at(0)
-    // );
   }, []);
 
   const handleChange = (event: ChangeEvent<HTMLDivElement>) => {
@@ -58,8 +39,6 @@ const CustomTag: React.FC<ICustomTagProps> = (props) => {
     const carretPos = getCaretCharacterOffsetWithin(event.target);
 
     console.log("CARRET POS: ", carretPos);
-
-    console.log("index: ", index);
 
     const blogItems = [...blog.arrayOfBlogItems]; // Create a new array with the existing blog items
     const blogItem = { ...blogItems[props.keyNum] }; // Create a new object with the blog item at index keyNum
@@ -174,10 +153,11 @@ const CustomTag: React.FC<ICustomTagProps> = (props) => {
 
     [
       blog.arrayOfBlogItems.at(props.keyNum)!.value &&
+        blog.arrayOfBlogItems.at(props.keyNum)!.value.length > 0 &&
         blog.arrayOfBlogItems
           .at(props.keyNum)!
           .value!.map((extraT: any, indexinner: any) => {
-            // console.log(extraT);
+            console.log(extraT);
 
             if (typeof extraT === "string") {
               //   return ghostValue.at(indexinner);

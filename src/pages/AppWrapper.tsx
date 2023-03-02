@@ -70,6 +70,7 @@ export default function AppWrapper(props: {
 
           // navigate.replace("/Login");
           return;
+        } else {
         }
       }
 

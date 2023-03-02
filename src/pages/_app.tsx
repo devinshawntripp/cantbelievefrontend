@@ -27,7 +27,7 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) {
-  const router = useRouter();
+  // const router = useRouter();
   // useEffect(() => {
   //   const handleRouteChange = (url: any) => {
   //     if (typeof window !== "undefined") {

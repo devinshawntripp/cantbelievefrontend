@@ -467,8 +467,6 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
         changed: true,
       };
 
-      // setBlogPost((prevBlogPost) => [...(prevBlogPost || []), newBlogItem]);
-
       if (blog.arrayOfBlogItems.length === 0) {
         dispatch(
           loadBlogData({
@@ -529,71 +527,12 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
     setIsActive(newStatus);
   };
 
-  // const changeBlogItem = (
-  //   event: ChangeEvent<HTMLDivElement>,
-  //   keyNum: number
-  // ) => {
-  //   event.preventDefault();
-
-  //   const newArr: Array<IBlogItem> = [...(blogPost || [])];
-
-  //   if (newArr.at(keyNum) !== undefined) {
-  //     console.log(event);
-  //     console.log(event.target.innerHTML);
-  //     console.log(newArr.at(keyNum)!.value);
-  //     // newArr.at(keyNum)!.value = event.currentTarget.innerHTML;
-  //   }
-
-  //   setBlogPost(newArr);
-  // };
-
   const handleLinkKeyDown = (event: any) => {};
-
-  // const submitForm = async () => {
-  //   //validate
-
-  //   if (
-  //     fileRef.current?.files &&
-  //     file &&
-  //     fileName != "" &&
-  //     title != "" &&
-  //     desc != "" &&
-  //     amzUrl != "" &&
-  //     desc != undefined &&
-  //     amzUrl != undefined &&
-  //     title != undefined &&
-  //     price != 0
-  //   ) {
-  //     const formData = new FormData();
-  //     formData.append("file", file);
-  //     formData.append("fileName", String(fileName));
-  //     formData.append("title", String(title));
-  //     formData.append("desc", String(desc));
-  //     formData.append("amzURL", String(amzUrl));
-  //     formData.append("price", String(price));
-
-  //     // console.log(formData);
-
-  //     await Axios.post(
-  //       `${process.env.NEXT_PUBLIC_APP_URL}/items/AddProduct`,
-  //       formData
-  //     ).then(() => {
-  //       notify("Successfully added a product");
-  //     });
-  //   } else {
-  //     notify("All values were not entered correctly");
-  //   }
-  // };
 
   return (
     <div className="row">
       <div className="col-lg-3"></div>
       <div className="col-lg-6 mt-100">
-        {/* {showImg && (
-        <section className="about_sectionOne_style">
-          <img className="about_imgStyle_style" src={showImg} />
-        </section>
-      )} */}
         <ToastContainer
           toastStyle={{ backgroundColor: "black" }}
           position="top-right"
@@ -626,7 +565,6 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
                 key={key}
                 handlelinkset={handleLinkSet}
                 handlelangaugeselect={handlelangaugeselect}
-                handletextoverlayclick={handleTextOverlayClick}
                 handlekeydown={handleLinkKeyDown}
               />
             );
