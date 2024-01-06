@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { getPostById } from "../../api/index.js";
+import { getPostById } from "../api/index.js";
 
 interface HtmlTagSchema {
   tag: string;
@@ -37,14 +37,14 @@ export default function BlogItem() {
 
   const CustomTag: any = (props: any) => {
     // console.log(props);
-    // const propsPassed = {
-    //   [props.class && "className"]: props.class,
-    //   [props.src && "src"]: props.src,
-    // };
+    const propsPassed = {
+      [props.class && "className"]: props.class,
+      [props.src && "src"]: props.src,
+    };
 
     return React.createElement(
       `${props.htmlTag}`,
-      props.attributes,
+      propsPassed,
 
       //   null,
       [
@@ -111,15 +111,15 @@ export default function BlogItem() {
       {post && <p className="author">{post.author}</p>}
       {post && <p className="date">{new Date(post.date).toUTCString()}</p>}
       {post &&
-        Array.from(post.content).map((content: any, index) => {
-          console.log(content);
+        Array.from(post.content).map((text: any, index) => {
+          console.log(text);
           return (
             <CustomTag
               key={index}
-              htmlTag={content.type}
-              text={content.value}
-              attributes={content.attributes && content.attributes}
-              // class={}
+              htmlTag={text.tag.tag}
+              text={text.text}
+              extraTags={text.tag.extraTags}
+              class={text.tag.class}
             />
           );
         })}

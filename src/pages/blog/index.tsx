@@ -9,12 +9,14 @@ import Link from "next/link";
 import axios from "axios";
 
 import { ThemeContext } from "../../Components/Theme";
+import { useRouter } from "next/router";
 
 interface IBlogPageProps {}
 
 const Blog: React.FC<IBlogPageProps> = (props: {}) => {
   const { dark } = useContext(ThemeContext);
   const [blogs, setBlogs] = useState<Array<any>>([]);
+  let router = useRouter();
   // 64000ae0484a4ea6897bc665
 
   useEffect(() => {
@@ -29,6 +31,10 @@ const Blog: React.FC<IBlogPageProps> = (props: {}) => {
 
     getBlogPosts();
   }, []);
+
+  const handleClick = (event: any, id: string) => {
+    router.push(`/blog/${id}`);
+  };
 
   return (
     <>
@@ -45,83 +51,6 @@ const Blog: React.FC<IBlogPageProps> = (props: {}) => {
         </div>
         <section className="section">
           <div className="row">
-            <div className="col-xl-3">
-              <div className="card-product-grid card-product-grid-2 hover-up">
-                <div className="d-flex align-items-center justify-content-around mb-30 border-bottom p-10">
-                  <div className="col-xl-3 d-flex align-items-center justify-content-center">
-                    <div className="d-flex flex-direction-row">
-                      <Graph
-                        width="35px"
-                        height="35px"
-                        className={`${dark ? "dark-icon" : "profile"}`}
-                      />
-                      <div className="mt-10 text-light-some">10</div>
-                    </div>
-                  </div>
-                  <div className="col-xl-3 d-flex align-items-center justify-content-center">
-                    <div className="d-flex flex-direction-row">
-                      <DarkLike className="like mr-2 mt-8" />
-                      <div className="ml-5 mt-10 text-light-some">3</div>
-                    </div>
-                  </div>
-                  <div className="col-xl-3 d-flex align-items-center justify-content-center">
-                    <div className="d-flex flex-direction-row">
-                      <DarkLike className="dislike mr-2 mt-8 hover-up" />
-                      <div className="ml-5 mt-10 text-light-some">10</div>
-                    </div>
-                  </div>
-                  <div className="col-xl-3 d-flex align-items-center justify-content-center">
-                    <div className="d-flex flex-direction-row">
-                      <Profile
-                        width="35px"
-                        height="35px"
-                        fill="currentValue"
-                        className={`${dark ? "dark-icon" : "profile"}`}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="card-image">
-                  <img src={productR.src}></img>
-                </div>
-                <h6 className="card-title">
-                  This is a title for this blog post
-                </h6>
-                <div className="card-info font-md">
-                  LOREM IPSUMal sjflakjds flajdk faljsd ;fla sdjfaljksjdfaklsdj
-                  faklsdjfa lksdjfalksdjflkaj sdk jfaklsjdflka jkdsfj akljsd
-                  lkfaj sdkfja klsdj falkjsdfklajsd fklajsd klfajd slkfajsd
-                  klfajsdklfja klsd
-                </div>
-                <div className="d-flex mt-20 align-items-center border-top pt-20 justify-content-around text-align-center">
-                  <a
-                    className="btn btn-border-brand-1 mr-20 "
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href=""
-                  >
-                    {/* <Button
-                variant="success"
-                // style={{ backgroundColor: "green" }}
-                // target="_blank"
-                // rel="noopener noreferrer"
-                // className="btn btn-primary"
-              > */}
-                    Read More
-                    {/* </Button> */}
-                  </a>
-
-                  <div className="d-flex flex-column mr-20 align-items-center text-light-some">
-                    <p>...5 min read</p>
-                  </div>
-                  <p className="price text-light-some">
-                    {/* ${String(Number(price).toLocaleString("en"))} */}
-                    more..
-                  </p>
-                  {/* </div> */}
-                </div>
-              </div>
-            </div>
             {blogs &&
               blogs.map((blog) => {
                 return (
@@ -168,7 +97,13 @@ const Blog: React.FC<IBlogPageProps> = (props: {}) => {
                         </div>
                       </div>
                       <div className="card-image">
-                        <img src={productR.src}></img>
+                        <img
+                          src={
+                            blog.frontFacingPic
+                              ? blog.frontFacingPic
+                              : productR.src
+                          }
+                        ></img>
                       </div>
                       <h6 className="card-title">
                         {blog.title
@@ -183,9 +118,10 @@ const Blog: React.FC<IBlogPageProps> = (props: {}) => {
                       <div className="d-flex mt-20 align-items-center border-top pt-20 justify-content-around text-align-center">
                         <a
                           className="btn btn-border-brand-1 mr-20 "
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          href=""
+                          // target="_blank"
+                          // rel="noopener noreferrer"
+                          // href=""
+                          onClick={(event: any) => handleClick(event, blog._id)}
                         >
                           {/* <Button
                 variant="success"

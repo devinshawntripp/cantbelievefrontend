@@ -101,20 +101,6 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
     show: false,
   });
 
-  // dispatch(
-  //   loadBlogData({
-  //     title: "",
-  //     frontFacingPic: null,
-  //     summary: "",
-  //     likes: 0,
-  //     dislikes: 0,
-  //     views: 0,
-  //     author: "",
-  //     authorPic: undefined,
-  //     arrayOfBlogItems: [],
-  //   })
-  // );
-
   const handleTextOverlayClick = (
     event: any,
     keyNum: number,
@@ -348,9 +334,23 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
     }
 
     if (event.key === "Backspace") {
-      console.log(blogTextEle);
       if (blogTextEle === "") {
-        setBlogPost((prevBlogPost) => [...(prevBlogPost?.slice(0, -1) || [])]);
+        const newBlogItems = [...blog.arrayOfBlogItems.slice(0, -1)];
+
+        dispatch(
+          loadBlogData({
+            title: blog.title,
+            frontFacingPic: blog.frontFacingPic,
+            summary: blog.summary,
+            likes: 0,
+            dislikes: 0,
+            views: 0,
+            author: blog.author,
+            authorPic: undefined,
+            arrayOfBlogItems: newBlogItems,
+          })
+        );
+        // setBlogPost((prevBlogPost) => [...(prevBlogPost?.slice(0, -1) || [])]);
       }
     }
   };
@@ -458,66 +458,83 @@ const CreatePost: React.FC<IAddProductProps> = (props: {}) => {
   // };
 
   const handleDisplayFileDetails = async (e: any) => {
-    fileToDataUri(e.target.files[0]).then((dataUri) => {
-      console.log("DATA URI ", dataUri);
-      const newBlogItem: IBlogItem = {
-        type: "img",
-        value: null,
-        attributes: { bold: false, src: String(dataUri) },
-        changed: true,
-      };
+    const formData = new FormData();
 
-      if (blog.arrayOfBlogItems.length === 0) {
-        dispatch(
-          loadBlogData({
-            title: blog.title,
-            frontFacingPic: blog.frontFacingPic,
-            summary: blog.summary,
-            likes: 0,
-            dislikes: 0,
-            views: 0,
-            author: blog.author,
-            authorPic: undefined,
-            arrayOfBlogItems: [newBlogItem],
-          })
-        );
-      } else {
-        dispatch(
-          loadBlogData({
-            title: blog.title,
-            frontFacingPic: blog.frontFacingPic,
-            summary: blog.summary,
-            likes: 0,
-            dislikes: 0,
-            views: 0,
-            author: blog.author,
-            authorPic: undefined,
-            arrayOfBlogItems: [...blog.arrayOfBlogItems, newBlogItem],
-          })
-        );
-      }
+    if (e.target.files[0]) {
+      formData.append("pic", e.target.files[0]);
+    }
 
-      e.target.value = null;
+    await axios
+      .post(`${process.env.NEXT_PUBLIC_APP_URL}/blog/add-photo`, formData)
+      .then((res) => {
+        console.log("SUCCESSFULLY POSTED", res);
 
-      setShowImg(dataUri);
-    });
+        const newBlogItem: IBlogItem = {
+          type: "img",
+          value: null,
+          attributes: { bold: false, src: String(res.data.src) },
+          changed: true,
+        };
+
+        if (blog.arrayOfBlogItems.length === 0) {
+          dispatch(
+            loadBlogData({
+              title: blog.title,
+              frontFacingPic: blog.frontFacingPic,
+              summary: blog.summary,
+              likes: 0,
+              dislikes: 0,
+              views: 0,
+              author: blog.author,
+              authorPic: undefined,
+              arrayOfBlogItems: [newBlogItem],
+            })
+          );
+        } else {
+          dispatch(
+            loadBlogData({
+              title: blog.title,
+              frontFacingPic: blog.frontFacingPic,
+              summary: blog.summary,
+              likes: 0,
+              dislikes: 0,
+              views: 0,
+              author: blog.author,
+              authorPic: undefined,
+              arrayOfBlogItems: [...blog.arrayOfBlogItems, newBlogItem],
+            })
+          );
+        }
+        e.target.value = null;
+      })
+      .catch((error) => {
+        console.log("SOME ERROR HAPPENED: ", error);
+      });
+
+    // fileToDataUri(e.target.files[0]).then((dataUri) => {
+    //   console.log("DATA URI ", dataUri);
+
+    //   e.target.value = null;
+
+    //   setShowImg(dataUri);
+    // });
   };
 
-  const fileToDataUri = (file: File) =>
-    new Promise((resolve, reject) => {
-      if (!file) {
-        return;
-      }
-      console.log(file);
-      const reader = new FileReader();
-      reader.onload = (event: any) => {
-        resolve(event.target.result);
-      };
+  // const fileToDataUri = (file: File) =>
+  //   new Promise((resolve, reject) => {
+  //     if (!file) {
+  //       return;
+  //     }
+  //     console.log(file);
+  //     const reader = new FileReader();
+  //     reader.onload = (event: any) => {
+  //       resolve(event.target.result);
+  //     };
 
-      if (file && file.type.match("image.*")) {
-        reader.readAsDataURL(file);
-      }
-    });
+  //     if (file && file.type.match("image.*")) {
+  //       reader.readAsDataURL(file);
+  //     }
+  //   });
 
   const toggleActive = (e: any) => {
     const newStatus = {

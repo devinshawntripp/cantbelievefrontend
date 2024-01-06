@@ -10,6 +10,7 @@ export default function Document() {
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossOrigin="anonymous"
         />
+        <script src="//www.ezojs.com/ezoic/sa.min.js"></script>
       </Head>
       <body>
         <Main />

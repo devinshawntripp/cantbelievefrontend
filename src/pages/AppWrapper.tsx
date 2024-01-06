@@ -74,6 +74,7 @@ export default function AppWrapper(props: {
         }
       }
 
+      console.log("Before token response");
       const tokenResponse = await Axios.post(
         `${process.env.NEXT_PUBLIC_APP_URL}/api/checkToken`,
         null,
